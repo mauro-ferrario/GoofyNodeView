@@ -1,0 +1,17 @@
+
+*.make
+
+bin/GoofyNodeTestDebug.app*
+*.xcworkspacedata
+
+*.xccheckout
+
+*.plist
+
+*.xcscheme
+
+*.xcuserstate
+
+*.pbxproj
+
+bin/data/.gitkeep
