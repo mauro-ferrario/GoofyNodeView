@@ -13,15 +13,12 @@
 
 class GoofyBridgeToNode
 {
-  //typedef void (GoofyBridgeToNode::*function_ptr)();
 public:
                                 GoofyBridgeToNode();
                                 ~GoofyBridgeToNode();
   virtual void                  setup();
-  //vector<function_ptr>          activeFunc;
   vector<string>                functionNames;
   virtual void                  activeFunction(int id);
-  virtual void                  activeFunctionIn(int id);
   virtual void                  defineNodeMethods();
 };
 

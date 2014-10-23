@@ -25,15 +25,8 @@ void GoofyBridgeToNode::setup()
 
 void GoofyBridgeToNode::activeFunction(int id)
 {
-  activeFunctionIn(id);
-}
-
-void GoofyBridgeToNode::activeFunctionIn(int id)
-{
 }
 
 void GoofyBridgeToNode::defineNodeMethods()
 {
-  // Definisce i nomi dei metodi che saranno accessibili dal nodo
-//  functionNames.push_back("method name 1");
 }

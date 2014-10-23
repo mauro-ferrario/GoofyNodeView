@@ -41,7 +41,7 @@ void FakeClass::defineNodeMethods()
   functionNames.push_back("method 3");
 }
 
-void FakeClass::activeFunctionIn(int id)
+void FakeClass::activeFunction(int id)
 {
   switch(id)
   {
