@@ -56,30 +56,7 @@ void GoofyNodeButton::draw()
 
 void GoofyNodeButton::onPressIn(int x, int y, int button)
 {
-  for(int a = 0; a < nodeOutConnections.size(); a++)
-  {
-    switch(nodeOutConnections[a]->type)
-    {
-      case GOOFY_DELAY:
-      {
-        cout << "Delay" << endl;
-        GoofyNodeDelay* delay = (GoofyNodeDelay*)nodeOutConnections[a];
-        delay->activeFunction(nodeOutConnectionsFunctionId[a]);
-        delay = NULL;
-        break;
-      }
-      case GOOFY_LAYER:
-      {
-        cout << "Layer" << endl;
-        GoofyBridgeToNode* tempLayer = nodeOutConnections[a]->interactiveLayer;
-        tempLayer->activeFunction(nodeOutConnectionsFunctionId[a]);
-        break;
-      }
-      case GOOFY_SIMPLE_NODE:
-        cout << "Layer 2" << endl;
-        break;
-    }
-  }
+  activeOutputs();
 }
 
 void GoofyNodeButton::onPressOut(int x, int y, int button)

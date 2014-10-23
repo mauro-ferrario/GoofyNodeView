@@ -25,7 +25,6 @@ void GoofyBridgeToNode::setup()
 
 void GoofyBridgeToNode::activeFunction(int id)
 {
-  cout << "Call function " << id << endl;
   activeFunctionIn(id);
 }
 

@@ -47,10 +47,8 @@ void GoofyNodeDelay::checkTimer()
  {
    if(timer.getAppTimeMillis() >= endTimer)
    {
-     cout << "Fine timer" << endl;
      timerEnded();
-     timerActive = false; //        nodeOutConnections[a]->playMovie();
- // bar((ShadowInteractiveLayer*)nodeOutConnections[a]->videoPlayer, &ShadowInteractiveLayer::activeFunction,ofRandom(0));
+     timerActive = false;
    }
  }
 }
@@ -58,36 +56,13 @@ void GoofyNodeDelay::checkTimer()
 void GoofyNodeDelay::startTimer()
 {
   timeStartTimer = timer.getAppTimeMillis();
-  endTimer = timeStartTimer +  10 * 1000;
+  endTimer = timeStartTimer +  1 * 1000;
   timerActive = true;
 }
  
 void GoofyNodeDelay::timerEnded()
 {
-  for(int a = 0; a < nodeOutConnections.size(); a++)
-  {
-    switch(nodeOutConnections[a]->type)
-    {
-      case GOOFY_DELAY:
-      {
-        cout << "Delay" << endl;
-        GoofyNodeDelay* delay = (GoofyNodeDelay*)nodeOutConnections[a];
-        delay->activeFunction(nodeOutConnectionsFunctionId[a]);
-        delay = NULL;
-        break;
-      }
-      case GOOFY_LAYER:
-      {
-        cout << "Layer" << endl;
-        GoofyBridgeToNode* tempLayer = nodeOutConnections[a]->interactiveLayer;
-        tempLayer->activeFunction(nodeOutConnectionsFunctionId[a]);
-        break;
-      }
-      case GOOFY_SIMPLE_NODE:
-        cout << "Layer 2" << endl;
-        break;
-    }
-  }
+  activeOutputs();
 }
 
 void GoofyNodeDelay::draw()
@@ -97,7 +72,14 @@ void GoofyNodeDelay::draw()
   drawBackground();
   ofPushStyle();
   ofSetColor(255,255,255);
-  ofRect(5, 5, ofMap(timer.getAppTimeMillis(), timeStartTimer, endTimer, 0, width - 10, true), height - 10);
+  if(timerActive)
+  {
+    ofRect(5, 5, ofMap(timer.getAppTimeMillis(), timeStartTimer, endTimer, 0, width - 10, true), height - 10);
+  }
+  else
+  {
+    ofRect(5, 5, width - 10, height - 10);
+  }
   ofPopStyle();
   ofPushStyle();
   drawNodes();
@@ -113,8 +95,6 @@ void GoofyNodeDelay::activeFunction(int id)
     case 0:
       {
         startTimer();
-        cout << nodeOutConnections.size() << endl;
-        cout << "Start timer" << endl;
       }
   }
 }

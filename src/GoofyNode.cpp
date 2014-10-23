@@ -9,7 +9,7 @@
 #include "GoofyNode.h"
 #include "GoofyNodePin.h"
 #include "GoofyNodeStage.h"
-
+#include "GoofyNodeDelay.h"
 
 GoofyNode::GoofyNode()
 {
@@ -250,6 +250,31 @@ void GoofyNode::drawBackground()
   ofSetColor(100);
   ofRect(0,0, width, height);
   ofPopStyle();
+}
+
+void GoofyNode::activeOutputs()
+{
+  for(int a = 0; a < nodeOutConnections.size(); a++)
+  {
+    switch(nodeOutConnections[a]->type)
+    {
+      case GOOFY_DELAY:
+      {
+        GoofyNodeDelay* delay = (GoofyNodeDelay*)nodeOutConnections[a];
+        delay->activeFunction(nodeOutConnectionsFunctionId[a]);
+        delay = NULL;
+        break;
+      }
+      case GOOFY_LAYER:
+      {
+        GoofyBridgeToNode* tempLayer = nodeOutConnections[a]->interactiveLayer;
+        tempLayer->activeFunction(nodeOutConnectionsFunctionId[a]);
+        break;
+      }
+      case GOOFY_SIMPLE_NODE:
+        break;
+    }
+  }
 }
 
 void GoofyNode::onPressIn(int x, int y, int button)

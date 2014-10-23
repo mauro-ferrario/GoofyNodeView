@@ -59,6 +59,11 @@ void GoofyNodeStage::addPinConnection(GoofyNodePin* pin)
       removeTempLineConnection();
       return;
     }
+    if(lineConnection->firstPin->pinMode == pin->pinMode)
+    {
+      removeTempLineConnection();
+      return;
+    }
     lineConnection->editable = true;
     lineConnection->secondPin = pin;
     lineConnection->endPoint = ofVec2f(pin->getX()+5, pin->getY()+5);

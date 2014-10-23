@@ -67,6 +67,7 @@ public:
   GoofyNodeStage*      mainStage;
   void                setMainStage(GoofyNodeStage* mainStage);
   GoofyBridgeToNode*  interactiveLayer;
+  void                activeOutputs();
 
 protected:
   virtual void        onPressIn(int x, int y, int button);
