@@ -35,6 +35,7 @@ enum GoofyNodePinMode
 class GoofyNode
 {
 public:
+  
                       GoofyNode();
                       ~GoofyNode();
   virtual void        setup(string name);
