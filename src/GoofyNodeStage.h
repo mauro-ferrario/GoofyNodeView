@@ -67,8 +67,6 @@ public:
   
   LineConnection* lineConnection;
   vector<LineConnection*> connections;
-  
-  
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNodeStage__) */

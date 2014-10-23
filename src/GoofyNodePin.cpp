@@ -68,7 +68,7 @@ void GoofyNodePin::onPressOut(int x, int y, int button)
 
 void GoofyNodePin::mouseDragged(int x, int y, int button)
 {
-  if(isDragging)
+  if(isDraggingIn)
   {
     //cout << "Drag pin mouse over" << endl;
     if(mainStage->lineConnection == NULL)

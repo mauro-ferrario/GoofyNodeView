@@ -62,7 +62,7 @@ public:
   void                setMainStage(GoofyNodeStage* mainStage);
   GoofyBridgeToNode*  interactiveLayer;
   void                activeOutputs();
-  bool                isDragging;
+  bool                isDraggingIn;
   ofVec2f             mouseDragStart;
   ofVec2f             dragOffset;
   void                removeMouseDragListener();

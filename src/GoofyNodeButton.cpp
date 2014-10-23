@@ -47,6 +47,6 @@ void GoofyNodeButton::drawAfterBackground()
 
 void GoofyNodeButton::onReleaseIn(int x, int y, int button)
 {
-  if(!isDragging)
+  if(!isDraggingIn)
     activeOutputs();
 }
