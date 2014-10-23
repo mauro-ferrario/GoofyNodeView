@@ -16,6 +16,16 @@ void ofApp::setup(){
   button->setup("Button");
   button->setPos(ofVec2f(40,40));
   nodeView->addNode(button);
+  
+  delay1 = new GoofyNodeDelay(nodeView);
+  delay1->setup("Delay 1");
+  delay1->setPos(ofVec2f(40,140));
+  nodeView->addNode(delay1);
+  
+  delay2 = new GoofyNodeDelay(nodeView);
+  delay2->setup("Delay 2");
+  delay2->setPos(ofVec2f(340,140));
+  nodeView->addNode(delay2);
 }
 
 //--------------------------------------------------------------

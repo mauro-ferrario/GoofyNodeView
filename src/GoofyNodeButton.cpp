@@ -18,7 +18,6 @@ GoofyNodeButton::GoofyNodeButton()
 GoofyNodeButton::GoofyNodeButton(GoofyNodeStage* mainStage)
 {
   this->mainStage = mainStage;
-  // timerToCheck = 0;
 }
 
 
@@ -26,7 +25,6 @@ GoofyNodeButton::~GoofyNodeButton()
 {
   
 }
-
 
 void GoofyNodeButton::setup(string name)
 {
@@ -39,30 +37,7 @@ void GoofyNodeButton::setup(string name)
 
 void GoofyNodeButton::update()
 {
-  //if(timerToCheck > 0)
-   // checkTimers();
 }
-
-/*
-void GoofyNodeButton::checkTimers()
-{
-  for(int a = 0; a < timerActive.size(); a++)
-  {
- 
-    if(timerActive[a])
-    {
-      if(timer.getAppTimeMillis() >= timeStartTimer[a] + nodeOutConnectionsParams[a] * 1000)
-      {
-        timerActive[a] = false;
-        timerToCheck--;
-        cout << "End timer" << a << endl;
-//        nodeOutConnections[a]->playMovie();
-       // bar((ShadowInteractiveLayer*)nodeOutConnections[a]->videoPlayer, &ShadowInteractiveLayer::activeFunction,ofRandom(0));
-      }
-    }
-  }
-   }
-   */
 
 void GoofyNodeButton::draw()
 {
@@ -79,41 +54,34 @@ void GoofyNodeButton::draw()
   ofPopMatrix();
 }
 
-void GoofyNodeButton::addNodeOutConnection(GoofyNode* node)
-{
-/*  GoofyNode::nodeOutConnections.push_back(node);
-  nodeOutConnectionsParams.push_back(ofRandom(1,10));
- */
-//  timerActive.push_back(false);
- // timeStartTimer.push_back(0);
-}
-
 void GoofyNodeButton::onPressIn(int x, int y, int button)
 {
-  cout << "button pressed qui" << endl;
-  
   for(int a = 0; a < nodeOutConnections.size(); a++)
   {
-    cout << "Dentro " << endl;
-    GoofyBridgeToNode* tempLayer = nodeOutConnections[a]->interactiveLayer;
-    tempLayer->activeFunction(a);
+    switch(nodeOutConnections[a]->type)
+    {
+      case GOOFY_DELAY:
+      {
+        cout << "Delay" << endl;
+        GoofyNodeDelay* delay = (GoofyNodeDelay*)nodeOutConnections[a];
+        delay->activeFunction(nodeOutConnectionsFunctionId[a]);
+        delay = NULL;
+        break;
+      }
+      case GOOFY_LAYER:
+      {
+        cout << "Layer" << endl;
+        GoofyBridgeToNode* tempLayer = nodeOutConnections[a]->interactiveLayer;
+        tempLayer->activeFunction(nodeOutConnectionsFunctionId[a]);
+        break;
+      }
+      case GOOFY_SIMPLE_NODE:
+        cout << "Layer 2" << endl;
+        break;
+    }
   }
-  //activeFunction
- // startTimers();
 }
 
 void GoofyNodeButton::onPressOut(int x, int y, int button)
 {
 }
-
-/*
-void GoofyNodeButton::startTimers()
-{
-  for(int a = 0; a < timerActive.size(); a++)
-  {
-    timeStartTimer[a] = timer.getAppTimeMillis();
-    timerActive[a] = true;
-    timerToCheck++;
-  }
-}
-*/

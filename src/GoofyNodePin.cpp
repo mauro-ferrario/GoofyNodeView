@@ -11,8 +11,8 @@
 
 GoofyNodePin::GoofyNodePin(GoofyNodePinMode mode)
 {
-  pinMode = mode;
-  cout << "NEW PIN" << endl;
+  pinId     = -1;
+  pinMode   = mode;
 }
 
 GoofyNodePin::~GoofyNodePin()
@@ -23,7 +23,6 @@ GoofyNodePin::~GoofyNodePin()
 void GoofyNodePin::setup(string name)
 {
   GoofyNode::setup(name);
-  cout << "NEW PIN SETUP" << mainStage << endl;
   type = GOOFY_PIN;
 }
 

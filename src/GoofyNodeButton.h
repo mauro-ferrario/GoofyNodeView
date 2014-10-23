@@ -10,7 +10,7 @@
 #define __ShadowTheatre2_0__GoofyNodeButton__
 
 #include "GoofyNode.h"
-#include "ofxMSATimer.h"
+#include "GoofyNodeDelay.h"
 
 class GoofyNodeStage;
 
@@ -24,30 +24,10 @@ public:
   void            setup(string name);
   void            draw();
   void            update();
- // void            checkTimers();
- // void            startTimers();
-  //vector<bool>    timerActive;
-  //vector<float>   timeStartTimer;
-  //ofxMSATimer     timer;
-  //int             timerToCheck;
   
 protected:
   void            onPressIn(int x, int y, int  button);
   void            onPressOut(int x, int y, int  button);
-  
-  /*
-  template<class T>
-  void bar ( T* fooPtr , void(T::*fooFnPtr)(int), int i )
-  {
-    (fooPtr->*fooFnPtr)(i);
-  }
-   */
-  
-  //template<class T>
-  //void (T::*fooFnPtr)();
-  //template<class T>
-  //T* fooPtr;
-  
   
 };
 

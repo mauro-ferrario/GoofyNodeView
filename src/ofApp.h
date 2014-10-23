@@ -4,6 +4,7 @@
 #include "FakeClass.h"
 #include "GoofyNodeStage.h"
 #include "GoofyNodeButton.h"
+#include "GoofyNodeDelay.h"
 
 
 
@@ -28,6 +29,8 @@ class ofApp : public ofBaseApp{
   FakeClass* fake1;
   GoofyNodeStage* nodeView;
   GoofyNodeButton* button;
+  GoofyNodeDelay* delay1;
+  GoofyNodeDelay* delay2;
 
   
 		

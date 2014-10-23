@@ -34,7 +34,7 @@ void GoofyNodeStage::drawBackground()
 
 void GoofyNodeStage::addNode(GoofyBridgeToNode* layer)
 {
-  cout << "Stage " << this << endl;
+  cout << "Add layer to Stage " << this << endl;
   GoofyNodeLayer::addNode(layer, this);
 }
 
@@ -67,10 +67,12 @@ void GoofyNodeStage::addPinConnection(GoofyNodePin* pin)
     if(lineConnection->firstPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
     {
       lineConnection->firstPin->parent->nodeOutConnections.push_back(lineConnection->secondPin->parent);
+      lineConnection->firstPin->parent->nodeOutConnectionsFunctionId.push_back(lineConnection->secondPin->pinId);
     }
     if(lineConnection->secondPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
     {
       lineConnection->secondPin->parent->nodeOutConnections.push_back(lineConnection->firstPin->parent);
+      lineConnection->secondPin->parent->nodeOutConnectionsFunctionId.push_back(lineConnection->firstPin->pinId);
     }
     
     lineConnection = NULL;

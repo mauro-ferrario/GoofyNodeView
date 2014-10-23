@@ -68,7 +68,6 @@ void GoofyNode::_mousePressed(ofMouseEventArgs &e)
     if(!isMousePressed)
     {
       isMousePressed = true;
-      cout << "Mouse pressed in" << name << mainStage << endl;
       onPressIn(x, y, button);
     }
   }
@@ -217,6 +216,7 @@ void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f p
   newPin->setup(ofToString(idFunction));
   newPin->setSize(10,10);
   newPin->setPos(pos);
+  newPin->pinId = idFunction;
   newPin->enableMouseEvents();
   newPin->parent = this;
   //nodes.push_back(newPin);

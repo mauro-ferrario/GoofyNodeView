@@ -22,6 +22,7 @@ public:
   virtual void        draw();
   void                drawHole();
   GoofyNodePinMode    pinMode;
+  int                 pinId;
   
 protected:
   void                onReleaseIn(int x, int y, int button);

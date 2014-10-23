@@ -22,7 +22,7 @@ enum GoofyNodeGuiTypes
   GOOFY_PIN,
   GOOFY_LAYER,
   GOOFY_WIDGET,
-  GOOFY_TIMER,
+  GOOFY_DELAY,
   GOOFY_BUTTON
 };
 
@@ -60,6 +60,7 @@ public:
   GoofyNode*          parent;
   
   vector<GoofyNode*>  nodeOutConnections;
+  vector<int>         nodeOutConnectionsFunctionId;
 //  vector<float>       nodeOutConnectionsParams;
   
   // void                playMovie();
