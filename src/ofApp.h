@@ -5,6 +5,9 @@
 #include "GoofyNodeStage.h"
 #include "GoofyNodeButton.h"
 
+
+
+
 class ofApp : public ofBaseApp{
 
 	public:
@@ -25,5 +28,7 @@ class ofApp : public ofBaseApp{
   FakeClass* fake1;
   GoofyNodeStage* nodeView;
   GoofyNodeButton* button;
+
+  
 		
 };

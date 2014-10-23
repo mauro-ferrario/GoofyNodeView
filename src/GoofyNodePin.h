@@ -12,12 +12,6 @@
 #include "GoofyNode.h"
 
 
-enum GoofyNodePinMode
-{
-  GOOFY_NODE_PIN_INPUT,
-  GOOFY_NODE_PIN_OUTPUT
-};
-
 class GoofyNodePin: public GoofyNode
 {
 public:
@@ -30,7 +24,10 @@ public:
   GoofyNodePinMode    pinMode;
   
 protected:
-  void                onPress(int x, int y, int button);
+  void                onReleaseIn(int x, int y, int button);
+  void                onPressIn(int x, int y, int button);
+  void                onPressOut(int x, int y, int button);
+  void                mouseDragged(int x, int y, int button);
 };
 
 #endif /* defined(__GoofyNodeTest__GoofyNodePin__) */

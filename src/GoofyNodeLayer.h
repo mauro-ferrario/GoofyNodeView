@@ -13,6 +13,8 @@
 #include "GoofyBridgeToNode.h"
 #include "GoofyNodePin.h"
 
+class GoofyNodeStage;
+
 class GoofyNodeLayer: public GoofyNode
 {
 public:
@@ -21,14 +23,11 @@ public:
   virtual void        setup(string name);
   virtual void        update();
   virtual void        draw();
-  void                addNode(GoofyNode* node);
-  void                addNode(GoofyBridgeToNode* layer);
+  virtual void        addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage);
+  virtual void        addNode(GoofyNode* node, GoofyNodeStage* mainStage);
+  virtual void        mouseDragged(int x, int y, int button);
   void                createPins();
-  void                createSinglePin(int idFunction,  GoofyNodePinMode mode);
   virtual void        drawBackground();
-  GoofyBridgeToNode*  interactiveLayer;
-  vector<GoofyNode*>  nodes;
-  void                drawNodes();
   
 protected:
   void                onPress(int x, int y, int button);

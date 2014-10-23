@@ -7,11 +7,12 @@
 //
 
 #include "GoofyNodePin.h"
-
+#include "GoofyNodeStage.h"
 
 GoofyNodePin::GoofyNodePin(GoofyNodePinMode mode)
 {
   pinMode = mode;
+  cout << "NEW PIN" << endl;
 }
 
 GoofyNodePin::~GoofyNodePin()
@@ -22,6 +23,7 @@ GoofyNodePin::~GoofyNodePin()
 void GoofyNodePin::setup(string name)
 {
   GoofyNode::setup(name);
+  cout << "NEW PIN SETUP" << mainStage << endl;
   type = GOOFY_PIN;
 }
 
@@ -53,7 +55,25 @@ void GoofyNodePin::drawHole()
   ofPopMatrix();
 }
 
-void GoofyNodePin::onPress(int x, int y, int button)
+void GoofyNodePin::onPressIn(int x, int y, int button)
+{
+}
+
+void GoofyNodePin::onReleaseIn(int x, int y, int button)
+{
+   mainStage->addPinConnection(this);
+}
+
+void GoofyNodePin::onPressOut(int x, int y, int button)
 {
   
+}
+
+void GoofyNodePin::mouseDragged(int x, int y, int button)
+{
+  if(isMouseOver)
+  {
+    if(mainStage->lineConnection == NULL)
+      mainStage->addPinConnection(this);
+  }
 }

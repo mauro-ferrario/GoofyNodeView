@@ -7,6 +7,7 @@
 //
 
 #include "GoofyNodeLayer.h"
+#include "GoofyNodeStage.h"
 
 GoofyNodeLayer::GoofyNodeLayer()
 {
@@ -37,34 +38,21 @@ void GoofyNodeLayer::draw()
   ofPopMatrix();
 }
 
-void GoofyNodeLayer::drawNodes()
-{
-  for(int a = 0; a < nodes.size(); a++)
-  {
-    nodes[a]->update();
-    nodes[a]->draw();
-  }
-}
-
 void GoofyNodeLayer::onPress(int x, int y, int button)
 {
   
 }
 
-void GoofyNodeLayer::addNode(GoofyNode* node)
+void GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage)
 {
-  node->parent = this;
-  nodes.push_back(node);
-}
-
-void GoofyNodeLayer::addNode(GoofyBridgeToNode* layer)
-{
+  this->mainStage = mainStage;
   GoofyNodeLayer* node = new GoofyNodeLayer();
   node->setPos(ofVec2f(ofRandom(0,600),ofRandom(0,600)));
   node->setSize(200,100);
+  node->enableMouseEvents();
   node->interactiveLayer = layer;
+  GoofyNode::addNode(node, mainStage);
   node->createPins();
-  addNode(node);
 }
 
 void GoofyNodeLayer::createPins()
@@ -72,22 +60,27 @@ void GoofyNodeLayer::createPins()
   if(interactiveLayer != NULL)
   {
     int totPins = interactiveLayer->functionNames.size();
+    cout << "MAIN STAGE " << mainStage << endl;
     for(int a = 0; a < totPins; a++)
-      createSinglePin(a, GOOFY_NODE_PIN_INPUT);
+    {
+      createSinglePin(a, GOOFY_NODE_PIN_INPUT, ofVec2f(15*a, -10));
+    }
   }
-}
-
-void GoofyNodeLayer::createSinglePin(int idFunction, GoofyNodePinMode mode)
-{
-  GoofyNodePin* newPin = new GoofyNodePin(mode);
-  newPin->setup(ofToString(idFunction));
-  newPin->setSize(10,10);
-  newPin->setPos(ofVec2f(idFunction*15, -10));
-  newPin->enableMouseEvents();
-  addNode(newPin);
 }
 
 void GoofyNodeLayer::drawBackground()
 {
   GoofyNode::drawBackground();
+}
+
+void GoofyNodeLayer::addNode(GoofyNode* node, GoofyNodeStage* mainStage)
+{
+  cout << "CAZZO " << endl;
+  this->mainStage = mainStage;
+  GoofyNode::addNode(node, mainStage);
+}
+
+void GoofyNodeLayer::mouseDragged(int x, int y, int button)
+{
+  
 }

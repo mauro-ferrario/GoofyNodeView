@@ -10,7 +10,9 @@
 #define __ShadowTheatre2_0__GoofyNode__
 
 #include "ofMain.h"
+#include "GoofyBridgeToNode.h"
 
+class GoofyNodeStage;
 
 
 enum GoofyNodeGuiTypes
@@ -24,16 +26,25 @@ enum GoofyNodeGuiTypes
   GOOFY_BUTTON
 };
 
+
+
+enum GoofyNodePinMode
+{
+  GOOFY_NODE_PIN_INPUT,
+  GOOFY_NODE_PIN_OUTPUT
+};
+
 class GoofyNode
 {
 public:
                       GoofyNode();
                       ~GoofyNode();
-  void                setup(string name);
+  virtual void        setup(string name);
   void                enableMouseEvents();
   void                disableMouseEvents();
   void                setSize(int w, int h);
   bool                hitTest(int tx, int ty);
+  virtual void        addNode(GoofyNode* node, GoofyNodeStage* mainStage);
   float               getX();
   float               getY();
   GoofyNodeGuiTypes   type;
@@ -42,23 +53,30 @@ public:
   virtual void        update();
   virtual void        draw();
   virtual void        drawBackground();
-  
+  virtual void        createSinglePin(int idFunction,  GoofyNodePinMode mode,  ofVec2f pos);
+  virtual void        drawNodes();
+  vector<GoofyNode*>  nodes;
   
   GoofyNode*          parent;
   
-//  vector<GoofyNode*>  nodeOutConnections;
+  vector<GoofyNode*>  nodeOutConnections;
 //  vector<float>       nodeOutConnectionsParams;
   
- // void                playMovie();
+  // void                playMovie();
+  GoofyNodeStage*      mainStage;
+  void                setMainStage(GoofyNodeStage* mainStage);
+  GoofyBridgeToNode*  interactiveLayer;
 
 protected:
-  virtual void        onPress(int x, int y, int button);
+  virtual void        onPressIn(int x, int y, int button);
+  virtual void        onPressOut(int x, int y, int button);
+  virtual void        mouseDragged(int x, int y, int button);
+  virtual void        onReleaseIn(int x, int y, int button);
   float               width;
   float               height;
   ofVec2f             pos;
   bool                isMousePressed;
   bool                isMouseOver;
-//  void                drawNodeOutConnections();
   
 private:
   void                _mousePressed(ofMouseEventArgs &e);
@@ -66,6 +84,7 @@ private:
   void                _mouseMoved(ofMouseEventArgs &e);
   void                _mouseDragged(ofMouseEventArgs &e);
   string              name;
+  
   
 };
 

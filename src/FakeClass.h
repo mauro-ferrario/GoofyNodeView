@@ -22,6 +22,7 @@ public:
   void          method2(int val);
   void          method3(int val, int val2);
   void          defineNodeMethods();
+  void          activeFunctionIn(int id);
 };
 
 #endif /* defined(__GoofyNodeTest__FakeClass__) */

@@ -8,12 +8,12 @@ void ofApp::setup(){
   nodeView = new GoofyNodeStage();
   nodeView->setup("Main");
   nodeView->setSize(ofGetWindowWidth(), ofGetWindowHeight());
+  nodeView->enableMouseEvents();
   fake1 = new FakeClass();
   fake1->setup();
   nodeView->addNode(fake1);
-  button = new GoofyNodeButton();
+  button = new GoofyNodeButton(nodeView);
   button->setup("Button");
-  button->setSize(50,50);
   button->setPos(ofVec2f(40,40));
   nodeView->addNode(button);
 }

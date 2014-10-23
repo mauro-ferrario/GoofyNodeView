@@ -7,7 +7,8 @@
 //
 
 #include "GoofyNode.h"
-
+#include "GoofyNodePin.h"
+#include "GoofyNodeStage.h"
 
 
 GoofyNode::GoofyNode()
@@ -18,6 +19,11 @@ GoofyNode::GoofyNode()
 GoofyNode::~GoofyNode()
 {
   
+}
+
+void GoofyNode::setMainStage(GoofyNodeStage* mainStage)
+{
+  this->mainStage = mainStage;
 }
 
 void GoofyNode::enableMouseEvents()
@@ -42,6 +48,14 @@ void GoofyNode::setSize(int w, int h)
   height  = h;
 }
 
+void GoofyNode::drawNodes()
+{
+  for(int a = 0; a < nodes.size(); a++)
+  {
+    nodes[a]->update();
+    nodes[a]->draw();
+  }
+}
 
 void GoofyNode::_mousePressed(ofMouseEventArgs &e)
 {
@@ -54,13 +68,13 @@ void GoofyNode::_mousePressed(ofMouseEventArgs &e)
     if(!isMousePressed)
     {
       isMousePressed = true;
-      cout << "Mouse pressed in" << name << endl;
-      onPress(x, y, button);
+      cout << "Mouse pressed in" << name << mainStage << endl;
+      onPressIn(x, y, button);
     }
   }
   else
   {
-    isMousePressed = false;	// update flag
+    onPressOut(x, y, button);
     //cout << "Mouse pressed out" << name << endl;
     //onPressOutside(x, y, button);
   }
@@ -79,6 +93,7 @@ void GoofyNode::_mouseReleased(ofMouseEventArgs &e)
   
   if(hitTest(x, y))
   {
+    onReleaseIn(x, y, button);
    // onRelease(x, y, button);
   }
   else
@@ -108,6 +123,43 @@ void GoofyNode::_mouseMoved(ofMouseEventArgs &e)
 
 void GoofyNode::_mouseDragged(ofMouseEventArgs &e)
 {
+  int x = e.x;
+  int y = e.y;
+  int button = e.button;
+
+  if(hitTest(x, y))
+  {
+    isMouseOver = true;
+    // onRelease(x, y, button);
+  }
+  else
+  {
+    isMouseOver = false;
+  }
+  
+//  if(hitTest(x, y)) {						// if mouse is over the object
+//    if(!_isMouseOver) {						// if wasn't over previous frame
+//      //				onPress(x, y);							// call onPress - maybe not
+//      _isMouseOver = true;						// update flag
+//      onRollOver(x, y);						// call onRollOver
+//    }
+//    onDragOver(x, y, button);				// and trigger onDragOver
+//  } else {
+//    if(_isMouseOver) {					// if mouse is not over the object, but the flag is true (From previous frame)
+//      onRollOut();							// call onRollOut
+//      _isMouseOver = false;						// update flag
+//    }
+//    if(isMousePressed(button)) {
+//      onDragOutside(x, y, button);
+//    }
+//    _isMousePressed[button] = false;
+//  }
+//  
+//  _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
+//  
+  mouseDragged(x, y, button);
+
+
 }
 
 float GoofyNode::getX()
@@ -159,6 +211,26 @@ void GoofyNode::draw()
 
 }
 
+void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos)
+{
+  GoofyNodePin* newPin = new GoofyNodePin(mode);
+  newPin->setup(ofToString(idFunction));
+  newPin->setSize(10,10);
+  newPin->setPos(pos);
+  newPin->enableMouseEvents();
+  newPin->parent = this;
+  //nodes.push_back(newPin);
+  this->addNode(newPin, this->mainStage);
+}
+
+
+void GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage)
+{
+  node->parent = this;
+  node->setMainStage(mainStage);
+  nodes.push_back(node);
+}
+
 /*
 void GoofyNode::addNodeOutConnection(GoofyNode* node)
 {
@@ -170,16 +242,7 @@ void GoofyNode::addNodeOutConnection(GoofyNode* node)
   nodeOutConnections.push_back(node);
 }
 
-void GoofyNode::drawNodeOutConnections()
-{
-  ofPushStyle();
-  ofSetColor(255);
-  for(int a = 0; a < nodeOutConnections.size(); a++)
-  {
-    ofLine(pos, nodeOutConnections[a]->pos);
-  }
-  ofPopStyle();
-}*/
+*/
 
 void GoofyNode::drawBackground()
 {
@@ -189,7 +252,22 @@ void GoofyNode::drawBackground()
   ofPopStyle();
 }
 
-void GoofyNode::onPress(int x, int y, int button)
+void GoofyNode::onPressIn(int x, int y, int button)
+{
+  
+}
+
+void GoofyNode::onPressOut(int x, int y, int button)
+{
+  
+}
+
+void GoofyNode::mouseDragged(int x, int y, int button)
+{
+  
+}
+
+void GoofyNode::onReleaseIn(int x, int y, int button)
 {
   
 }

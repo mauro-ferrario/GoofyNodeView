@@ -12,10 +12,13 @@
 #include "GoofyNode.h"
 #include "ofxMSATimer.h"
 
+class GoofyNodeStage;
+
 class GoofyNodeButton: public GoofyNode
 {
 public:
                   GoofyNodeButton();
+                  GoofyNodeButton(GoofyNodeStage* mainStage);
                   ~GoofyNodeButton();
   void            addNodeOutConnection(GoofyNode* node);
   void            setup(string name);
@@ -29,7 +32,8 @@ public:
   //int             timerToCheck;
   
 protected:
-  void            onPress(int x, int y, int  button);
+  void            onPressIn(int x, int y, int  button);
+  void            onPressOut(int x, int y, int  button);
   
   /*
   template<class T>
