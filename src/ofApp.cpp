@@ -5,13 +5,16 @@ void ofApp::setup(){
   ofSetVerticalSync(false);
   ofSetFrameRate(120);
   ofBackground(0);
+  
   nodeView = new GoofyNodeStage();
   nodeView->setup("Main");
   nodeView->setSize(ofGetWindowWidth(), ofGetWindowHeight());
   nodeView->enableMouseEvents();
+  
   fake1 = new FakeClass();
   fake1->setup();
   nodeView->addNode(fake1);
+  
   button = new GoofyNodeButton(nodeView);
   button->setup("Button");
   button->setPos(ofVec2f(40,40));

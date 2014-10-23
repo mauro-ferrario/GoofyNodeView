@@ -22,7 +22,7 @@ public:
                   ~GoofyNodeButton();
   void            addNodeOutConnection(GoofyNode* node);
   void            setup(string name);
-  void            draw();
+  void            drawAfterBackground();
   void            update();
   
 protected:

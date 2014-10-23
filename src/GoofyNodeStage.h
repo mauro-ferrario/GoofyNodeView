@@ -25,12 +25,16 @@ public:
   LineConnection(GoofyNodePin* pin)
   {
     editable = false;
+    secondPin = NULL;
     firstPin = pin;
     startPoint  = ofVec2f(pin->getX() + 5, pin->getY() + 5);
   }
   
   void draw()
   {
+    startPoint  = ofVec2f(firstPin->getX() + 5, firstPin->getY() + 5);
+    if(secondPin != NULL)
+      endPoint  = ofVec2f(secondPin->getX() + 5, secondPin->getY() + 5);
     ofPushStyle();
     ofSetColor(255);
     ofLine(startPoint, endPoint);

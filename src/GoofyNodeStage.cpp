@@ -27,7 +27,7 @@ void GoofyNodeStage::setup(string name)
 void GoofyNodeStage::drawBackground()
 {
   ofPushStyle();
-  ofSetColor(100, 100);
+  ofSetColor(255,0,0, 100);
   ofRect(0,0, width, height);
   ofPopStyle();
 }
@@ -104,7 +104,7 @@ void GoofyNodeStage::mouseDragged(int x, int y, int button)
 
 void GoofyNodeStage::draw()
 {
-  GoofyNodeLayer::draw();
+  GoofyNode::draw();
   if(lineConnection != NULL)
   {
     lineConnection->draw();

@@ -22,20 +22,18 @@ public:
                   ~GoofyNodeDelay();
   void            addNodeOutConnection(GoofyNode* node);
   void            setup(string name);
-  void            draw();
   void            update();
   void            activeFunction(int id);
+
+private:
+  void            drawAfterBackground();
   void            timerEnded();
-  
   void            checkTimer();
   void            startTimer();
   bool            timerActive;
   float           timeStartTimer;
   float           endTimer;
   ofxMSATimer     timer;
-  
-protected:
-  
 };
 
 #endif /* defined(__GoofyNodeTest__GoofyNodeDelay__) */

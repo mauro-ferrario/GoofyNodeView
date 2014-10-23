@@ -11,15 +11,12 @@
 
 GoofyNodeButton::GoofyNodeButton()
 {
- // timerToCheck = 0;
 }
-
 
 GoofyNodeButton::GoofyNodeButton(GoofyNodeStage* mainStage)
 {
   this->mainStage = mainStage;
 }
-
 
 GoofyNodeButton::~GoofyNodeButton()
 {
@@ -39,19 +36,13 @@ void GoofyNodeButton::update()
 {
 }
 
-void GoofyNodeButton::draw()
+void GoofyNodeButton::drawAfterBackground()
 {
-  ofPushMatrix();
-  ofTranslate(pos);
-  drawBackground();
   ofPushStyle();
   ofSetColor(255,0,0);
   float radius = (width *.7)*.5;
   float center = (width)*.5;
   ofCircle(center, center, radius);
-  drawNodes();
-  ofPopStyle();
-  ofPopMatrix();
 }
 
 void GoofyNodeButton::onPressIn(int x, int y, int button)

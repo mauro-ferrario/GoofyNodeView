@@ -49,6 +49,7 @@ public:
   void                setPos(ofVec2f newPos);
   virtual void        update();
   virtual void        draw();
+  virtual void        drawAfterBackground();
   virtual void        drawBackground();
   virtual void        createSinglePin(int idFunction,  GoofyNodePinMode mode,  ofVec2f pos);
   virtual void        drawNodes();
@@ -60,7 +61,11 @@ public:
   void                setMainStage(GoofyNodeStage* mainStage);
   GoofyBridgeToNode*  interactiveLayer;
   void                activeOutputs();
-
+  bool                isDragging;
+  ofVec2f             mouseDragStart;
+  ofVec2f             dragOffset;
+  void                removeMouseDragListener();
+  
 protected:
   virtual void        onPressIn(int x, int y, int button);
   virtual void        onPressOut(int x, int y, int button);
@@ -76,7 +81,7 @@ private:
   void                _mousePressed(ofMouseEventArgs &e);
   void                _mouseReleased(ofMouseEventArgs &e);
   void                _mouseMoved(ofMouseEventArgs &e);
-  void                _mouseDragged(ofMouseEventArgs &e);
+  bool                _mouseDragged(ofMouseEventArgs &e);
   string              name;
   
   

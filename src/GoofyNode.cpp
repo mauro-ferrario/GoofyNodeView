@@ -13,7 +13,6 @@
 
 GoofyNode::GoofyNode()
 {
-  
 }
 
 GoofyNode::~GoofyNode()
@@ -38,8 +37,12 @@ void GoofyNode::disableMouseEvents()
 {
   ofRemoveListener(ofEvents().mousePressed, this, &GoofyNode::_mousePressed);
   ofRemoveListener(ofEvents().mouseMoved, this, &GoofyNode::_mouseMoved);
-  ofRemoveListener(ofEvents().mouseDragged, this, &GoofyNode::_mouseDragged);
   ofRemoveListener(ofEvents().mouseReleased, this, &GoofyNode::_mouseReleased);
+}
+
+void GoofyNode::removeMouseDragListener()
+{
+  ofRemoveListener(ofEvents().mouseDragged, this, &GoofyNode::_mouseDragged);
 }
 
 void GoofyNode::setSize(int w, int h)
@@ -67,6 +70,11 @@ void GoofyNode::_mousePressed(ofMouseEventArgs &e)
   {
     if(!isMousePressed)
     {
+      cout << "Mouse pressed" << endl;
+      if(type != GOOFY_PIN  && type != GOOFY_STAGE)
+      {
+        mouseDragStart = ofVec2f(x, y);
+      }
       isMousePressed = true;
       onPressIn(x, y, button);
     }
@@ -89,6 +97,19 @@ void GoofyNode::_mouseReleased(ofMouseEventArgs &e)
   int x = e.x;
   int y = e.y;
   int button = e.button;
+  
+  
+  if(isDragging && dragOffset.length() != 0)
+  {
+    if(type != GOOFY_PIN  && type != GOOFY_STAGE)
+    {
+      cout << "Dentro" << endl;
+      pos -= dragOffset;
+      dragOffset = ofVec2f(0,0);
+    }
+    isDragging = false;
+  }
+  isDragging  = false;
   
   if(hitTest(x, y))
   {
@@ -120,15 +141,27 @@ void GoofyNode::_mouseMoved(ofMouseEventArgs &e)
   }
 }
 
-void GoofyNode::_mouseDragged(ofMouseEventArgs &e)
+bool GoofyNode::_mouseDragged(ofMouseEventArgs &e)
 {
   int x = e.x;
   int y = e.y;
   int button = e.button;
-
+  
+  
+  //mouseDragStart = ofVec2f(0,0);
+  if(isDragging)
+  {
+    if(type != GOOFY_PIN && type != GOOFY_STAGE)
+    {
+      cout << "qui" << endl;
+      dragOffset = mouseDragStart - ofVec2f(x,y);
+    }
+  }
+  
   if(hitTest(x, y))
   {
     isMouseOver = true;
+    isDragging  = true;
     // onRelease(x, y, button);
   }
   else
@@ -158,18 +191,21 @@ void GoofyNode::_mouseDragged(ofMouseEventArgs &e)
 //  
   mouseDragged(x, y, button);
 
-
+  if(isDragging && type == GOOFY_PIN)
+    return  true;
+  else
+    return false;
 }
 
 float GoofyNode::getX()
 {
   if(parent == NULL)
   {
-    return pos.x;
+    return pos.x + dragOffset.x;
   }
   else
   {
-    return pos.x + parent->getX();
+    return pos.x + parent->getX() - parent->dragOffset.x;
   }
 }
 
@@ -177,11 +213,11 @@ float GoofyNode::getY()
 {
   if(parent == NULL)
   {
-    return pos.y;
+    return pos.y + dragOffset.y;
   }
   else
   {
-    return pos.y + parent->getY();
+    return pos.y + parent->getY() - parent->dragOffset.y;
   }
 }
 
@@ -194,20 +230,33 @@ bool GoofyNode::hitTest(int tx, int ty)
 
 void GoofyNode::setup(string name)
 {
-  this->name = name;
-  parent = NULL;
-  pos.x = pos.y = 0;
-  type = GOOFY_SIMPLE_NODE;
+  this->name  = name;
+  mouseDragStart = ofVec2f(0,0);
+  dragOffset = ofVec2f(0,0);
+  isDragging  = false;
+  parent      = NULL;
+  pos.x       = 0;
+  pos.y       = 0;
+  type        = GOOFY_SIMPLE_NODE;
 }
 
 void GoofyNode::update()
 {
-  
 }
 
 void GoofyNode::draw()
 {
+  ofPushMatrix();
+  ofTranslate(pos - dragOffset);
+  drawBackground();
+  drawAfterBackground();
+  drawNodes();
+  ofPopMatrix();
+}
 
+void GoofyNode::drawAfterBackground()
+{
+  
 }
 
 void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos)
@@ -217,7 +266,6 @@ void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f p
   newPin->setSize(10,10);
   newPin->setPos(pos);
   newPin->pinId = idFunction;
-  newPin->enableMouseEvents();
   newPin->parent = this;
   this->addNode(newPin, this->mainStage);
 }

@@ -22,20 +22,13 @@ void GoofyNodeLayer::setup(string name)
 {
   GoofyNode::setup(name);
   type = GOOFY_LAYER;
+  setSize(200,100);
+  enableMouseEvents();
 }
 
 void GoofyNodeLayer::update()
 {
   
-}
-
-void GoofyNodeLayer::draw()
-{
-  ofPushMatrix();
-  ofTranslate(pos);
-  drawBackground();
-  drawNodes();
-  ofPopMatrix();
 }
 
 void GoofyNodeLayer::onPress(int x, int y, int button)
@@ -49,8 +42,6 @@ void GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage
   GoofyNodeLayer* node = new GoofyNodeLayer();
   node->setup("Layer");
   node->setPos(ofVec2f(ofRandom(0,600),ofRandom(0,600)));
-  node->setSize(200,100);
-  node->enableMouseEvents();
   node->interactiveLayer = layer;
   GoofyNode::addNode(node, mainStage);
   node->createPins();
@@ -72,11 +63,6 @@ void GoofyNodeLayer::createPins()
       createSinglePin(a, GOOFY_NODE_PIN_INPUT, ofVec2f(15*a, -10));
     }
   }
-}
-
-void GoofyNodeLayer::drawBackground()
-{
-  GoofyNode::drawBackground();
 }
 
 void GoofyNodeLayer::mouseDragged(int x, int y, int button)

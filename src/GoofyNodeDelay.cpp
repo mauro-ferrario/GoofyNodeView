@@ -14,7 +14,6 @@ GoofyNodeDelay::GoofyNodeDelay()
   timerActive = false;
 }
 
-
 GoofyNodeDelay::GoofyNodeDelay(GoofyNodeStage* mainStage)
 {
   this->mainStage = mainStage;
@@ -29,8 +28,9 @@ GoofyNodeDelay::~GoofyNodeDelay()
 void GoofyNodeDelay::setup(string name)
 {
   GoofyNode::setup(name);
-  setSize(100,30);
   type = GOOFY_DELAY;
+  enableMouseEvents();
+  setSize(100,30);
   createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((100-10)*.5,30));
   createSinglePin(0, GOOFY_NODE_PIN_INPUT, ofVec2f((100-10)*.5,-10));
 }
@@ -47,28 +47,25 @@ void GoofyNodeDelay::checkTimer()
    if(timer.getAppTimeMillis() >= endTimer)
    {
      timerEnded();
-     timerActive = false;
    }
  }
 }
 
 void GoofyNodeDelay::startTimer()
 {
-  timeStartTimer = timer.getAppTimeMillis();
-  endTimer = timeStartTimer +  1 * 1000;
-  timerActive = true;
+  timeStartTimer  = timer.getAppTimeMillis();
+  endTimer        = timeStartTimer +  1 * 1000;
+  timerActive     = true;
 }
  
 void GoofyNodeDelay::timerEnded()
 {
+  timerActive     = false;
   activeOutputs();
 }
 
-void GoofyNodeDelay::draw()
+void GoofyNodeDelay::drawAfterBackground()
 {
-  ofPushMatrix();
-  ofTranslate(pos);
-  drawBackground();
   ofPushStyle();
   ofSetColor(255,255,255);
   if(timerActive)
@@ -80,10 +77,6 @@ void GoofyNodeDelay::draw()
     ofRect(5, 5, width - 10, height - 10);
   }
   ofPopStyle();
-  ofPushStyle();
-  drawNodes();
-  ofPopStyle();
-  ofPopMatrix();
 }
 
 

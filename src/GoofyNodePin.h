@@ -19,7 +19,7 @@ public:
                       ~GoofyNodePin();
   virtual void        setup(string name);
   virtual void        update();
-  virtual void        draw();
+  virtual void        drawAfterBackground();
   void                drawHole();
   GoofyNodePinMode    pinMode;
   int                 pinId;
