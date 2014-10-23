@@ -70,7 +70,6 @@ void GoofyNode::_mousePressed(ofMouseEventArgs &e)
   {
     if(!isMousePressed)
     {
-      cout << "Mouse pressed" << endl;
       if(type != GOOFY_PIN  && type != GOOFY_STAGE)
       {
         mouseDragStart = ofVec2f(x, y);
@@ -82,8 +81,6 @@ void GoofyNode::_mousePressed(ofMouseEventArgs &e)
   else
   {
     onPressOut(x, y, button);
-    //cout << "Mouse pressed out" << name << endl;
-    //onPressOutside(x, y, button);
   }
 }
 
@@ -103,25 +100,20 @@ void GoofyNode::_mouseReleased(ofMouseEventArgs &e)
   {
     if(type != GOOFY_PIN  && type != GOOFY_STAGE)
     {
-      cout << "Dentro" << endl;
       pos -= dragOffset;
       dragOffset = ofVec2f(0,0);
     }
-    isDragging = false;
   }
-  isDragging  = false;
   
   if(hitTest(x, y))
   {
     onReleaseIn(x, y, button);
-   // onRelease(x, y, button);
   }
   else
   {
-   // if(isMousePressed(button)) onReleaseOutside(x, y, button);
   }
   isMousePressed = false;
- // mouseReleased(x, y, button);
+  isDragging = false;
 }
 
 void GoofyNode::_mouseMoved(ofMouseEventArgs &e)
@@ -133,7 +125,6 @@ void GoofyNode::_mouseMoved(ofMouseEventArgs &e)
   if(hitTest(x, y))
   {
     isMouseOver = true;
-    // onRelease(x, y, button);
   }
   else
   {
@@ -146,49 +137,21 @@ bool GoofyNode::_mouseDragged(ofMouseEventArgs &e)
   int x = e.x;
   int y = e.y;
   int button = e.button;
-  
-  
-  //mouseDragStart = ofVec2f(0,0);
+
   if(isDragging)
   {
     if(type != GOOFY_PIN && type != GOOFY_STAGE)
     {
-      cout << "qui" << endl;
       dragOffset = mouseDragStart - ofVec2f(x,y);
     }
   }
   
   if(hitTest(x, y))
   {
-    isMouseOver = true;
-    isDragging  = true;
-    // onRelease(x, y, button);
-  }
-  else
-  {
-    isMouseOver = false;
+    if(isMousePressed)
+      isDragging  = true;
   }
   
-//  if(hitTest(x, y)) {						// if mouse is over the object
-//    if(!_isMouseOver) {						// if wasn't over previous frame
-//      //				onPress(x, y);							// call onPress - maybe not
-//      _isMouseOver = true;						// update flag
-//      onRollOver(x, y);						// call onRollOver
-//    }
-//    onDragOver(x, y, button);				// and trigger onDragOver
-//  } else {
-//    if(_isMouseOver) {					// if mouse is not over the object, but the flag is true (From previous frame)
-//      onRollOut();							// call onRollOut
-//      _isMouseOver = false;						// update flag
-//    }
-//    if(isMousePressed(button)) {
-//      onDragOutside(x, y, button);
-//    }
-//    _isMousePressed[button] = false;
-//  }
-//  
-//  _stateChangeTimestampMillis = ofGetElapsedTimeMillis();
-//  
   mouseDragged(x, y, button);
 
   if(isDragging && type == GOOFY_PIN)
