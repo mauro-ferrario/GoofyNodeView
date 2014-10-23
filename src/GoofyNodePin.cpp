@@ -34,6 +34,7 @@ void GoofyNodePin::update()
 }
 void GoofyNodePin::drawAfterBackground()
 {
+  //cout << "Drag over pin" << isMouseOver <<  endl;
   if(isMouseOver)
     drawHole();
 }
@@ -69,7 +70,7 @@ void GoofyNodePin::mouseDragged(int x, int y, int button)
 {
   if(isDragging)
   {
-    cout << "Drag pin mouse over" << endl;
+    //cout << "Drag pin mouse over" << endl;
     if(mainStage->lineConnection == NULL)
       mainStage->addPinConnection(this);
   }
