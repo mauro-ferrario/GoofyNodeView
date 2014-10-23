@@ -34,7 +34,6 @@ void GoofyNodeStage::drawBackground()
 
 void GoofyNodeStage::addNode(GoofyBridgeToNode* layer)
 {
-  cout << "Add layer to Stage " << this << endl;
   GoofyNodeLayer::addNode(layer, this);
 }
 

@@ -11,7 +11,6 @@
 
 GoofyNodeDelay::GoofyNodeDelay()
 {
-  // timerToCheck = 0;
   timerActive = false;
 }
 

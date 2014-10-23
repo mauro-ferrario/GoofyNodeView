@@ -20,7 +20,6 @@ GoofyNodeLayer::~GoofyNodeLayer()
 
 void GoofyNodeLayer::setup(string name)
 {
-  cout << "Setup layer" << endl;
   GoofyNode::setup(name);
   type = GOOFY_LAYER;
 }

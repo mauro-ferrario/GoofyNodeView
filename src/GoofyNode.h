@@ -26,8 +26,6 @@ enum GoofyNodeGuiTypes
   GOOFY_BUTTON
 };
 
-
-
 enum GoofyNodePinMode
 {
   GOOFY_NODE_PIN_INPUT,
@@ -49,21 +47,15 @@ public:
   float               getY();
   GoofyNodeGuiTypes   type;
   void                setPos(ofVec2f newPos);
-//  virtual void        addNodeOutConnection(GoofyNode* node);
   virtual void        update();
   virtual void        draw();
   virtual void        drawBackground();
   virtual void        createSinglePin(int idFunction,  GoofyNodePinMode mode,  ofVec2f pos);
   virtual void        drawNodes();
   vector<GoofyNode*>  nodes;
-  
   GoofyNode*          parent;
-  
   vector<GoofyNode*>  nodeOutConnections;
   vector<int>         nodeOutConnectionsFunctionId;
-//  vector<float>       nodeOutConnectionsParams;
-  
-  // void                playMovie();
   GoofyNodeStage*      mainStage;
   void                setMainStage(GoofyNodeStage* mainStage);
   GoofyBridgeToNode*  interactiveLayer;
@@ -76,9 +68,9 @@ protected:
   virtual void        onReleaseIn(int x, int y, int button);
   float               width;
   float               height;
-  ofVec2f             pos;
   bool                isMousePressed;
   bool                isMouseOver;
+  ofVec2f             pos;
   
 private:
   void                _mousePressed(ofMouseEventArgs &e);
@@ -89,7 +81,5 @@ private:
   
   
 };
-
-
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNode__) */

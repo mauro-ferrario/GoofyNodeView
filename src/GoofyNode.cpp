@@ -219,7 +219,6 @@ void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f p
   newPin->pinId = idFunction;
   newPin->enableMouseEvents();
   newPin->parent = this;
-  //nodes.push_back(newPin);
   this->addNode(newPin, this->mainStage);
 }
 
@@ -230,19 +229,6 @@ void GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage)
   node->setMainStage(mainStage);
   nodes.push_back(node);
 }
-
-/*
-void GoofyNode::addNodeOutConnection(GoofyNode* node)
-{
-  if(node->parent != parent)
-  {
-    cout << "Error!, not in the same level" << endl;
-    return;
-  }
-  nodeOutConnections.push_back(node);
-}
-
-*/
 
 void GoofyNode::drawBackground()
 {
