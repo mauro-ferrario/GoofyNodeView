@@ -21,8 +21,10 @@ GoofyNodeStage::~GoofyNodeStage()
 void GoofyNodeStage::setup(string name)
 {
   GoofyNode::setup(name);
-  checkRelease = false;
   type = GOOFY_STAGE;
+  checkRelease = false;
+  countDrag = 0;
+  enableMouseEvents();
 }
 
 void GoofyNodeStage::drawBackground()
@@ -48,7 +50,7 @@ void GoofyNodeStage::addPinConnection(GoofyNodePin* pin)
 {
   if(lineConnection == NULL)
   {
-    lineConnection = new LineConnection(pin);
+    lineConnection = new GoofyNodeLineConnection(pin);
     lineConnection->endPoint = lineConnection->startPoint;
     lineConnection->editable = true;
   }
@@ -66,8 +68,6 @@ void GoofyNodeStage::addPinConnection(GoofyNodePin* pin)
     }
     lineConnection->editable = true;
     lineConnection->secondPin = pin;
-    lineConnection->endPoint = ofVec2f(pin->getX()+5, pin->getY()+5);
-    connections.push_back(lineConnection);
     
     if(lineConnection->firstPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
     {
@@ -79,6 +79,9 @@ void GoofyNodeStage::addPinConnection(GoofyNodePin* pin)
       lineConnection->secondPin->parent->nodeOutConnections.push_back(lineConnection->firstPin->parent);
       lineConnection->secondPin->parent->nodeOutConnectionsFunctionId.push_back(lineConnection->firstPin->pinId);
     }
+    
+    
+    connections.push_back(lineConnection);
     
     lineConnection = NULL;
   }
