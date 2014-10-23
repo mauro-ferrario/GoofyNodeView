@@ -11,6 +11,7 @@
 
 #include "GoofyNodeLayer.h"
 #include "GoofyNodePin.h"
+#include "ofxMSATimer.h"
 
 class GoofyNodePin;
 
@@ -55,6 +56,11 @@ public:
   virtual void        addNode(GoofyNode* node);
   virtual void        mouseDragged(int x, int y, int button);
   void                removeTempLineConnection();
+  virtual void        onReleaseIn(int x, int y, int button);
+  bool                checkLineConnectionPin();
+  ofxMSATimer         timer;
+  float               timerStart;
+  bool                checkRelease;
   
   
   void                addPinConnection(GoofyNodePin* pin);

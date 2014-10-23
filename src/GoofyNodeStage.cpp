@@ -21,6 +21,7 @@ GoofyNodeStage::~GoofyNodeStage()
 void GoofyNodeStage::setup(string name)
 {
   GoofyNode::setup(name);
+  checkRelease = false;
   type = GOOFY_STAGE;
 }
 
@@ -91,6 +92,25 @@ void GoofyNodeStage::removeTempLineConnection()
 
 void GoofyNodeStage::update()
 {
+  if(checkRelease)
+  {
+    if(timer.getElapsedMillis() > timerStart + 1)
+    {
+      if(checkLineConnectionPin())
+        removeTempLineConnection();
+      checkRelease = false;
+    }
+  }
+}
+
+bool GoofyNodeStage::checkLineConnectionPin()
+{
+  if(lineConnection != NULL)
+  {
+    if(lineConnection->secondPin == NULL)
+      return true;
+  }
+  return false;
 }
 
 void GoofyNodeStage::mouseDragged(int x, int y, int button)
@@ -112,5 +132,14 @@ void GoofyNodeStage::draw()
   for(int a = 0; a < connections.size(); a++)
   {
     connections[a]->draw();
+  }
+}
+
+void GoofyNodeStage::onReleaseIn(int x, int y, int button)
+{
+  if(lineConnection != NULL)
+  {
+    timerStart = timer.getElapsedMillis();
+    checkRelease = true;
   }
 }
