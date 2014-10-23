@@ -26,8 +26,7 @@ public:
   void            update();
   
 protected:
-  void            onPressIn(int x, int y, int  button);
-  void            onPressOut(int x, int y, int  button);
+  void            onReleaseIn(int x, int y, int  button);
   
 };
 

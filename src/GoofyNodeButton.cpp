@@ -45,11 +45,8 @@ void GoofyNodeButton::drawAfterBackground()
   ofCircle(center, center, radius);
 }
 
-void GoofyNodeButton::onPressIn(int x, int y, int button)
+void GoofyNodeButton::onReleaseIn(int x, int y, int button)
 {
-  activeOutputs();
-}
-
-void GoofyNodeButton::onPressOut(int x, int y, int button)
-{
+  if(!isDragging)
+    activeOutputs();
 }
