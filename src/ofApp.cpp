@@ -9,7 +9,12 @@ void ofApp::setup(){
   nodeView = new GoofyNodeStage();
   nodeView->setup("Main");
   nodeView->setSize(ofGetWindowWidth(), ofGetWindowHeight());
-  nodeView->enableMouseEvents();
+  
+  
+  delay1 = new GoofyNodeDelay(nodeView);
+  delay1->setup("Delay 1");
+  delay1->setPos(ofVec2f(40,140));
+  nodeView->addNode(delay1);
   
   fake1 = new FakeClass();
   fake1->setup();
@@ -20,10 +25,6 @@ void ofApp::setup(){
   button->setPos(ofVec2f(40,40));
   nodeView->addNode(button);
   
-  delay1 = new GoofyNodeDelay(nodeView);
-  delay1->setup("Delay 1");
-  delay1->setPos(ofVec2f(40,140));
-  nodeView->addNode(delay1);
   
   delay2 = new GoofyNodeDelay(nodeView);
   delay2->setup("Delay 2");
