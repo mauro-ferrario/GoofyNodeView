@@ -77,13 +77,12 @@ void GoofyNodeLineConnection::_keyReleased(ofKeyEventArgs &e)
        // Rimuovo da pin2
      }
      connection = NULL;
-     // lancia il listener per rimuovere questo
    }
 }
 
 void GoofyNodeLineConnection::_mouseReleased(ofMouseEventArgs &e)
 {
-  if(secondPin == NULL)
+  if(secondPin == NULL || firstPin == NULL || editable)
     return;
   int x = e.x;
   int y = e.y;
