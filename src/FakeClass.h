@@ -11,18 +11,14 @@
 #define __GoofyNodeTest__FakeClass__
 
 #include "ofMain.h"
-#include "GoofyBridgeToNode.h"
 
-class FakeClass : public GoofyBridgeToNode
+class FakeClass
 {
 public:
-                FakeClass();
-  virtual void  setup();
-  void          method1();
-  void          method2(int val);
-  void          method3(int val, int val2);
-  void          defineNodeMethods();
-  void          activeFunction(int id);
+  FakeClass(){}
+  void          method1(){  cout << "Method 1" << endl; }
+  void          method2(int val){  cout << "Method 2" << endl; }
+  void          method3(int val, int val2){  cout << "Method 3" << endl; }
 };
 
 #endif /* defined(__GoofyNodeTest__FakeClass__) */
