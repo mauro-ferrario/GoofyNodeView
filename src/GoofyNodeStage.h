@@ -30,11 +30,14 @@ public:
   virtual void        mouseDragged(int x, int y, int button);
   void                removeTempLineConnection();
   virtual void        onReleaseIn(int x, int y, int button);
+  void                createNewLineConnection(GoofyNodePin* pin);
+  void                closeLineConnection(GoofyNodePin* pin);
   bool                checkLineConnectionPin();
   ofxMSATimer         timer;
   float               timerStart;
   bool                checkRelease;
   int                 countDrag;
+  bool                checkMatch(GoofyNodePin* pin1, GoofyNodePin* pin2);
   
   
   void                addPinConnection(GoofyNodePin* pin);

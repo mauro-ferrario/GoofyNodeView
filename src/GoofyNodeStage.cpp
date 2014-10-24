@@ -11,6 +11,7 @@
 GoofyNodeStage::GoofyNodeStage()
 {
   lineConnection = NULL;
+  logVerboseModule = "GoofyNodeStage";
 }
 
 GoofyNodeStage::~GoofyNodeStage()
@@ -45,54 +46,97 @@ void GoofyNodeStage::addNode(GoofyNode* node)
   GoofyNodeLayer::addNode(node, this);
 }
 
+void GoofyNodeStage::createNewLineConnection(GoofyNodePin* pin)
+{
+  lineConnection = new GoofyNodeLineConnection(pin);
+  lineConnection->endPoint = lineConnection->startPoint;
+  lineConnection->editable = true;
+  pin = NULL;
+}
 
 void GoofyNodeStage::addPinConnection(GoofyNodePin* pin)
 {
   if(lineConnection == NULL)
   {
-    lineConnection = new GoofyNodeLineConnection(pin);
-    lineConnection->endPoint = lineConnection->startPoint;
-    lineConnection->editable = true;
+    ofLogVerbose(logVerboseModule, "addPinConnection: first point");
+    createNewLineConnection(pin);
   }
   else
   {
-    if(lineConnection->firstPin->parent == pin->parent)
+    if(!checkMatch(lineConnection->firstPin, pin))
     {
       removeTempLineConnection();
       return;
     }
-    if(lineConnection->firstPin->pinMode == pin->pinMode)
+    else
     {
-      removeTempLineConnection();
-      return;
+      ofLogVerbose(logVerboseModule, "addPinConnection: second point");
+      closeLineConnection(pin);
     }
-    lineConnection->editable = true;
-    lineConnection->secondPin = pin;
-    
-    GoofyNodeOutConnection* newOutConnection;
-    
-    if(lineConnection->firstPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
-    {
-      newOutConnection = new GoofyNodeOutConnection(lineConnection->secondPin->parent, lineConnection->secondPin->pinId);
-      lineConnection->firstPin->parent->nodeOutConnections.push_back(newOutConnection);
-    }
-    if(lineConnection->secondPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
-    {
-      newOutConnection = new GoofyNodeOutConnection(lineConnection->firstPin->parent, lineConnection->firstPin->pinId);
-      lineConnection->secondPin->parent->nodeOutConnections.push_back(newOutConnection);
-    }
-    
-    lineConnection->connection = newOutConnection;
-    newOutConnection = NULL;
-    
-    connections.push_back(lineConnection);
-    
-    lineConnection = NULL;
+    pin = NULL;
   }
+}
+
+void GoofyNodeStage::closeLineConnection(GoofyNodePin* pin)
+{
+  lineConnection->editable = false;
+  lineConnection->secondPin = pin;
+  pin = NULL;
+  GoofyNodeOutConnection* newOutConnection;
+  if(lineConnection->firstPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
+  {
+    newOutConnection = new GoofyNodeOutConnection(lineConnection->secondPin->parent, lineConnection->secondPin->pinId);
+    lineConnection->firstPin->parent->nodeOutConnections.push_back(newOutConnection);
+  }
+  if(lineConnection->secondPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
+  {
+    newOutConnection = new GoofyNodeOutConnection(lineConnection->firstPin->parent, lineConnection->firstPin->pinId);
+    lineConnection->secondPin->parent->nodeOutConnections.push_back(newOutConnection);
+  }
+  lineConnection->connection = newOutConnection;
+  newOutConnection = NULL;
+  connections.push_back(lineConnection);
+  lineConnection = NULL;
+}
+
+
+bool GoofyNodeStage::checkMatch(GoofyNodePin* pin1, GoofyNodePin* pin2)
+{
+  int passed = 0;
+  if(pin1->parent == pin2->parent)
+  {
+    ofLogVerbose(logVerboseModule, "same pin parent");
+    passed++;
+  }
+  if(pin1->pinMode == pin2->pinMode)
+  {
+    ofLogVerbose(logVerboseModule, "same pin mode");
+    passed++;
+  }
+  if(pin1->pinMode == GOOFY_NODE_PIN_OUTPUT)
+  {
+    bool tempPassed = !pin1->parent->checkSameConnection(pin2->parent, pin2->pinId);
+    if(!tempPassed)
+      ofLogVerbose(logVerboseModule, "same connection already done");
+    if(!tempPassed)
+      passed++;
+  }
+  else
+  {
+    bool tempPassed = !pin2->parent->checkSameConnection(pin1->parent, pin1->pinId);
+    if(!tempPassed)
+      ofLogVerbose(logVerboseModule, "same connection already done");
+    if(!tempPassed)
+      passed++;
+  }
+  pin1 = NULL;
+  pin2 = NULL;  
+  return passed == 0 ? true : false;
 }
 
 void GoofyNodeStage::removeTempLineConnection()
 {
+  ofLogVerbose(logVerboseModule, "delete lineConnection");
   delete lineConnection;
   lineConnection = NULL;
 }
