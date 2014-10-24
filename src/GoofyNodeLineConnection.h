@@ -16,6 +16,7 @@ class GoofyNodeLineConnection
 {
 public:
                             GoofyNodeLineConnection(GoofyNodePin* pin);
+                            ~GoofyNodeLineConnection();
   void                      draw();
   ofVec2f                   startPoint;
   ofVec2f                   endPoint;

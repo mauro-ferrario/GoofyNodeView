@@ -22,6 +22,14 @@ GoofyNodeLineConnection::GoofyNodeLineConnection(GoofyNodePin* pin)
   startPoint  = ofVec2f(pin->getX() + 5, pin->getY() + 5);
   enableMouseEvents();
 }
+
+GoofyNodeLineConnection::~GoofyNodeLineConnection()
+{
+  firstPin = NULL;
+  secondPin = NULL;
+  connection = NULL;
+  disableMouseEvents();
+}
   
 void GoofyNodeLineConnection::draw()
 {
