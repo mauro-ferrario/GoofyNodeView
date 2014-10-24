@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "FakeClass.h"
+#include "FakeClassForNode.h"
 #include "GoofyNodeStage.h"
 #include "GoofyNodeButton.h"
 #include "GoofyNodeDelay.h"
@@ -23,7 +23,7 @@ public:
   void dragEvent(ofDragInfo dragInfo);
   void gotMessage(ofMessage msg);
 
-  FakeClass* fake1;
+  FakeClassForNode* fake1;
   GoofyNodeStage* nodeView;
   GoofyNodeButton* button;
   GoofyNodeDelay* delay1;

@@ -19,7 +19,7 @@ void ofApp::setup(){
   delay1->setPos(ofVec2f(40,140));
   nodeView->addNode(delay1);
   
-  fake1 = new FakeClass();
+  fake1 = new FakeClassForNode();
   fake1->setup();
   nodeView->addNode(fake1);
   
