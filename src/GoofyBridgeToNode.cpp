@@ -30,3 +30,8 @@ void GoofyBridgeToNode::activeFunction(int id)
 void GoofyBridgeToNode::defineNodeMethods()
 {
 }
+
+void GoofyBridgeToNode::addMethod(string methodName)
+{
+  functionNames.push_back(methodName);
+}

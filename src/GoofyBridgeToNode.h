@@ -20,6 +20,7 @@ public:
   vector<string>                functionNames;
   virtual void                  activeFunction(int id);
   virtual void                  defineNodeMethods();
+  void                          addMethod(string methodName);
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyBridgeToNode__) */
