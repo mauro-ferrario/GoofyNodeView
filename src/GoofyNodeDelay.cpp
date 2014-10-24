@@ -27,8 +27,9 @@ GoofyNodeDelay::~GoofyNodeDelay()
 
 void GoofyNodeDelay::setup(string name)
 {
+  secondsDelay  = 0;
   GoofyNode::setup(name);
-  type = GOOFY_DELAY;
+  type          = GOOFY_DELAY;
   enableMouseEvents();
   setSize(100,30);
   createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((100-10)*.5,30));
@@ -51,10 +52,20 @@ void GoofyNodeDelay::checkTimer()
  }
 }
 
+void GoofyNodeDelay::setDelay(float seconds)
+{
+  if(seconds < 0)
+  {
+    ofLogWarning("GoofyNodeDelay::setDelay", "Delay must be positive or equal to 0!");
+    return;
+  }
+  secondsDelay = seconds;
+}
+
 void GoofyNodeDelay::startTimer()
 {
   timeStartTimer  = timer.getAppTimeMillis();
-  endTimer        = timeStartTimer +  1 * 1000;
+  endTimer        = timeStartTimer +  secondsDelay * 1000;
   timerActive     = true;
 }
  

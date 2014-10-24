@@ -24,6 +24,7 @@ public:
   void            setup(string name);
   void            update();
   void            activeFunction(int id);
+  void            setDelay(float seconds);
 
 private:
   void            drawAfterBackground();
@@ -33,6 +34,7 @@ private:
   bool            timerActive;
   float           timeStartTimer;
   float           endTimer;
+  float           secondsDelay;
   ofxMSATimer     timer;
 };
 
