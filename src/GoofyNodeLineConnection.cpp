@@ -54,7 +54,7 @@ void GoofyNodeLineConnection::enableMouseEvents()
 void GoofyNodeLineConnection::disableMouseEvents()
 {
   ofRemoveListener(ofEvents().mouseReleased, this, &GoofyNodeLineConnection::_mouseReleased);
-  
+  ofRemoveListener(ofEvents().keyReleased, this, &GoofyNodeLineConnection::_keyReleased);
 }
 
 
