@@ -298,6 +298,29 @@ void GoofyNode::removeConnection(GoofyNodeOutConnection* connection)
   connection = NULL;
 }
 
+bool GoofyNode::checkSameConnection(GoofyNode* node, int pinID)
+{
+  vector<GoofyNodeOutConnection*>::iterator it = nodeOutConnections.begin();
+  cout << "Check" << nodeOutConnections.size()<< endl;
+  
+  for(int a = 0; a < nodeOutConnections.size(); a++)
+  {
+    if(nodeOutConnections[a]->node == node && (nodeOutConnections[a]->pinID == pinID))
+      return true;
+  }
+  
+//  if(nodeOutConnections.size() > 0)
+//  {
+//    while(it != nodeOutConnections.end());
+//    {
+//      //if((*it)->node == node && ((*it)->pinID == pinID))
+//        //return true;
+//      it++;
+//    }
+//  }
+  return false;
+}
+
 void GoofyNode::onPressIn(int x, int y, int button)
 {
   

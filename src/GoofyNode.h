@@ -61,7 +61,8 @@ public:
   GoofyNode*          parent;
   vector<GoofyNodeOutConnection*>  nodeOutConnections;
   static bool                removeEqualElement(GoofyNodeOutConnection* connection1, GoofyNodeOutConnection* connection2);
-  GoofyNodeStage*      mainStage;
+  bool                checkSameConnection(GoofyNode* node, int pinID);
+  GoofyNodeStage*     mainStage;
   void                setMainStage(GoofyNodeStage* mainStage);
   GoofyBridgeToNode*  interactiveLayer;
   void                activeOutputs();
