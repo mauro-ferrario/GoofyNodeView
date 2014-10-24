@@ -28,12 +28,16 @@ GoofyNodeDelay::~GoofyNodeDelay()
 void GoofyNodeDelay::setup(string name)
 {
   secondsDelay  = 0;
+  isPause       = false;
+  timeStartPause = 0;
   GoofyNode::setup(name);
   type          = GOOFY_DELAY;
   enableMouseEvents();
   setSize(100,30);
   createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((100-10)*.5,30));
   createSinglePin(0, GOOFY_NODE_PIN_INPUT, ofVec2f((100-10)*.5,-10));
+  createSinglePin(1, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 0));
+  createSinglePin(2, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 20));
   initTextTimer();
 }
 
@@ -71,18 +75,52 @@ void GoofyNodeDelay::setDelay(float seconds)
 
 void GoofyNodeDelay::startTimer()
 {
-  //textTimer.disable();
-  timeStartTimer  = timer.getAppTimeMillis();
-  endTimer        = timeStartTimer +  secondsDelay * 1000;
-  timerActive     = true;
+  if(isPause)
+    pauseTimer();
+  else
+  {
+    secondsDelay    = ofToFloat(textTimer.text);
+    textTimer.disable();
+    timeStartTimer  = timer.getAppTimeMillis();
+    endTimer        = timeStartTimer +  secondsDelay * 1000;
+    timerActive     = true;
+  }
 }
+
+void GoofyNodeDelay::stopTimer()
+{
+  resetTimer();
+}
+
  
 void GoofyNodeDelay::timerEnded()
 {
+  resetTimer();
+  activeOutputs();
+}
+
+void GoofyNodeDelay::pauseTimer()
+{
+  isPause = !isPause;
+  if(isPause)
+  {
+    timerActive     = false;
+    timeStartPause = timer.getAppTimeMillis();
+  }
+  else
+  {
+    timerActive = true;
+    float timerOffset = timer.getAppTimeMillis() - timeStartPause;
+    endTimer        += timerOffset;
+  }
+}
+
+void GoofyNodeDelay::resetTimer()
+{
   timerActive     = false;
+  isPause         = false;
   textTimer.text = ofToString(secondsDelay);
   textTimer.enable();
-  activeOutputs();
 }
 
 void GoofyNodeDelay::draw()
@@ -102,6 +140,10 @@ void GoofyNodeDelay::drawAfterBackground()
   {
     ofRect(5, 5, ofMap(timer.getAppTimeMillis(), timeStartTimer, endTimer, 0, width - 10, true), height - 10);
   }
+  else if(isPause)
+  {
+    ofRect(5, 5, ofMap(timeStartPause, timeStartTimer, endTimer, 0, width - 10, true), height - 10);
+  }
   else
   {
     ofRect(5, 5, width - 10, height - 10);
@@ -116,9 +158,19 @@ void GoofyNodeDelay::activeFunction(int id)
   {
     case 0:
       {
-        secondsDelay = ofToFloat(textTimer.text);
         startTimer();
+        break;
       }
+    case 1:
+    {
+      stopTimer();
+      break;
+    }
+    case 2:
+    {
+      pauseTimer();
+      break;
+    }
   }
 }
 

@@ -33,6 +33,9 @@ private:
   void              timerEnded();
   void              checkTimer();
   void              startTimer();
+  void              stopTimer();
+  void              pauseTimer();
+  void              resetTimer();
   void              initTextTimer();
   bool              timerActive;
   float             timeStartTimer;
@@ -40,6 +43,8 @@ private:
   float             secondsDelay;
   ofxMSATimer       timer;
   ofxTextInputField textTimer;
+  bool              isPause;
+  float             timeStartPause;
 };
 
 #endif /* defined(__GoofyNodeTest__GoofyNodeDelay__) */
