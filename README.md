@@ -8,6 +8,7 @@ A basic node interface for openFrameworks.
 ###Addons dependencies
 
 - ofxMSATimer
+- ofxTextInputField
 
 ###How to use
 

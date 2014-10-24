@@ -34,10 +34,17 @@ void GoofyNodeDelay::setup(string name)
   setSize(100,30);
   createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((100-10)*.5,30));
   createSinglePin(0, GOOFY_NODE_PIN_INPUT, ofVec2f((100-10)*.5,-10));
+  initTextTimer();
 }
 
 void GoofyNodeDelay::update()
 {
+  if(timerActive)
+  {
+    textTimer.text = ofToString((endTimer - timer.getAppTimeMillis())/1000);
+  }
+  textTimer.bounds.x = getX() + 20 - dragOffset.x;
+  textTimer.bounds.y = getY() + 7 - dragOffset.y;
   checkTimer();
 }
 
@@ -64,6 +71,7 @@ void GoofyNodeDelay::setDelay(float seconds)
 
 void GoofyNodeDelay::startTimer()
 {
+  //textTimer.disable();
   timeStartTimer  = timer.getAppTimeMillis();
   endTimer        = timeStartTimer +  secondsDelay * 1000;
   timerActive     = true;
@@ -72,7 +80,18 @@ void GoofyNodeDelay::startTimer()
 void GoofyNodeDelay::timerEnded()
 {
   timerActive     = false;
+  textTimer.text = ofToString(secondsDelay);
+  textTimer.enable();
   activeOutputs();
+}
+
+void GoofyNodeDelay::draw()
+{
+  GoofyNode::draw();
+  ofPushStyle();
+  ofSetColor(0);
+  textTimer.draw();
+  ofPopStyle();
 }
 
 void GoofyNodeDelay::drawAfterBackground()
@@ -97,7 +116,16 @@ void GoofyNodeDelay::activeFunction(int id)
   {
     case 0:
       {
+        secondsDelay = ofToFloat(textTimer.text);
         startTimer();
       }
   }
+}
+
+void GoofyNodeDelay::initTextTimer()
+{
+  textTimer.setup();
+  textTimer.text = ofToString(secondsDelay);
+  textTimer.bounds.x = getX();
+  textTimer.bounds.y = getY();
 }

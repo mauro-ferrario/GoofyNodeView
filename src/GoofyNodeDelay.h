@@ -11,31 +11,35 @@
 
 #include "GoofyNode.h"
 #include "ofxMSATimer.h"
+#include "ofxTextInputField.h"
 
 class GoofyNodeStage;
 
 class GoofyNodeDelay: public GoofyNode
 {
 public:
-                  GoofyNodeDelay();
-                  GoofyNodeDelay(GoofyNodeStage* mainStage);
-                  ~GoofyNodeDelay();
-  void            addNodeOutConnection(GoofyNode* node);
-  void            setup(string name);
-  void            update();
-  void            activeFunction(int id);
-  void            setDelay(float seconds);
+                    GoofyNodeDelay();
+                    GoofyNodeDelay(GoofyNodeStage* mainStage);
+                    ~GoofyNodeDelay();
+  void              addNodeOutConnection(GoofyNode* node);
+  void              setup(string name);
+  void              update();
+  void              draw();
+  void              activeFunction(int id);
+  void              setDelay(float seconds);
 
 private:
-  void            drawAfterBackground();
-  void            timerEnded();
-  void            checkTimer();
-  void            startTimer();
-  bool            timerActive;
-  float           timeStartTimer;
-  float           endTimer;
-  float           secondsDelay;
-  ofxMSATimer     timer;
+  void              drawAfterBackground();
+  void              timerEnded();
+  void              checkTimer();
+  void              startTimer();
+  void              initTextTimer();
+  bool              timerActive;
+  float             timeStartTimer;
+  float             endTimer;
+  float             secondsDelay;
+  ofxMSATimer       timer;
+  ofxTextInputField textTimer;
 };
 
 #endif /* defined(__GoofyNodeTest__GoofyNodeDelay__) */
