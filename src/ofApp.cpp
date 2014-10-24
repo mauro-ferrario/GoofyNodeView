@@ -2,6 +2,9 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+  
+  ofSetLogLevel(OF_LOG_VERBOSE);
+  
   ofSetVerticalSync(false);
   ofSetFrameRate(120);
   ofBackground(0);

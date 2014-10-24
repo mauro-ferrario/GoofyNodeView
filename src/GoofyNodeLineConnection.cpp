@@ -16,7 +16,9 @@ GoofyNodeLineConnection::GoofyNodeLineConnection(GoofyNodePin* pin)
   editable  = false;
   secondPin = NULL;
   selected  = false;
+  toRemove  = false;
   firstPin  = pin;
+  logVerboseModule = "GoofyNodeLineConnection::_keyReleased";
   startPoint  = ofVec2f(pin->getX() + 5, pin->getY() + 5);
   enableMouseEvents();
 }
@@ -38,11 +40,37 @@ void GoofyNodeLineConnection::draw()
 void GoofyNodeLineConnection::enableMouseEvents()
 {
   ofAddListener(ofEvents().mouseReleased, this, &GoofyNodeLineConnection::_mouseReleased);
+  ofAddListener(ofEvents().keyReleased, this, &GoofyNodeLineConnection::_keyReleased);
 }
 
 void GoofyNodeLineConnection::disableMouseEvents()
 {
   ofRemoveListener(ofEvents().mouseReleased, this, &GoofyNodeLineConnection::_mouseReleased);
+  
+}
+
+
+void GoofyNodeLineConnection::_keyReleased(ofKeyEventArgs &e)
+{
+   if(e.key == 127 && selected)
+   {
+     toRemove = true;
+     ofLogVerbose(logVerboseModule, "Remove line");
+     if(firstPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
+     {
+       ofLogVerbose(logVerboseModule, "Remove from first pin");
+       firstPin->parent->removeConnection(connection);
+       // Rimuovo da pin1
+     }
+     else
+     {
+       ofLogVerbose(logVerboseModule, "Remove from second pin");
+       secondPin->parent->removeConnection(connection);
+       // Rimuovo da pin2
+     }
+     connection = NULL;
+     // lancia il listener per rimuovere questo
+   }
 }
 
 void GoofyNodeLineConnection::_mouseReleased(ofMouseEventArgs &e)

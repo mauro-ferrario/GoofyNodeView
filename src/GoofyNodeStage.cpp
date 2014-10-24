@@ -69,17 +69,21 @@ void GoofyNodeStage::addPinConnection(GoofyNodePin* pin)
     lineConnection->editable = true;
     lineConnection->secondPin = pin;
     
+    GoofyNodeOutConnection* newOutConnection;
+    
     if(lineConnection->firstPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
     {
-      lineConnection->firstPin->parent->nodeOutConnections.push_back(lineConnection->secondPin->parent);
-      lineConnection->firstPin->parent->nodeOutConnectionsFunctionId.push_back(lineConnection->secondPin->pinId);
+      newOutConnection = new GoofyNodeOutConnection(lineConnection->secondPin->parent, lineConnection->secondPin->pinId);
+      lineConnection->firstPin->parent->nodeOutConnections.push_back(newOutConnection);
     }
     if(lineConnection->secondPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
     {
-      lineConnection->secondPin->parent->nodeOutConnections.push_back(lineConnection->firstPin->parent);
-      lineConnection->secondPin->parent->nodeOutConnectionsFunctionId.push_back(lineConnection->firstPin->pinId);
+      newOutConnection = new GoofyNodeOutConnection(lineConnection->firstPin->parent, lineConnection->firstPin->pinId);
+      lineConnection->secondPin->parent->nodeOutConnections.push_back(newOutConnection);
     }
     
+    lineConnection->connection = newOutConnection;
+    newOutConnection = NULL;
     
     connections.push_back(lineConnection);
     
@@ -132,6 +136,21 @@ void GoofyNodeStage::draw()
   {
     lineConnection->draw();
   }
+  
+  vector<GoofyNodeLineConnection*>::iterator it = connections.begin();
+  
+  while(it != connections.end())
+  {
+    if((*it)->toRemove)
+      connections.erase(it);
+    else
+    {
+      (*it)->draw();
+      it++;
+    }
+    //(GoofyNodeLineConnection*)*it.
+  }
+  
   for(int a = 0; a < connections.size(); a++)
   {
     connections[a]->draw();

@@ -202,6 +202,7 @@ bool GoofyNode::hitTest(int tx, int ty)
 
 void GoofyNode::setup(string name)
 {
+  logVerboseModule = "";
   this->name  = name;
   mouseDragStart = ofVec2f(0,0);
   dragOffset = ofVec2f(0,0);
@@ -262,25 +263,39 @@ void GoofyNode::activeOutputs()
 {
   for(int a = 0; a < nodeOutConnections.size(); a++)
   {
-    switch(nodeOutConnections[a]->type)
+    switch(nodeOutConnections[a]->node->type)
     {
       case GOOFY_DELAY:
       {
-        GoofyNodeDelay* delay = (GoofyNodeDelay*)nodeOutConnections[a];
-        delay->activeFunction(nodeOutConnectionsFunctionId[a]);
+        GoofyNodeDelay* delay = (GoofyNodeDelay*)nodeOutConnections[a]->node;
+        delay->activeFunction(nodeOutConnections[a]->pinID);
         delay = NULL;
         break;
       }
       case GOOFY_LAYER:
       {
-        GoofyBridgeToNode* tempLayer = nodeOutConnections[a]->interactiveLayer;
-        tempLayer->activeFunction(nodeOutConnectionsFunctionId[a]);
+        GoofyBridgeToNode* tempLayer = nodeOutConnections[a]->node->interactiveLayer;
+        tempLayer->activeFunction(nodeOutConnections[a]->pinID);
         break;
       }
       case GOOFY_SIMPLE_NODE:
         break;
     }
   }
+}
+
+bool removeEqualElement(GoofyNodeOutConnection* connection1, GoofyNodeOutConnection* connection2)
+{
+  if(connection1 == connection2)
+    return true;
+  return false;
+}
+
+void GoofyNode::removeConnection(GoofyNodeOutConnection* connection)
+{
+  delete connection;
+  nodeOutConnections.erase(std::remove(nodeOutConnections.begin(), nodeOutConnections.end(), connection), nodeOutConnections.end());
+  connection = NULL;
 }
 
 void GoofyNode::onPressIn(int x, int y, int button)

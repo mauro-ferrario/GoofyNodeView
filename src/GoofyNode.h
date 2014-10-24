@@ -11,6 +11,7 @@
 
 #include "ofMain.h"
 #include "GoofyBridgeToNode.h"
+#include "GoofyNodeOutConnection.h"
 
 class GoofyNodeStage;
 
@@ -31,6 +32,7 @@ enum GoofyNodePinMode
   GOOFY_NODE_PIN_INPUT,
   GOOFY_NODE_PIN_OUTPUT
 };
+
 
 class GoofyNode
 {
@@ -54,10 +56,11 @@ public:
   virtual void        drawBackground();
   virtual void        createSinglePin(int idFunction,  GoofyNodePinMode mode,  ofVec2f pos);
   virtual void        drawNodes();
+  void                removeConnection(GoofyNodeOutConnection* connection);
   vector<GoofyNode*>  nodes;
   GoofyNode*          parent;
-  vector<GoofyNode*>  nodeOutConnections;
-  vector<int>         nodeOutConnectionsFunctionId;
+  vector<GoofyNodeOutConnection*>  nodeOutConnections;
+  static bool                removeEqualElement(GoofyNodeOutConnection* connection1, GoofyNodeOutConnection* connection2);
   GoofyNodeStage*      mainStage;
   void                setMainStage(GoofyNodeStage* mainStage);
   GoofyBridgeToNode*  interactiveLayer;
@@ -66,6 +69,8 @@ public:
   ofVec2f             mouseDragStart;
   ofVec2f             dragOffset;
   void                removeMouseDragListener();
+  string              logVerboseModule;
+  
   
 protected:
   virtual void        onPressIn(int x, int y, int button);
@@ -84,8 +89,6 @@ private:
   void                _mouseMoved(ofMouseEventArgs &e);
   bool                _mouseDragged(ofMouseEventArgs &e);
   string              name;
-  
-  
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNode__) */

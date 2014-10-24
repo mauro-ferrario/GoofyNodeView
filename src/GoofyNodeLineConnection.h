@@ -15,17 +15,21 @@
 class GoofyNodeLineConnection
 {
 public:
-                  GoofyNodeLineConnection(GoofyNodePin* pin);
-  void            draw();
-  ofVec2f         startPoint;
-  ofVec2f         endPoint;
-  GoofyNodePin*   firstPin;
-  GoofyNodePin*   secondPin;
-  bool            editable;
-  void            enableMouseEvents();
-  void            disableMouseEvents();
-  void            _mouseReleased(ofMouseEventArgs &e);
-  bool            selected;
+                            GoofyNodeLineConnection(GoofyNodePin* pin);
+  void                      draw();
+  ofVec2f                   startPoint;
+  ofVec2f                   endPoint;
+  GoofyNodePin*             firstPin;
+  GoofyNodePin*             secondPin;
+  bool                      editable;
+  void                      enableMouseEvents();
+  void                      disableMouseEvents();
+  void                      _mouseReleased(ofMouseEventArgs &e);
+  void                      _keyReleased(ofKeyEventArgs &e);
+  bool                      selected;
+  bool                      toRemove;
+  GoofyNodeOutConnection*   connection;
+  string                    logVerboseModule;
 };
 
 #endif /* defined(__GoofyNodeTest__GoofyNodeLineConnection__) */
