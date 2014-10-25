@@ -21,6 +21,7 @@ public:
   virtual void        update();
   virtual void        drawAfterBackground();
   void                drawHole();
+  void                drawName();
   GoofyNodePinMode    pinMode;
   int                 pinId;
   

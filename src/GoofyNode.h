@@ -55,6 +55,7 @@ public:
   virtual void        drawAfterBackground();
   virtual void        drawBackground();
   virtual void        createSinglePin(int idFunction,  GoofyNodePinMode mode,  ofVec2f pos);
+  virtual void        createSinglePin(int idFunction,  GoofyNodePinMode mode,  ofVec2f pos, string name);
   virtual void        drawNodes();
   void                removeConnection(GoofyNodeOutConnection* connection);
   vector<GoofyNode*>  nodes;
@@ -83,13 +84,13 @@ protected:
   bool                isMousePressed;
   bool                isMouseOver;
   ofVec2f             pos;
+  string              name;
   
 private:
   void                _mousePressed(ofMouseEventArgs &e);
   void                _mouseReleased(ofMouseEventArgs &e);
   void                _mouseMoved(ofMouseEventArgs &e);
   bool                _mouseDragged(ofMouseEventArgs &e);
-  string              name;
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNode__) */

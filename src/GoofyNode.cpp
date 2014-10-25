@@ -234,8 +234,13 @@ void GoofyNode::drawAfterBackground()
 
 void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos)
 {
+  createSinglePin(idFunction, mode, pos, ofToString(idFunction));
+}
+
+void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos, string name)
+{
   GoofyNodePin* newPin = new GoofyNodePin(mode);
-  newPin->setup(ofToString(idFunction));
+  newPin->setup(name);
   newPin->setSize(10,10);
   newPin->setPos(pos);
   newPin->pinId = idFunction;

@@ -36,7 +36,21 @@ void GoofyNodePin::drawAfterBackground()
 {
   //cout << "Drag over pin" << isMouseOver <<  endl;
   if(isMouseOver)
+  {
     drawHole();
+    drawName();
+  }
+}
+
+void GoofyNodePin::drawName()
+{
+  ofPushMatrix();
+  ofPushStyle();
+  ofSetColor(0);
+  ofVec2f pos;
+  ofDrawBitmapString(name, pos);
+  ofPopStyle();
+  ofPopMatrix();
 }
 
 void GoofyNodePin::drawHole()

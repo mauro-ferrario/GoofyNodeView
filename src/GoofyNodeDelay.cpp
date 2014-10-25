@@ -34,10 +34,10 @@ void GoofyNodeDelay::setup(string name)
   type          = GOOFY_DELAY;
   enableMouseEvents();
   setSize(100,30);
-  createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((100-10)*.5,30));
-  createSinglePin(0, GOOFY_NODE_PIN_INPUT, ofVec2f((100-10)*.5,-10));
-  createSinglePin(1, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 0));
-  createSinglePin(2, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 20));
+  createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((100-10)*.5,30), "output");
+  createSinglePin(0, GOOFY_NODE_PIN_INPUT, ofVec2f((100-10)*.5,-10), "input");
+  createSinglePin(1, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 0), "stop");
+  createSinglePin(2, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 20), "pause");
   initTextTimer();
 }
 

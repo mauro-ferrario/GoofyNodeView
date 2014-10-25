@@ -29,7 +29,7 @@ void GoofyNodeButton::setup(string name)
   setSize(30,30);
   type = GOOFY_BUTTON;
   enableMouseEvents();
-  createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((30-10)*.5,30));
+  createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((30-10)*.5,30), "output");
 }
 
 void GoofyNodeButton::update()
