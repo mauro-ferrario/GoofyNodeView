@@ -10,9 +10,11 @@
 #include "GoofyNodePin.h"
 #include "GoofyNodeStage.h"
 #include "GoofyNodeDelay.h"
+#include "GoofyNodeButton.h"
 
 GoofyNode::GoofyNode()
 {
+  logVerboseModule = "GoofyNode:";
 }
 
 GoofyNode::~GoofyNode()
@@ -248,6 +250,55 @@ void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f p
   this->addNode(newPin, this->mainStage);
 }
 
+void GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage)
+{
+  switch(type)
+  {
+    case GOOFY_STAGE:
+    {
+      ofLogVerbose(logVerboseModule, "can't add this type!");
+      break;
+    }
+    case GOOFY_PIN:
+    {
+      if(this->type == GOOFY_STAGE)
+      {
+        ofLogVerbose(logVerboseModule, "can't add pin to this element!");
+      }
+      else
+      {
+        createSinglePin(0, GOOFY_NODE_PIN_NOT_DEFINED, ofVec2f(0,0));
+      }
+      break;
+    }
+    case GOOFY_DELAY:
+    {
+      GoofyNodeDelay* delay = new GoofyNodeDelay(this->mainStage);
+      delay->setup("");
+      delay->setPos(ofVec2f(10,10));
+      this->addNode(delay, this->mainStage);
+      break;
+    }
+    case GOOFY_BUTTON:
+    {
+      createSingleButton();
+      break;
+    }
+    default:
+    {
+      ofLogVerbose(logVerboseModule, "can't add this type!");
+      break;
+    }
+  }
+}
+
+void GoofyNode::createSingleButton() // Questo potrebbe essere un metodo dinamico della classe button
+{
+  GoofyNodeButton* btn = new GoofyNodeButton(this->mainStage);
+  btn->setup("button");
+  btn->setPos(ofVec2f(10,10));
+  addNode(btn, this->mainStage);
+}
 
 void GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage)
 {
@@ -306,8 +357,6 @@ void GoofyNode::removeConnection(GoofyNodeOutConnection* connection)
 bool GoofyNode::checkSameConnection(GoofyNode* node, int pinID)
 {
   vector<GoofyNodeOutConnection*>::iterator it = nodeOutConnections.begin();
-  cout << "Check" << nodeOutConnections.size()<< endl;
-  
   for(int a = 0; a < nodeOutConnections.size(); a++)
   {
     if(nodeOutConnections[a]->node == node && (nodeOutConnections[a]->pinID == pinID))
