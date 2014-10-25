@@ -15,3 +15,7 @@ bin/GoofyNodeTestDebug.app*
 *.pbxproj
 
 bin/data/.gitkeep
+
+bin/data/test.xml
+
+bin/data/test.xml
