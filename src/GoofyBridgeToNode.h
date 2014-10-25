@@ -21,6 +21,8 @@ public:
   virtual void                  activeFunction(int id);
   virtual void                  defineNodeMethods();
   void                          addMethod(string methodName);
+  string                        id;
+  void                          initId();
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyBridgeToNode__) */

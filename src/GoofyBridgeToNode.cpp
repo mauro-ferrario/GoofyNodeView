@@ -18,8 +18,15 @@ GoofyBridgeToNode::~GoofyBridgeToNode()
   
 }
 
+void GoofyBridgeToNode::initId()
+{
+  id = ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(int(ofRandom(10000)));
+}
+
 void GoofyBridgeToNode::setup()
 {
+  if(id == "")
+    initId();
   defineNodeMethods();
 }
 
