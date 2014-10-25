@@ -43,7 +43,7 @@ void GoofyNodeDelay::setup(string name)
 
 void GoofyNodeDelay::update()
 {
-  if(timerActive)
+  if(timerActive&&!isPause)
   {
     textTimer.text = ofToString((endTimer - timer.getAppTimeMillis())/1000);
   }
@@ -54,7 +54,7 @@ void GoofyNodeDelay::update()
 
 void GoofyNodeDelay::checkTimer()
 {
- if(timerActive)
+ if(timerActive&&!isPause)
  {
    if(timer.getAppTimeMillis() >= endTimer)
    {
@@ -101,15 +101,17 @@ void GoofyNodeDelay::timerEnded()
 
 void GoofyNodeDelay::pauseTimer()
 {
+  if(!timerActive)
+    return;
   isPause = !isPause;
   if(isPause)
   {
-    timerActive     = false;
+    //timerActive     = false;
     timeStartPause = timer.getAppTimeMillis();
   }
   else
   {
-    timerActive = true;
+    //timerActive = true;
     float timerOffset = timer.getAppTimeMillis() - timeStartPause;
     endTimer        += timerOffset;
   }
@@ -136,7 +138,7 @@ void GoofyNodeDelay::drawAfterBackground()
 {
   ofPushStyle();
   ofSetColor(255,255,255);
-  if(timerActive)
+  if(timerActive&&!isPause)
   {
     ofRect(5, 5, ofMap(timer.getAppTimeMillis(), timeStartTimer, endTimer, 0, width - 10, true), height - 10);
   }
