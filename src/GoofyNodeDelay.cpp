@@ -41,6 +41,12 @@ void GoofyNodeDelay::setup(string name)
   initTextTimer();
 }
 
+void GoofyNodeDelay::saveSpecificInfo(ofxXmlSettings* xml)
+{
+  xml->addValue("delay", secondsDelay);
+  xml = NULL;
+}
+
 void GoofyNodeDelay::update()
 {
   if(timerActive&&!isPause)

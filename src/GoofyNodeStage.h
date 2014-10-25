@@ -42,6 +42,7 @@ public:
   
   
   void                addPinConnection(GoofyNodePin* pin);
+  long int            nodeCounts;
   
   GoofyNodeLineConnection* lineConnection;
   vector<GoofyNodeLineConnection*> connections;

@@ -5,6 +5,7 @@
 #include "GoofyNodeStage.h"
 #include "GoofyNodeButton.h"
 #include "GoofyNodeDelay.h"
+#include "ofxXmlSettings.h"
 
 class ofApp : public ofBaseApp{
 
@@ -28,4 +29,5 @@ public:
   GoofyNodeButton* button;
   GoofyNodeDelay* delay1;
   GoofyNodeDelay* delay2;
+  ofxXmlSettings  xml;
 };

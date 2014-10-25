@@ -304,6 +304,8 @@ void GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage)
 {
   node->parent = this;
   node->setMainStage(mainStage);
+  node->nodeId = ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(mainStage->nodeCounts);
+  mainStage->nodeCounts++;
   nodes.push_back(node);
 }
 
@@ -373,6 +375,54 @@ bool GoofyNode::checkSameConnection(GoofyNode* node, int pinID)
 //    }
 //  }
   return false;
+}
+
+void GoofyNode::saveInfo(ofxXmlSettings* xml, int tagPos)
+{
+  xml->addTag("node");
+  xml->pushTag("node", tagPos);
+  xml->addValue("type", type);
+  xml->addValue("id", nodeId);
+  xml->addTag("position");
+  xml->pushTag("position",0);
+  xml->addValue("x", getX());
+  xml->addValue("y", getY());
+  xml->popTag();
+  
+  
+  saveOutConnections(xml);
+  
+  xml->addTag("nodes");
+  xml->pushTag("nodes", 0);
+  
+  for(int a = 0; a < nodes.size(); a++)
+  {
+    nodes[a]->saveInfo(xml, a);
+  }
+  xml->popTag();
+  saveSpecificInfo(xml);
+  xml->popTag();
+  xml = NULL;
+}
+
+void GoofyNode::saveOutConnections(ofxXmlSettings* xml)
+{
+  int pos = xml->addTag("outConnections");
+  xml->pushTag("outConnections", pos);
+  for(int a = 0; a < nodeOutConnections.size(); a++)
+  {
+    int contOutConnection = xml->addTag("outConnection");
+    xml->pushTag("outConnection", contOutConnection);
+    xml->addValue("nodeId", ofToString(nodeOutConnections[a]->node->nodeId));
+    xml->addValue("pinId", nodeOutConnections[a]->pinID);
+    xml->popTag();
+  }
+  xml->popTag();
+}
+
+void GoofyNode::saveSpecificInfo(ofxXmlSettings* xml)
+{
+  xml = NULL;
 }
 
 void GoofyNode::onPressIn(int x, int y, int button)

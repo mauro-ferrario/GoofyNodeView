@@ -27,6 +27,7 @@ public:
   void              draw();
   void              activeFunction(int id);
   void              setDelay(float seconds);
+  void              saveSpecificInfo(ofxXmlSettings* xml);
 
 private:
   void              drawAfterBackground();

@@ -12,6 +12,7 @@
 #include "ofMain.h"
 #include "GoofyBridgeToNode.h"
 #include "GoofyNodeOutConnection.h"
+#include "ofxXmlSettings.h"
 
 class GoofyNodeStage;
 
@@ -75,6 +76,11 @@ public:
   ofVec2f             dragOffset;
   void                removeMouseDragListener();
   string              logVerboseModule;
+  void                saveInfo(ofxXmlSettings* xml, int tagPos = 0);
+  void                saveOutConnections(ofxXmlSettings* xml);
+  virtual void        saveSpecificInfo(ofxXmlSettings* xml);
+  string              nodeId;
+  
   
   
 protected:
@@ -94,6 +100,7 @@ private:
   void                _mouseReleased(ofMouseEventArgs &e);
   void                _mouseMoved(ofMouseEventArgs &e);
   bool                _mouseDragged(ofMouseEventArgs &e);
+  ofxXmlSettings*     xml;
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNode__) */

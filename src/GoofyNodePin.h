@@ -24,6 +24,7 @@ public:
   void                drawName();
   GoofyNodePinMode    pinMode;
   int                 pinId;
+  void                saveSpecificInfo(ofxXmlSettings* xml);
   
 protected:
   void                onReleaseIn(int x, int y, int button);

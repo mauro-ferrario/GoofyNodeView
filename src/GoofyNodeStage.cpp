@@ -10,8 +10,9 @@
 
 GoofyNodeStage::GoofyNodeStage()
 {
-  lineConnection = NULL;
-  logVerboseModule = "GoofyNodeStage";
+  lineConnection    = NULL;
+  logVerboseModule  = "GoofyNodeStage";
+  nodeCounts        = 0;
 }
 
 GoofyNodeStage::~GoofyNodeStage()

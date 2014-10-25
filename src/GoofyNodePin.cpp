@@ -27,6 +27,13 @@ void GoofyNodePin::setup(string name)
   enableMouseEvents();
 }
 
+void GoofyNodePin::saveSpecificInfo(ofxXmlSettings* xml)
+{
+  xml->addValue("pinMode", pinMode);
+  xml->addValue("pinId", pinId);
+  xml = NULL;
+}
+
 void GoofyNodePin::update()
 
 {
