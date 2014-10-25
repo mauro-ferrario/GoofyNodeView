@@ -69,7 +69,6 @@ public:
   bool                checkSameConnection(GoofyNode* node, int pinID);
   GoofyNodeStage*     mainStage;
   void                setMainStage(GoofyNodeStage* mainStage);
-  GoofyBridgeToNode*  interactiveLayer;
   void                activeOutputs();
   bool                isDraggingIn;
   ofVec2f             mouseDragStart;

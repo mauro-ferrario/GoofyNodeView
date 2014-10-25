@@ -26,7 +26,7 @@ public:
   virtual void        addNode(GoofyNode* node, GoofyNodeStage* mainStage);
   virtual void        mouseDragged(int x, int y, int button);
   void                createPins();
-  
+  GoofyBridgeToNode*  interactiveLayer;
 protected:
   void                onPress(int x, int y, int button);
 };
