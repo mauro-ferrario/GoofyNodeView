@@ -36,6 +36,13 @@ void GoofyNodeLayer::onPress(int x, int y, int button)
   
 }
 
+void GoofyNodeLayer::saveSpecificInfo(ofxXmlSettings* xml)
+{
+  if(interactiveLayer != NULL)
+    xml->addValue("interactiveLayerId", interactiveLayer->id);
+  xml = NULL;
+}
+
 void GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage)
 {
   this->mainStage = mainStage;

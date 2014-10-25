@@ -27,6 +27,7 @@ public:
   virtual void        mouseDragged(int x, int y, int button);
   void                createPins();
   GoofyBridgeToNode*  interactiveLayer;
+  void                saveSpecificInfo(ofxXmlSettings* xml);
 protected:
   void                onPress(int x, int y, int button);
 };
