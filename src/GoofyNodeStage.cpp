@@ -209,3 +209,8 @@ void GoofyNodeStage::onReleaseIn(int x, int y, int button)
     checkRelease = true;
   }
 }
+
+void GoofyNodeStage::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage)
+{
+  GoofyNode::addNode(type, mainStage);
+}

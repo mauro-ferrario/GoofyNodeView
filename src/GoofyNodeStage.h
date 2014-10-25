@@ -38,6 +38,7 @@ public:
   bool                checkRelease;
   int                 countDrag;
   bool                checkMatch(GoofyNodePin* pin1, GoofyNodePin* pin2);
+  void                addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage);
   
   
   void                addPinConnection(GoofyNodePin* pin);
