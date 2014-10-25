@@ -332,8 +332,11 @@ void GoofyNode::activeOutputs()
       }
       case GOOFY_LAYER:
       {
-        GoofyBridgeToNode* tempLayer = nodeOutConnections[a]->node->interactiveLayer;
+        GoofyNodeLayer* tempNodeLayer = (GoofyNodeLayer*)(nodeOutConnections[a]->node);
+        GoofyBridgeToNode* tempLayer = tempNodeLayer->interactiveLayer;
         tempLayer->activeFunction(nodeOutConnections[a]->pinID);
+        tempNodeLayer = NULL;
+        tempLayer = NULL;
         break;
       }
       case GOOFY_SIMPLE_NODE:
