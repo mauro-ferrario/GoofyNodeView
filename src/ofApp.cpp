@@ -33,6 +33,8 @@ void ofApp::setup(){
   delay2->setup("Delay 2");
   delay2->setPos(ofVec2f(340,140));
   nodeView->addNode(delay2);
+  nodeView->addNode(GOOFY_DELAY, nodeView);
+  nodeView->addNode(GOOFY_BUTTON, nodeView);
 }
 
 //--------------------------------------------------------------
