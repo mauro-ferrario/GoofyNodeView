@@ -29,6 +29,7 @@ enum GoofyNodeGuiTypes
 
 enum GoofyNodePinMode
 {
+  GOOFY_NODE_PIN_NOT_DEFINED,
   GOOFY_NODE_PIN_INPUT,
   GOOFY_NODE_PIN_OUTPUT
 };

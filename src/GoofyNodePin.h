@@ -15,7 +15,7 @@
 class GoofyNodePin: public GoofyNode
 {
 public:
-                      GoofyNodePin(GoofyNodePinMode mode);
+                      GoofyNodePin(GoofyNodePinMode mode = GOOFY_NODE_PIN_NOT_DEFINED);
                       ~GoofyNodePin();
   virtual void        setup(string name);
   virtual void        update();
