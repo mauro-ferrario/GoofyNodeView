@@ -14,14 +14,23 @@ void ofApp::setup(){
   nodeView->setSize(ofGetWindowWidth(), ofGetWindowHeight());
   
   
+  xml.loadFile("test.xml");
+  nodeView->loadFromXML(&xml);
+  
+/*
   delay1 = new GoofyNodeDelay(nodeView);
   delay1->setup("Delay 1");
   delay1->setPos(ofVec2f(40,140));
   nodeView->addNode(delay1);
   
-  fake1 = new FakeClassForNode();
+    fake1 = new FakeClassForNode();
   fake1->setup();
   nodeView->addNode(fake1);
+
+   delay1 = new GoofyNodeDelay(nodeView);
+  delay1->setup("Delay 1");
+  delay1->setPos(ofVec2f(40,140));
+  nodeView->addNode(delay1);
   
   button = new GoofyNodeButton(nodeView);
   button->setup("Button");
@@ -35,6 +44,7 @@ void ofApp::setup(){
   nodeView->addNode(delay2);
   nodeView->addNode(GOOFY_DELAY, nodeView);
   nodeView->addNode(GOOFY_BUTTON, nodeView);
+  */
 }
 
 //--------------------------------------------------------------
@@ -57,6 +67,7 @@ void ofApp::keyPressed(int key){
 void ofApp::keyReleased(int key){
   if(key == 's')
   {
+    xml.clear();
     nodeView->saveInfo(&xml);
     xml.saveFile("test.xml");
   }

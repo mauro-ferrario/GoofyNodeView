@@ -50,3 +50,12 @@ void GoofyNodeButton::onReleaseIn(int x, int y, int button)
   if(!isDraggingIn)
     activeOutputs();
 }
+
+GoofyNodeButton* GoofyNodeButton::createButton(ofVec2f pos, GoofyNodeStage* mainStage, string name)
+{
+  GoofyNodeButton* btn = new GoofyNodeButton(mainStage);
+  btn->setup("button");
+  btn->setPos(pos);
+  mainStage = NULL;
+  return btn;
+}

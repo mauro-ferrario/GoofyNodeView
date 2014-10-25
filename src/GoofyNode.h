@@ -47,8 +47,8 @@ public:
   void                disableMouseEvents();
   void                setSize(int w, int h);
   bool                hitTest(int tx, int ty);
-  virtual void        addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage);
-  virtual void        addNode(GoofyNode* node, GoofyNodeStage* mainStage);
+  virtual void        addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage, ofVec2f pos = ofVec2f(0,0), string name = "");
+  virtual void        addNode(GoofyNode* node, GoofyNodeStage* mainStage, ofVec2f pos = ofVec2f(0,0), string name = "");
   float               getX();
   float               getY();
   GoofyNodeGuiTypes   type;
@@ -59,7 +59,6 @@ public:
   virtual void        drawBackground();
   virtual void        createSinglePin(int idFunction,  GoofyNodePinMode mode,  ofVec2f pos);
   virtual void        createSinglePin(int idFunction,  GoofyNodePinMode mode,  ofVec2f pos, string name);
-  virtual void        createSingleButton();
   virtual void        drawNodes();
   void                removeConnection(GoofyNodeOutConnection* connection);
   vector<GoofyNode*>  nodes;
@@ -79,6 +78,7 @@ public:
   void                saveOutConnections(ofxXmlSettings* xml);
   virtual void        saveSpecificInfo(ofxXmlSettings* xml);
   string              nodeId;
+  void                loadFromXML(ofxXmlSettings* xml, int nodeXMLPos = 0);
   
   
   

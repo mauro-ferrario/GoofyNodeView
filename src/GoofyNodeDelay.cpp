@@ -43,7 +43,7 @@ void GoofyNodeDelay::setup(string name)
 
 void GoofyNodeDelay::saveSpecificInfo(ofxXmlSettings* xml)
 {
-  xml->addValue("delay", secondsDelay);
+  xml->addValue("delay", ofToFloat(textTimer.text) > secondsDelay ? ofToFloat(textTimer.text) : secondsDelay);
   xml = NULL;
 }
 
@@ -77,6 +77,7 @@ void GoofyNodeDelay::setDelay(float seconds)
     return;
   }
   secondsDelay = seconds;
+  textTimer.text = ofToString(secondsDelay);
 }
 
 void GoofyNodeDelay::startTimer()
@@ -188,4 +189,13 @@ void GoofyNodeDelay::initTextTimer()
   textTimer.text = ofToString(secondsDelay);
   textTimer.bounds.x = getX();
   textTimer.bounds.y = getY();
+}
+
+GoofyNodeDelay* GoofyNodeDelay::createDelay(ofVec2f pos, GoofyNodeStage* mainStage, float secondsDelay, string name)
+{
+  GoofyNodeDelay* delay = new GoofyNodeDelay(mainStage);
+  delay->setup(name);
+  delay->setDelay(secondsDelay);
+  delay->setPos(pos);
+  return delay;
 }

@@ -28,6 +28,7 @@ public:
   void              activeFunction(int id);
   void              setDelay(float seconds);
   void              saveSpecificInfo(ofxXmlSettings* xml);
+  static GoofyNodeDelay* createDelay(ofVec2f pos, GoofyNodeStage* mainStage, float secondsDelay, string name);
 
 private:
   void              drawAfterBackground();

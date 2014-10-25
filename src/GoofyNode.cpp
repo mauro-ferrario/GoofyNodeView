@@ -250,7 +250,7 @@ void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f p
   this->addNode(newPin, this->mainStage);
 }
 
-void GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage)
+void GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage, ofVec2f pos, string name)
 {
   switch(type)
   {
@@ -273,15 +273,12 @@ void GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage)
     }
     case GOOFY_DELAY:
     {
-      GoofyNodeDelay* delay = new GoofyNodeDelay(this->mainStage);
-      delay->setup("");
-      delay->setPos(ofVec2f(10,10));
-      this->addNode(delay, this->mainStage);
+      //addNode(GoofyNodeDelay::createDelay(pos, this->mainStage, 0, name), this->mainStage);
       break;
     }
     case GOOFY_BUTTON:
     {
-      createSingleButton();
+      addNode(GoofyNodeButton::createButton(pos, this->mainStage, name), this->mainStage);
       break;
     }
     default:
@@ -292,15 +289,7 @@ void GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage)
   }
 }
 
-void GoofyNode::createSingleButton() // Questo potrebbe essere un metodo dinamico della classe button
-{
-  GoofyNodeButton* btn = new GoofyNodeButton(this->mainStage);
-  btn->setup("button");
-  btn->setPos(ofVec2f(10,10));
-  addNode(btn, this->mainStage);
-}
-
-void GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage)
+void GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage, ofVec2f pos, string name)
 {
   node->parent = this;
   node->setMainStage(mainStage);
@@ -418,6 +407,47 @@ void GoofyNode::saveOutConnections(ofxXmlSettings* xml)
     xml->pushTag("outConnection", contOutConnection);
     xml->addValue("nodeId", ofToString(nodeOutConnections[a]->node->nodeId));
     xml->addValue("pinId", nodeOutConnections[a]->pinID);
+    xml->popTag();
+  }
+  xml->popTag();
+}
+
+
+void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
+{
+  xml->pushTag("node", nodeXMLPos);
+  int type = xml->getValue("type", 0);
+  this->nodeId = xml->getValue("id",0);
+  ofVec2f pos;
+  pos.x = xml->getValue("position:x", 0);
+  pos.y = xml->getValue("position:y", 0);
+  if(type == GOOFY_STAGE)
+  {
+    mainStage = (GoofyNodeStage*)this;
+  }
+  else
+  {
+    if(type == GOOFY_BUTTON)
+      addNode((GoofyNodeGuiTypes)type, mainStage, pos);
+    else if(type == GOOFY_DELAY)
+    {
+      float delay =  xml->getValue("delay",0);
+      addNode(GoofyNodeDelay::createDelay(pos, this->mainStage, delay, name), this->mainStage);
+    }
+    
+  }
+  
+  if(type == GOOFY_STAGE || type == GOOFY_LAYER)
+  {
+    xml->pushTag("nodes");
+    int nodes = xml->getNumTags("node");;
+    if(nodes > 0)
+    {
+      for(int i = 0; i < nodes; i++)
+      {
+        loadFromXML(xml, i);
+      }
+    }
     xml->popTag();
   }
   xml->popTag();

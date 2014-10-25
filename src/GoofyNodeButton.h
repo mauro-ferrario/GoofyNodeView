@@ -24,10 +24,12 @@ public:
   void            setup(string name);
   void            drawAfterBackground();
   void            update();
+  static GoofyNodeButton* createButton(ofVec2f pos, GoofyNodeStage* mainStage, string name = "button");
   
 protected:
   void            onReleaseIn(int x, int y, int  button);
-  
 };
+
+
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNodeButton__) */
