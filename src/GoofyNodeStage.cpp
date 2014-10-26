@@ -163,29 +163,32 @@ void GoofyNodeStage::createConnections()
     cout << (*it)->pinID << endl;
     cout << "Dentro" << endl;
     
+    
+   
     GoofyNodePin* pin1;
     GoofyNodePin* pin2;
     
     for(int a = 0; a < tempNode.size(); a++)
     {
-      cout << "NODE ID = " << (*it)->nodeInId << endl;
-      cout << "TEMP NODE ID = " << tempNode[a]->nodeId  << endl;
       if(tempNode[a]->nodeId == (*it)->nodeInId)
       {
-        cout << "Creo connessione 1" << endl;
         pin1 = (GoofyNodePin*)tempNode[a]->nodes[0];
       }
       if(tempNode[a]->nodeId == (*it)->nodeOutId)
       {
-        cout << "Creo connessione 2" << endl;
         pin2 = (GoofyNodePin*)tempNode[a]->nodes[(*it)->pinID];
       }
     }
     
+    GoofyNodeOutConnection* newOutConnection = new GoofyNodeOutConnection(pin1->parent, pin2->parent, (*it)->pinID);
+    
     
     GoofyNodeLineConnection* newConnection = new GoofyNodeLineConnection(pin1, pin2);
+    pin1->parent->nodeOutConnections.push_back(newOutConnection);
+    newConnection->connection = newOutConnection;
     connections.push_back(newConnection);
     newConnection = NULL;
+    newOutConnection = NULL;
     it++;
   }
 }
