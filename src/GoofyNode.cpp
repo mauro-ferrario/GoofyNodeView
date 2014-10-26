@@ -298,13 +298,7 @@ GoofyNode* GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage, ofVec2
   node->setMainStage(mainStage);
   if(node->nodeId == "")
   {
-    if(node->type != GOOFY_PIN)
-      cout << "Creo id" << endl;
     node->nodeId = ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(mainStage->nodeCounts);
-  }
-  else
-  {
-    cout << "Non creo id" << endl;
   }
   mainStage->nodeCounts++;
   if(node->type != GOOFY_PIN)
@@ -435,7 +429,7 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
   string tempId =  xml->getValue("id","");
   if(type == GOOFY_STAGE)
     this->nodeId = xml->getValue("id","");
-  cout << "ID FROM XML" << this->nodeId << endl;
+  //cout << "ID FROM XML" << this->nodeId << endl;
   ofVec2f pos;
   pos.x = xml->getValue("position:x", 0);
   pos.y = xml->getValue("position:y", 0);
@@ -452,6 +446,27 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
       float delay =  xml->getValue("delay",0);
       addNode(GoofyNodeDelay::createDelay(pos, this->mainStage, delay, name), this->mainStage)->nodeId =  xml->getValue("id","");
     }
+    else if(type == GOOFY_LAYER)
+    {
+      // Sono per forza nello stage
+      GoofyNodeStage* stage = (GoofyNodeStage*)this;
+      GoofyBridgeToNode* interactiveLayer;
+      for(int a = 0; a < mainStage->layers.size(); a++)
+      {
+        if(mainStage->layers[a]->id == xml->getValue("interactiveLayerId",""))
+        {
+          cout << "Layer corrispondente trovato" << endl;
+          interactiveLayer = mainStage->layers[a];
+        }
+      }
+      GoofyNode* tempNode = stage->addNode(interactiveLayer);
+      cout << tempNode << endl;
+      tempNode->nodeId = xml->getValue("interactiveLayerId","");
+      //tempNode->nodeId =
+      cout << xml->getValue("interactiveLayerId","") << endl;;
+      interactiveLayer = NULL;
+      cout << "Devo creare un layer" << endl;
+    }
   }
   
   
@@ -459,15 +474,15 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
   
   if(totOutConnections > 0)
   {
-    cout << "Create connections " << endl;
+   // cout << "Create connections " << endl;
     xml->pushTag("outConnections");
     int totConnection = xml->getNumTags("outConnection");
     for(int i = 0; i < totConnection; i++)
     {
-      cout << "Boh " << i << endl;
+      //cout << "Boh " << i << endl;
       xml->pushTag("outConnection",i);
-      cout << xml->getValue("nodeId", "") << endl;;
-      cout << xml->getValue("pinId", 0) << endl;
+     // cout << xml->getValue("nodeId", "") << endl;;
+     // cout << xml->getValue("pinId", 0) << endl;
       GoofyNodeOutConnection* tempOutConnection = new GoofyNodeOutConnection(tempId, xml->getValue("nodeId", ""), xml->getValue("pinId", 0));
       
       mainStage->tempNodeOutConnection.push_back(tempOutConnection);
@@ -477,7 +492,7 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
     xml->popTag();
   }
   
-  if(type == GOOFY_STAGE || type == GOOFY_LAYER)
+  if(type == GOOFY_STAGE); // || type == GOOFY_LAYER)
   {
     xml->pushTag("nodes");
     int nodes = xml->getNumTags("node");;

@@ -37,14 +37,14 @@ void GoofyNodeStage::drawBackground()
   ofPopStyle();
 }
 
-void GoofyNodeStage::addNode(GoofyBridgeToNode* layer)
+GoofyNode* GoofyNodeStage::addNode(GoofyBridgeToNode* layer)
 {
-  GoofyNodeLayer::addNode(layer, this);
+  return GoofyNodeLayer::addNode(layer, this);
 }
 
-void GoofyNodeStage::addNode(GoofyNode* node)
+GoofyNode* GoofyNodeStage::addNode(GoofyNode* node)
 {
-  GoofyNodeLayer::addNode(node, this);
+  return GoofyNodeLayer::addNode(node, this);
 }
 
 void GoofyNodeStage::createNewLineConnection(GoofyNodePin* pin)
@@ -157,11 +157,11 @@ void GoofyNodeStage::createConnections()
   while(it != tempNodeOutConnection.end())
   {
     //addLineConnection
-    cout << "**************" << endl;
-    cout << (*it)->nodeInId << endl;
-    cout << (*it)->nodeOutId<< endl;
-    cout << (*it)->pinID << endl;
-    cout << "Dentro" << endl;
+//    cout << "**************" << endl;
+//    cout << (*it)->nodeInId << endl;
+//    cout << (*it)->nodeOutId<< endl;
+//    cout << (*it)->pinID << endl;
+//    cout << "Dentro" << endl;
     
     
    

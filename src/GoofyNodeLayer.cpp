@@ -40,11 +40,14 @@ void GoofyNodeLayer::onPress(int x, int y, int button)
 void GoofyNodeLayer::saveSpecificInfo(ofxXmlSettings* xml)
 {
   if(interactiveLayer != NULL)
+  {
+    xml->setValue("id", interactiveLayer->id);
     xml->addValue("interactiveLayerId", interactiveLayer->id);
+  }
   xml = NULL;
 }
 
-void GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage)
+GoofyNode* GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage)
 {
   this->mainStage = mainStage;
   GoofyNodeLayer* node = new GoofyNodeLayer();
@@ -53,12 +56,14 @@ void GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage
   node->interactiveLayer = layer;
   GoofyNode::addNode(node, mainStage);
   node->createPins();
+  node->nodeId = layer->id;
+  return (GoofyNode*)node;
 }
 
-void GoofyNodeLayer::addNode(GoofyNode* node, GoofyNodeStage* mainStage)
+GoofyNode* GoofyNodeLayer::addNode(GoofyNode* node, GoofyNodeStage* mainStage)
 {
   this->mainStage = mainStage;
-  GoofyNode::addNode(node, mainStage);
+  return GoofyNode::addNode(node, mainStage);
 }
 
 void GoofyNodeLayer::createPins()

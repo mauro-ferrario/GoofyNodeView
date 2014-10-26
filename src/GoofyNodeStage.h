@@ -25,8 +25,8 @@ public:
   void                draw();
   void                setup(string name);
   void                drawBackground();
-  virtual void        addNode(GoofyBridgeToNode* layer);
-  virtual void        addNode(GoofyNode* node);
+  virtual GoofyNode*        addNode(GoofyBridgeToNode* layer);
+  virtual GoofyNode*        addNode(GoofyNode* node);
   virtual void        mouseDragged(int x, int y, int button);
   void                removeTempLineConnection();
   virtual void        onReleaseIn(int x, int y, int button);
@@ -49,6 +49,7 @@ public:
   vector<GoofyNode*>               tempNode;
   vector<GoofyNodeOutConnection*>  tempNodeOutConnection;
   void                  createConnections();
+  vector<GoofyBridgeToNode*> layers;
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNodeStage__) */
