@@ -234,12 +234,12 @@ void GoofyNode::drawAfterBackground()
   
 }
 
-void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos)
+GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos)
 {
-  createSinglePin(idFunction, mode, pos, ofToString(idFunction));
+  return createSinglePin(idFunction, mode, pos, ofToString(idFunction));
 }
 
-void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos, string name)
+GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos, string name)
 {
   GoofyNodePin* newPin = new GoofyNodePin(mode);
   newPin->setup(name);
@@ -248,10 +248,12 @@ void GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f p
   newPin->pinId = idFunction;
   newPin->parent = this;
   this->addNode(newPin, this->mainStage);
+  return newPin;
 }
 
-void GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage, ofVec2f pos, string name)
+GoofyNode* GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage, ofVec2f pos, string name)
 {
+  GoofyNode* node;
   switch(type)
   {
     case GOOFY_STAGE:
@@ -267,7 +269,7 @@ void GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage, ofVec
       }
       else
       {
-        createSinglePin(0, GOOFY_NODE_PIN_NOT_DEFINED, ofVec2f(0,0));
+        node = createSinglePin(0, GOOFY_NODE_PIN_NOT_DEFINED, ofVec2f(0,0));
       }
       break;
     }
@@ -278,7 +280,7 @@ void GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage, ofVec
     }
     case GOOFY_BUTTON:
     {
-      addNode(GoofyNodeButton::createButton(pos, this->mainStage, name), this->mainStage);
+      node = addNode(GoofyNodeButton::createButton(pos, this->mainStage, name), this->mainStage);
       break;
     }
     default:
@@ -287,15 +289,28 @@ void GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage, ofVec
       break;
     }
   }
+  return node;
 }
 
-void GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage, ofVec2f pos, string name)
+GoofyNode* GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage, ofVec2f pos, string name)
 {
   node->parent = this;
   node->setMainStage(mainStage);
-  node->nodeId = ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(mainStage->nodeCounts);
+  if(node->nodeId == "")
+  {
+    if(node->type != GOOFY_PIN)
+      cout << "Creo id" << endl;
+    node->nodeId = ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(mainStage->nodeCounts);
+  }
+  else
+  {
+    cout << "Non creo id" << endl;
+  }
   mainStage->nodeCounts++;
+  if(node->type != GOOFY_PIN)
+    mainStage->tempNode.push_back(node);
   nodes.push_back(node);
+  return node;
 }
 
 void GoofyNode::drawBackground()
@@ -310,18 +325,18 @@ void GoofyNode::activeOutputs()
 {
   for(int a = 0; a < nodeOutConnections.size(); a++)
   {
-    switch(nodeOutConnections[a]->node->type)
+    switch(nodeOutConnections[a]->nodeOut->type)
     {
       case GOOFY_DELAY:
       {
-        GoofyNodeDelay* delay = (GoofyNodeDelay*)nodeOutConnections[a]->node;
+        GoofyNodeDelay* delay = (GoofyNodeDelay*)nodeOutConnections[a]->nodeOut;
         delay->activeFunction(nodeOutConnections[a]->pinID);
         delay = NULL;
         break;
       }
       case GOOFY_LAYER:
       {
-        GoofyNodeLayer* tempNodeLayer = (GoofyNodeLayer*)(nodeOutConnections[a]->node);
+        GoofyNodeLayer* tempNodeLayer = (GoofyNodeLayer*)(nodeOutConnections[a]->nodeOut);
         GoofyBridgeToNode* tempLayer = tempNodeLayer->interactiveLayer;
         tempLayer->activeFunction(nodeOutConnections[a]->pinID);
         tempNodeLayer = NULL;
@@ -353,7 +368,7 @@ bool GoofyNode::checkSameConnection(GoofyNode* node, int pinID)
   vector<GoofyNodeOutConnection*>::iterator it = nodeOutConnections.begin();
   for(int a = 0; a < nodeOutConnections.size(); a++)
   {
-    if(nodeOutConnections[a]->node == node && (nodeOutConnections[a]->pinID == pinID))
+    if(nodeOutConnections[a]->nodeOut == node && (nodeOutConnections[a]->pinID == pinID))
       return true;
   }
   
@@ -405,7 +420,7 @@ void GoofyNode::saveOutConnections(ofxXmlSettings* xml)
   {
     int contOutConnection = xml->addTag("outConnection");
     xml->pushTag("outConnection", contOutConnection);
-    xml->addValue("nodeId", ofToString(nodeOutConnections[a]->node->nodeId));
+    xml->addValue("nodeId", ofToString(nodeOutConnections[a]->nodeOut->nodeId));
     xml->addValue("pinId", nodeOutConnections[a]->pinID);
     xml->popTag();
   }
@@ -417,7 +432,10 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
 {
   xml->pushTag("node", nodeXMLPos);
   int type = xml->getValue("type", 0);
-  this->nodeId = xml->getValue("id",0);
+  string tempId =  xml->getValue("id","");
+  if(type == GOOFY_STAGE)
+    this->nodeId = xml->getValue("id","");
+  cout << "ID FROM XML" << this->nodeId << endl;
   ofVec2f pos;
   pos.x = xml->getValue("position:x", 0);
   pos.y = xml->getValue("position:y", 0);
@@ -428,13 +446,35 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
   else
   {
     if(type == GOOFY_BUTTON)
-      addNode((GoofyNodeGuiTypes)type, mainStage, pos);
+      addNode((GoofyNodeGuiTypes)type, mainStage, pos)->nodeId =  xml->getValue("id","");
     else if(type == GOOFY_DELAY)
     {
       float delay =  xml->getValue("delay",0);
-      addNode(GoofyNodeDelay::createDelay(pos, this->mainStage, delay, name), this->mainStage);
+      addNode(GoofyNodeDelay::createDelay(pos, this->mainStage, delay, name), this->mainStage)->nodeId =  xml->getValue("id","");
     }
-    
+  }
+  
+  
+  int totOutConnections = xml->getNumTags("outConnections");
+  
+  if(totOutConnections > 0)
+  {
+    cout << "Create connections " << endl;
+    xml->pushTag("outConnections");
+    int totConnection = xml->getNumTags("outConnection");
+    for(int i = 0; i < totConnection; i++)
+    {
+      cout << "Boh " << i << endl;
+      xml->pushTag("outConnection",i);
+      cout << xml->getValue("nodeId", "") << endl;;
+      cout << xml->getValue("pinId", 0) << endl;
+      GoofyNodeOutConnection* tempOutConnection = new GoofyNodeOutConnection(tempId, xml->getValue("nodeId", ""), xml->getValue("pinId", 0));
+      
+      mainStage->tempNodeOutConnection.push_back(tempOutConnection);
+      tempOutConnection = NULL;
+      xml->popTag();
+    }
+    xml->popTag();
   }
   
   if(type == GOOFY_STAGE || type == GOOFY_LAYER)

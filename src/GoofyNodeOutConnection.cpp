@@ -9,13 +9,22 @@
 #include "GoofyNodeOutConnection.h"
 #include "GoofyNode.h"
 
-GoofyNodeOutConnection::GoofyNodeOutConnection(GoofyNode* node, int pinID)
+GoofyNodeOutConnection::GoofyNodeOutConnection(GoofyNode* nodeIn, GoofyNode* nodeOut, int pinID)
 {
-  this->node = node;
+  this->nodeIn  = nodeIn;
+  this->nodeOut = nodeOut;
+  this->pinID   = pinID;
+}
+
+GoofyNodeOutConnection::GoofyNodeOutConnection(string nodeInId, string nodeOutId, int pinID)
+{
+  this->nodeInId = nodeInId;
+  this->nodeOutId = nodeOutId;
   this->pinID = pinID;
 }
 
 GoofyNodeOutConnection::~GoofyNodeOutConnection()
 {
-  node = NULL;
+  nodeOut = NULL;
+  nodeIn = NULL;
 }

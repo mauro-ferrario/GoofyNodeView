@@ -16,9 +16,13 @@ class GoofyNode;
 class GoofyNodeOutConnection
 {
 public:
-                GoofyNodeOutConnection(GoofyNode* node, int pinID);
+                GoofyNodeOutConnection(GoofyNode* nodeIn, GoofyNode* nodeOut, int pinID);
+                GoofyNodeOutConnection(string nodeInId, string nodeOutId, int pinID);
                 ~GoofyNodeOutConnection();
-  GoofyNode*    node;
+  GoofyNode*    nodeOut;
+  GoofyNode*    nodeIn;
+  string        nodeInId;
+  string        nodeOutId;
   int           pinID;
 };
 

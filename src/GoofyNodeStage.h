@@ -39,13 +39,16 @@ public:
   int                 countDrag;
   bool                checkMatch(GoofyNodePin* pin1, GoofyNodePin* pin2);
   void                addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage);
-  
+  void                addLineConnection(GoofyNodePin* pin1, GoofyNodePin* pin2);
   
   void                addPinConnection(GoofyNodePin* pin);
   long int            nodeCounts;
   
   GoofyNodeLineConnection* lineConnection;
   vector<GoofyNodeLineConnection*> connections;
+  vector<GoofyNode*>               tempNode;
+  vector<GoofyNodeOutConnection*>  tempNodeOutConnection;
+  void                  createConnections();
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNodeStage__) */

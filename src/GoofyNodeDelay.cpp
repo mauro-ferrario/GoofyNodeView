@@ -35,9 +35,9 @@ void GoofyNodeDelay::setup(string name)
   enableMouseEvents();
   setSize(100,30);
   createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((100-10)*.5,30), "output");
-  createSinglePin(0, GOOFY_NODE_PIN_INPUT, ofVec2f((100-10)*.5,-10), "input");
-  createSinglePin(1, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 0), "stop");
-  createSinglePin(2, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 20), "pause");
+  createSinglePin(1, GOOFY_NODE_PIN_INPUT, ofVec2f((100-10)*.5,-10), "input");
+  createSinglePin(2, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 0), "stop");
+  createSinglePin(3, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 20), "pause");
   initTextTimer();
 }
 
@@ -165,17 +165,17 @@ void GoofyNodeDelay::activeFunction(int id)
 {
   switch(id)
   {
-    case 0:
+    case 1:
       {
         startTimer();
         break;
       }
-    case 1:
+    case 2:
     {
       stopTimer();
       break;
     }
-    case 2:
+    case 3:
     {
       pauseTimer();
       break;

@@ -55,6 +55,15 @@ void GoofyNodeStage::createNewLineConnection(GoofyNodePin* pin)
   pin = NULL;
 }
 
+void GoofyNodeStage::addLineConnection(GoofyNodePin* pin1, GoofyNodePin* pin2)
+{
+  GoofyNodeLineConnection* tempLineConnection = new GoofyNodeLineConnection(pin1, pin2);
+  connections.push_back(tempLineConnection);
+  pin1 = NULL;
+  pin2 = NULL;
+  tempLineConnection = NULL;
+}
+
 void GoofyNodeStage::addPinConnection(GoofyNodePin* pin)
 {
   if(lineConnection == NULL)
@@ -86,12 +95,12 @@ void GoofyNodeStage::closeLineConnection(GoofyNodePin* pin)
   GoofyNodeOutConnection* newOutConnection;
   if(lineConnection->firstPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
   {
-    newOutConnection = new GoofyNodeOutConnection(lineConnection->secondPin->parent, lineConnection->secondPin->pinId);
+    newOutConnection = new GoofyNodeOutConnection(lineConnection->firstPin->parent, lineConnection->secondPin->parent, lineConnection->secondPin->pinId);
     lineConnection->firstPin->parent->nodeOutConnections.push_back(newOutConnection);
   }
   if(lineConnection->secondPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
   {
-    newOutConnection = new GoofyNodeOutConnection(lineConnection->firstPin->parent, lineConnection->firstPin->pinId);
+    newOutConnection = new GoofyNodeOutConnection(lineConnection->secondPin->parent, lineConnection->firstPin->parent, lineConnection->firstPin->pinId);
     lineConnection->secondPin->parent->nodeOutConnections.push_back(newOutConnection);
   }
   lineConnection->connection = newOutConnection;
@@ -142,6 +151,45 @@ void GoofyNodeStage::removeTempLineConnection()
   lineConnection = NULL;
 }
 
+void GoofyNodeStage::createConnections()
+{
+  vector<GoofyNodeOutConnection*>::iterator it = tempNodeOutConnection.begin();
+  while(it != tempNodeOutConnection.end())
+  {
+    //addLineConnection
+    cout << "**************" << endl;
+    cout << (*it)->nodeInId << endl;
+    cout << (*it)->nodeOutId<< endl;
+    cout << (*it)->pinID << endl;
+    cout << "Dentro" << endl;
+    
+    GoofyNodePin* pin1;
+    GoofyNodePin* pin2;
+    
+    for(int a = 0; a < tempNode.size(); a++)
+    {
+      cout << "NODE ID = " << (*it)->nodeInId << endl;
+      cout << "TEMP NODE ID = " << tempNode[a]->nodeId  << endl;
+      if(tempNode[a]->nodeId == (*it)->nodeInId)
+      {
+        cout << "Creo connessione 1" << endl;
+        pin1 = (GoofyNodePin*)tempNode[a]->nodes[0];
+      }
+      if(tempNode[a]->nodeId == (*it)->nodeOutId)
+      {
+        cout << "Creo connessione 2" << endl;
+        pin2 = (GoofyNodePin*)tempNode[a]->nodes[(*it)->pinID];
+      }
+    }
+    
+    
+    GoofyNodeLineConnection* newConnection = new GoofyNodeLineConnection(pin1, pin2);
+    connections.push_back(newConnection);
+    newConnection = NULL;
+    it++;
+  }
+}
+
 void GoofyNodeStage::update()
 {
   if(checkRelease)
@@ -184,6 +232,7 @@ void GoofyNodeStage::draw()
   
   vector<GoofyNodeLineConnection*>::iterator it = connections.begin();
   
+ // cout << "TOT CONNECTIONS =" << connections.size() << endl;
   while(it != connections.end())
   {
     if((*it)->toRemove)

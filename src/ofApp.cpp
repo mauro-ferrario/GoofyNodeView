@@ -15,18 +15,24 @@ void ofApp::setup(){
   
   
   xml.loadFile("test.xml");
+  if(true)
+  {
   nodeView->loadFromXML(&xml);
-  
-/*
+  nodeView->createConnections();
+  }
+  else
+  {
+
   delay1 = new GoofyNodeDelay(nodeView);
   delay1->setup("Delay 1");
   delay1->setPos(ofVec2f(40,140));
   nodeView->addNode(delay1);
-  
+  /*
     fake1 = new FakeClassForNode();
   fake1->setup();
   nodeView->addNode(fake1);
-
+*/
+    
    delay1 = new GoofyNodeDelay(nodeView);
   delay1->setup("Delay 1");
   delay1->setPos(ofVec2f(40,140));
@@ -44,7 +50,9 @@ void ofApp::setup(){
   nodeView->addNode(delay2);
   nodeView->addNode(GOOFY_DELAY, nodeView);
   nodeView->addNode(GOOFY_BUTTON, nodeView);
-  */
+  }
+  
+    
 }
 
 //--------------------------------------------------------------

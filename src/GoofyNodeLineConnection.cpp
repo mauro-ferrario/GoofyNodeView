@@ -23,6 +23,17 @@ GoofyNodeLineConnection::GoofyNodeLineConnection(GoofyNodePin* pin)
   enableMouseEvents();
 }
 
+GoofyNodeLineConnection::GoofyNodeLineConnection(GoofyNodePin* pin1, GoofyNodePin* pin2)
+{
+  editable  = false;
+  secondPin = pin2;
+  selected  = false;
+  toRemove  = false;
+  firstPin  = pin1;
+  logVerboseModule = "GoofyNodeLineConnection::_keyReleased";
+  enableMouseEvents();
+}
+
 GoofyNodeLineConnection::~GoofyNodeLineConnection()
 {
   firstPin = NULL;
