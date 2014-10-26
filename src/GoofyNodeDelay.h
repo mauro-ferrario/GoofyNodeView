@@ -20,7 +20,7 @@ class GoofyNodeDelay: public GoofyNode
 public:
                     GoofyNodeDelay();
                     GoofyNodeDelay(GoofyNodeStage* mainStage);
-                    ~GoofyNodeDelay();
+virtual ~GoofyNodeDelay();
   void              addNodeOutConnection(GoofyNode* node);
   void              setup(string name);
   void              update();

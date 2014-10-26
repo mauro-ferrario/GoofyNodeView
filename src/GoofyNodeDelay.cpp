@@ -22,7 +22,8 @@ GoofyNodeDelay::GoofyNodeDelay(GoofyNodeStage* mainStage)
 
 GoofyNodeDelay::~GoofyNodeDelay()
 {
-  
+  cout << "DESTROY DELAY" << endl;
+  textTimer.disable();
 }
 
 void GoofyNodeDelay::setup(string name)

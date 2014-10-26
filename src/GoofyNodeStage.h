@@ -46,10 +46,12 @@ public:
   
   GoofyNodeLineConnection* lineConnection;
   vector<GoofyNodeLineConnection*> connections;
-  vector<GoofyNode*>               tempNode;
+  vector<GoofyNode*>               tempNode; // Devo rimuovere anche da qui gli elementi rimossi
   vector<GoofyNodeOutConnection*>  tempNodeOutConnection;
   void                  createConnections();
   vector<GoofyBridgeToNode*> layers;
+  void                    removeNode(GoofyNode* node);
+  void                    removeNodeLineConnection(GoofyNode* node);
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNodeStage__) */

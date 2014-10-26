@@ -19,7 +19,36 @@ GoofyNode::GoofyNode()
 
 GoofyNode::~GoofyNode()
 {
+  cout << "remove node" << endl;
+  disableMouseEvents();
+  disableKeyboardEvents();
+  int totNodes = nodes.size();
+  for(int a = 0; a < totNodes; a++)
+  {
+    delete nodes[a];
+    nodes[a] = NULL;
+  }
+  nodes.clear();
   
+  //nodeOutConnections.clear();
+  parent = NULL;
+  mainStage = NULL;
+}
+
+void GoofyNode::removeAllNodeOutConnections(GoofyNode* nodeToRemove)
+{
+  int totConnections = nodeOutConnections.size();
+  for(int a = totConnections-1; a>=0; a--)
+  {
+    cout << "DENTRO TYPE = " << type << endl;
+    cout << "DENTRO " << nodeOutConnections[a]->nodeOut << endl;
+    if(nodeOutConnections[a]->nodeOut == nodeToRemove)
+    {
+      removeConnection(nodeOutConnections[a]);
+      //nodeOutConnections[a] = NULL;
+    }
+    //nodeOutConnections.pop_back();
+  }
 }
 
 void GoofyNode::setMainStage(GoofyNodeStage* mainStage)
@@ -37,9 +66,46 @@ void GoofyNode::enableMouseEvents()
 
 void GoofyNode::disableMouseEvents()
 {
-  ofRemoveListener(ofEvents().mousePressed, this, &GoofyNode::_mousePressed);
-  ofRemoveListener(ofEvents().mouseMoved, this, &GoofyNode::_mouseMoved);
-  ofRemoveListener(ofEvents().mouseReleased, this, &GoofyNode::_mouseReleased);
+  cout << "Disable events" << type << endl;
+  ofRemoveListener(ofEvents().mousePressed, this, &GoofyNode::_mousePressed, 1000 - type);
+  ofRemoveListener(ofEvents().mouseMoved, this, &GoofyNode::_mouseMoved, 1000 - type);
+  ofRemoveListener(ofEvents().mouseDragged, this, &GoofyNode::_mouseDragged, 1000 - type);
+  ofRemoveListener(ofEvents().mouseReleased, this, &GoofyNode::_mouseReleased, 1000 - type);
+}
+
+void GoofyNode::enableKeyboardEvents()
+{
+  ofAddListener(ofEvents().keyPressed, this, &GoofyNode::_keyPressed,100);
+}
+
+void GoofyNode::disableKeyboardEvents()
+{
+  ofRemoveListener(ofEvents().keyPressed, this, &GoofyNode::_keyPressed,100);
+}
+
+void GoofyNode::removeNodeChildren()
+{
+  cout << "TYPE = " << type << endl;
+  int totNodes = nodes.size();
+  for(int a = totNodes - 1; a >= 0; a--)
+  {
+    cout << nodes[a]->type << endl;
+    nodes[a]->removeNodeChildren();
+    mainStage->removeNodeLineConnection(nodes[a]);
+    delete nodes[a];
+    nodes[a] = NULL;
+  }
+  nodes.clear();
+}
+
+bool GoofyNode::_keyPressed(ofKeyEventArgs &e)
+{
+  if(e.key == OF_KEY_BACKSPACE && selected &&type != GOOFY_STAGE)
+  {
+    cout << "cancello" <<  type <<endl;
+    mainStage->removeNode(this);
+  }
+  return false;
 }
 
 void GoofyNode::removeMouseDragListener()
@@ -57,8 +123,11 @@ void GoofyNode::drawNodes()
 {
   for(int a = 0; a < nodes.size(); a++)
   {
-    nodes[a]->update();
-    nodes[a]->draw();
+    if(nodes[a])
+    {
+      nodes[a]->update();
+      nodes[a]->draw();
+    }
   }
 }
 
@@ -93,6 +162,7 @@ void GoofyNode:: setPos(ofVec2f newPos)
 
 void GoofyNode::_mouseReleased(ofMouseEventArgs &e)
 {
+  cout << type << endl;
   int x = e.x;
   int y = e.y;
   int button = e.button;
@@ -110,10 +180,12 @@ void GoofyNode::_mouseReleased(ofMouseEventArgs &e)
   
   if(hitTest(x, y))
   {
+    selected = true;
     onReleaseIn(x, y, button);
   }
   else
   {
+    selected = false;
   }
   isMousePressed = false;
   isDraggingIn = false;
@@ -124,7 +196,6 @@ void GoofyNode::_mouseMoved(ofMouseEventArgs &e)
   int x = e.x;
   int y = e.y;
   int button = e.button;
-  
   if(hitTest(x, y))
   {
     isMouseOver = true;
@@ -141,7 +212,7 @@ bool GoofyNode::_mouseDragged(ofMouseEventArgs &e)
   int y = e.y;
   int button = e.button;
 
-  
+  cout << "TYPE = " << type << endl;
   if(isDraggingIn)
   {
     if(type != GOOFY_PIN && type != GOOFY_STAGE)
@@ -213,6 +284,8 @@ void GoofyNode::setup(string name)
   pos.x       = 0;
   pos.y       = 0;
   type        = GOOFY_SIMPLE_NODE;
+  selected    = false;
+  enableKeyboardEvents();
 }
 
 void GoofyNode::update()
@@ -221,12 +294,23 @@ void GoofyNode::update()
 
 void GoofyNode::draw()
 {
+  ofPushStyle();
   ofPushMatrix();
   ofTranslate(pos - dragOffset);
   drawBackground();
   drawAfterBackground();
   drawNodes();
+  if(selected&&type != GOOFY_STAGE)
+    drawSelected();
   ofPopMatrix();
+}
+
+void GoofyNode::drawSelected()
+{
+  ofPushStyle();
+  ofSetColor(255,100);
+  ofRect(0,0,width, height);
+  ofPopStyle();
 }
 
 void GoofyNode::drawAfterBackground()
@@ -352,6 +436,7 @@ bool removeEqualElement(GoofyNodeOutConnection* connection1, GoofyNodeOutConnect
 
 void GoofyNode::removeConnection(GoofyNodeOutConnection* connection)
 {
+  cout << "CONNECTION OUT REMOVED " << endl;
   delete connection;
   nodeOutConnections.erase(std::remove(nodeOutConnections.begin(), nodeOutConnections.end(), connection), nodeOutConnections.end());
   connection = NULL;

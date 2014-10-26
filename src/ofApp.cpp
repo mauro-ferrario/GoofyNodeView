@@ -16,7 +16,7 @@ void ofApp::setup(){
   
   fake1 = new FakeClassForNode();
   fake1->setup();
-  fake1->id = "2014102621254-941";
+  fake1->id = "2014102623651-4070";
   nodeView->layers.push_back(fake1);
   
   xml.loadFile("test.xml");
@@ -34,14 +34,14 @@ void ofApp::setup(){
   delay1->setup("Delay 1");
   delay1->setPos(ofVec2f(40,140));
   nodeView->addNode(delay1);
-  /*
+  
    
-*/
+
     
     fake1 = new FakeClassForNode();
      fake1->setup();
      nodeView->addNode(fake1);
-     
+    
    delay1 = new GoofyNodeDelay(nodeView);
   delay1->setup("Delay 1");
   delay1->setPos(ofVec2f(40,140));
@@ -59,6 +59,7 @@ void ofApp::setup(){
   nodeView->addNode(delay2);
   nodeView->addNode(GOOFY_DELAY, nodeView);
   nodeView->addNode(GOOFY_BUTTON, nodeView);
+    
   }
   
     

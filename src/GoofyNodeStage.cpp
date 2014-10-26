@@ -20,6 +20,60 @@ GoofyNodeStage::~GoofyNodeStage()
   
 }
 
+void GoofyNodeStage::removeNode(GoofyNode* node)
+{
+  removeNodeLineConnection(node);
+ // return;
+  node->removeNodeChildren();
+  
+  
+  vector<GoofyNode*>::iterator itNodes = nodes.begin();
+  
+  while(itNodes != nodes.end())
+  {
+    if((*itNodes) == node)
+    {
+      nodes.erase(itNodes);
+    }
+    else
+      itNodes++;
+  }
+  
+  delete node;
+  node = NULL;
+}
+
+void GoofyNodeStage::removeNodeLineConnection(GoofyNode* node)
+{
+  vector<GoofyNodeLineConnection*>::iterator it = connections.begin();
+  while(it != connections.end())
+  {
+    cout << "ID = " << node->nodeId << endl;
+    cout << "TIPOOOO = " << node->type << endl;
+    if((*it)->firstPin->parent == node || (*it)->secondPin->parent == node)
+    {
+      cout << "Qui" << endl;
+      if((*it)->firstPin->parent == node)
+      {
+        cout << "Qui 2" << endl;
+        (*it)->secondPin->parent->removeAllNodeOutConnections(node);
+      }
+      if((*it)->secondPin->parent == node)
+      {
+        cout << "Qui 3" << endl;
+        (*it)->firstPin->parent->removeAllNodeOutConnections(node);
+      }
+      (*it)->connection = NULL;
+      delete (*it);
+      (*it) = NULL;
+      connections.erase(it);
+      cout << "Rimuovo" << endl;
+    }
+    else
+      it++;
+  }
+}
+
 void GoofyNodeStage::setup(string name)
 {
   GoofyNode::setup(name);
@@ -191,6 +245,13 @@ void GoofyNodeStage::createConnections()
     newOutConnection = NULL;
     it++;
   }
+  
+  int totTempNodes = tempNode.size();
+  for(int a = totTempNodes-1; a>=0; a--)
+  {
+    tempNode[a] = NULL;
+  }
+  tempNode.clear();
 }
 
 void GoofyNodeStage::update()

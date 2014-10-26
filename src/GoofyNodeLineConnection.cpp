@@ -40,6 +40,7 @@ GoofyNodeLineConnection::~GoofyNodeLineConnection()
   secondPin = NULL;
   connection = NULL;
   disableMouseEvents();
+  cout << "RIMUOVO LINEE" << endl;
 }
   
 void GoofyNodeLineConnection::draw()

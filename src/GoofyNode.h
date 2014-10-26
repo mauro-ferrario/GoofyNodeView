@@ -41,8 +41,10 @@ class GoofyNode
 public:
   
                       GoofyNode();
-                      ~GoofyNode();
+      virtual                ~GoofyNode();
   virtual void        setup(string name);
+  void                enableKeyboardEvents();
+  void                disableKeyboardEvents();
   void                enableMouseEvents();
   void                disableMouseEvents();
   void                setSize(int w, int h);
@@ -79,7 +81,10 @@ public:
   virtual void        saveSpecificInfo(ofxXmlSettings* xml);
   string              nodeId;
   void                loadFromXML(ofxXmlSettings* xml, int nodeXMLPos = 0);
-  
+  bool                selected;
+  void                drawSelected();
+  void                removeNodeChildren();
+  void                removeAllNodeOutConnections(GoofyNode* nodeToRemove);
   
   
 protected:
@@ -99,6 +104,7 @@ private:
   void                _mouseReleased(ofMouseEventArgs &e);
   void                _mouseMoved(ofMouseEventArgs &e);
   bool                _mouseDragged(ofMouseEventArgs &e);
+  bool                _keyPressed(ofKeyEventArgs &e);
   ofxXmlSettings*     xml;
 };
 
