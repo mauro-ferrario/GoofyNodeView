@@ -109,7 +109,20 @@ void GoofyNodeLineConnection::_mouseReleased(ofMouseEventArgs &e)
   
   if(abs(y1 - y) >= 0 && abs(y1 - y) <= 5)
   {
-    selected = true;
+    if(firstPin->getX() > secondPin->getX())
+    {
+      if(x < firstPin->getX() && x > secondPin->getX())
+        selected = true;
+      else
+        selected = false;
+    }
+    else if(firstPin->getX() <= secondPin->getX())
+    {
+      if(x < secondPin->getX() && x > firstPin->getX())
+        selected = true;
+      else
+        selected = false;
+    }
   }
   else
   {
