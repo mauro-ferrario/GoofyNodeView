@@ -9,6 +9,7 @@ A basic node interface for openFrameworks.
 
 - ofxMSATimer
 - ofxTextInputField
+- ofxXmlSettings
 
 ###How to use
 
