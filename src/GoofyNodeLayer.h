@@ -19,9 +19,8 @@ class GoofyNodeLayer: public GoofyNode
 {
 public:
                       GoofyNodeLayer();
-                      GoofyNodeLayer(GoofyNodeStage* mainStage, string name = "");
                       ~GoofyNodeLayer();
-  virtual void        setup(GoofyNodeStage* mainStage, string name = "");
+  virtual void        setup(string name);
   virtual void        update();
   virtual GoofyNode*  addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage);
   virtual GoofyNode*  addNode(GoofyNode* node, GoofyNodeStage* mainStage);

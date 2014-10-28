@@ -11,7 +11,6 @@
 
 GoofyBridgeToNode::GoofyBridgeToNode()
 {
-  
 }
 
 GoofyBridgeToNode::~GoofyBridgeToNode()
@@ -26,7 +25,6 @@ void GoofyBridgeToNode::initId()
 
 void GoofyBridgeToNode::setup()
 {
-  cout << "CAll setup" << endl;
   if(id == "")
     initId();
   defineNodeMethods();
