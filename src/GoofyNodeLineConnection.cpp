@@ -32,7 +32,7 @@ void GoofyNodeLineConnection::setup(GoofyNodePin* pin)
   toRemove          = false;
   firstPin          = pin;
   maxSelectedRange  = 5;
-  logVerboseModule = "GoofyNodeLineConnection::";
+  logVerboseModule  = "GoofyNodeLineConnection";
   startPoint  = ofVec2f(pin->getX() + 5, pin->getY() + 5);
   enableMouseEvents();
 }
