@@ -9,11 +9,7 @@ void ofApp::setup(){
   ofSetFrameRate(120);
   ofBackground(0);
   
-  nodeView = new GoofyNodeStage();
-  nodeView->setup("Main");
-  nodeView->setSize(ofGetWindowWidth(), ofGetWindowHeight());
-  
-  
+  nodeView = new GoofyNodeStage("Main", ofGetWindowWidth(), ofGetWindowHeight());
   fake1 = new FakeClassForNode();
   fake1->setup();
   fake1->id = "2014102703052-2625";

@@ -20,10 +20,11 @@ class GoofyNodeStage: public GoofyNodeLayer
 {
 public:
                                     GoofyNodeStage();
+                                    GoofyNodeStage(string name, int width, int height);
                                     ~GoofyNodeStage();
   void                              update();
   void                              draw();
-  void                              setup(string name);
+  void                              setup(string name, int width, int height);
   void                              drawBackground();
   GoofyNode*                        addNode(GoofyBridgeToNode* layer);
   GoofyNode*                        addNode(GoofyNode* node);
