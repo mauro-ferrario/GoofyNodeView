@@ -23,6 +23,7 @@ GoofyNodePin::~GoofyNodePin()
 void GoofyNodePin::setup(string name)
 {
   GoofyNode::setup(name);
+  setSize(10,10);
   type = GOOFY_PIN;
   enableMouseEvents();
 }
@@ -35,13 +36,12 @@ void GoofyNodePin::saveSpecificInfo(ofxXmlSettings* xml)
 }
 
 void GoofyNodePin::update()
-
 {
   
 }
+
 void GoofyNodePin::drawAfterBackground()
 {
-  //cout << "Drag over pin" << isMouseOver <<  endl;
   if(isMouseOver)
   {
     drawHole();
@@ -91,7 +91,6 @@ void GoofyNodePin::mouseDragged(int x, int y, int button)
 {
   if(isDraggingIn)
   {
-    //cout << "Drag pin mouse over" << endl;
     if(mainStage->lineConnection == NULL)
       mainStage->addPinConnection(this);
   }

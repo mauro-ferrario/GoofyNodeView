@@ -17,12 +17,12 @@ public:
                                 GoofyBridgeToNode();
                                 ~GoofyBridgeToNode();
   virtual void                  setup();
-  vector<string>                functionNames;
   virtual void                  activeFunction(int id);
   virtual void                  defineNodeMethods();
+  void                          initId();
   void                          addMethod(string methodName);
   string                        id;
-  void                          initId();
+  vector<string>                functionNames;
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyBridgeToNode__) */

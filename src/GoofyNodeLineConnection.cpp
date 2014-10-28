@@ -8,29 +8,32 @@
 
 #include "GoofyNodeLineConnection.h"
 
-
-#include "GoofyNodeLineConnection.h"
-
 GoofyNodeLineConnection::GoofyNodeLineConnection(GoofyNodePin* pin)
 {
-  editable  = false;
-  secondPin = NULL;
-  selected  = false;
-  toRemove  = false;
-  firstPin  = pin;
-  logVerboseModule = "GoofyNodeLineConnection::_keyReleased";
-  startPoint  = ofVec2f(pin->getX() + 5, pin->getY() + 5);
-  enableMouseEvents();
+  setup(pin);
 }
 
 GoofyNodeLineConnection::GoofyNodeLineConnection(GoofyNodePin* pin1, GoofyNodePin* pin2)
 {
-  editable  = false;
+  setup(pin1, pin2);
+}
+
+void GoofyNodeLineConnection::setup(GoofyNodePin* pin1, GoofyNodePin* pin2)
+{
+  setup(pin1);
   secondPin = pin2;
-  selected  = false;
-  toRemove  = false;
-  firstPin  = pin1;
-  logVerboseModule = "GoofyNodeLineConnection::_keyReleased";
+}
+
+void GoofyNodeLineConnection::setup(GoofyNodePin* pin)
+{
+  editable          = false;
+  secondPin         = NULL;
+  selected          = false;
+  toRemove          = false;
+  firstPin          = pin;
+  maxSelectedRange  = 5;
+  logVerboseModule = "GoofyNodeLineConnection::";
+  startPoint  = ofVec2f(pin->getX() + 5, pin->getY() + 5);
   enableMouseEvents();
 }
 
@@ -40,7 +43,6 @@ GoofyNodeLineConnection::~GoofyNodeLineConnection()
   secondPin = NULL;
   connection = NULL;
   disableMouseEvents();
-  cout << "RIMUOVO LINEE" << endl;
 }
   
 void GoofyNodeLineConnection::draw()
@@ -69,64 +71,70 @@ void GoofyNodeLineConnection::disableMouseEvents()
   ofRemoveListener(ofEvents().keyReleased, this, &GoofyNodeLineConnection::_keyReleased);
 }
 
-
 void GoofyNodeLineConnection::_keyReleased(ofKeyEventArgs &e)
 {
-   if(e.key == 127 && selected)
+   if(e.key == OF_KEY_BACKSPACE && selected)
    {
-     toRemove = true;
-     ofLogVerbose(logVerboseModule, "Remove line");
-     if(firstPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
-     {
-       ofLogVerbose(logVerboseModule, "Remove from first pin");
-       firstPin->parent->removeConnection(connection);
-       // Rimuovo da pin1
-     }
-     else
-     {
-       ofLogVerbose(logVerboseModule, "Remove from second pin");
-       secondPin->parent->removeConnection(connection);
-       // Rimuovo da pin2
-     }
-     connection = NULL;
+     remove();
    }
+}
+
+void GoofyNodeLineConnection::remove()
+{
+  toRemove = true;
+  ofLogVerbose(logVerboseModule, "Remove line");
+  GoofyNode* nodeToRemoveConnection;
+  if(firstPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
+  {
+    nodeToRemoveConnection = firstPin->parent;
+    ofLogVerbose(logVerboseModule, "Remove from first pin");
+  }
+  else
+  {
+    ofLogVerbose(logVerboseModule, "Remove from second pin");
+  }
+  nodeToRemoveConnection->parent->removeConnection(connection);
+  nodeToRemoveConnection = NULL;
+  connection = NULL;
 }
 
 void GoofyNodeLineConnection::_mouseReleased(ofMouseEventArgs &e)
 {
   if(secondPin == NULL || firstPin == NULL || editable)
     return;
+  
   int x = e.x;
   int y = e.y;
   int button = e.button;
   
-  ofVec2f point1 = ofVec2f(firstPin->getX() + 5, firstPin->getY() + 5);
-  ofVec2f point2 = ofVec2f(secondPin->getX() + 5, secondPin->getY() + 5);
-  
-  float delta = (point2.y - point1.y)/(point2.x - point1.x);
-  
-  float y1 = (delta*(point2.x - x)-point2.y);
-  y1 *= -1;
-  
-  if(abs(y1 - y) >= 0 && abs(y1 - y) <= 5)
-  {
-    if(firstPin->getX() > secondPin->getX())
-    {
-      if(x < firstPin->getX() && x > secondPin->getX())
-        selected = true;
-      else
-        selected = false;
-    }
-    else if(firstPin->getX() <= secondPin->getX())
-    {
-      if(x < secondPin->getX() && x > firstPin->getX())
-        selected = true;
-      else
-        selected = false;
-    }
-  }
+  if(isCloseToTheLine(x,y))
+    selected = true;
   else
-  {
     selected = false;
+}
+
+bool GoofyNodeLineConnection::isCloseToTheLine(int x, int y)
+{
+  float delta = (endPoint.y - startPoint.y)/(endPoint.x - startPoint.x);
+  float y1 = (delta*(endPoint.x - x)-endPoint.y);
+  y1 *= -1;
+  float distance = abs(y1-y);
+  if(distance >= 0 && distance <= maxSelectedRange)
+  {
+    if(startPoint.x > endPoint.x)
+    {
+      if(x < startPoint.x && x > endPoint.x)
+        return true;
+      else
+        return false;
+    }
+    else if(startPoint.x <= endPoint.x)
+    {
+      if(x < endPoint.x && x > startPoint.x)
+        return true;
+      else
+        return false;
+    }
   }
+  return false;
 }

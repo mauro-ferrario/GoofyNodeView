@@ -22,8 +22,8 @@ public:
                       ~GoofyNodeLayer();
   virtual void        setup(string name);
   virtual void        update();
-  virtual GoofyNode*        addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage);
-  virtual GoofyNode*        addNode(GoofyNode* node, GoofyNodeStage* mainStage);
+  virtual GoofyNode*  addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage);
+  virtual GoofyNode*  addNode(GoofyNode* node, GoofyNodeStage* mainStage);
   virtual void        mouseDragged(int x, int y, int button);
   void                createPins();
   GoofyBridgeToNode*  interactiveLayer;

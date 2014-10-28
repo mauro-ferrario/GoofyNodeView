@@ -16,16 +16,13 @@ void ofApp::setup(){
   
   fake1 = new FakeClassForNode();
   fake1->setup();
-  fake1->id = "2014102623651-4070";
-  nodeView->layers.push_back(fake1);
+  fake1->id = "2014102703052-2625";
+  nodeView->addLayer(fake1);
   
   xml.loadFile("test.xml");
   if(true)
   {
-  nodeView->loadFromXML(&xml);
-  nodeView->createConnections();
-    
-  
+    nodeView->loadFromXML(&xml);
   }
   else
   {
@@ -36,13 +33,11 @@ void ofApp::setup(){
   nodeView->addNode(delay1);
   
    
-
+  fake1 = new FakeClassForNode();
+  fake1->setup();
+  nodeView->addNode(fake1);
     
-    fake1 = new FakeClassForNode();
-     fake1->setup();
-     nodeView->addNode(fake1);
-    
-   delay1 = new GoofyNodeDelay(nodeView);
+  delay1 = new GoofyNodeDelay(nodeView);
   delay1->setup("Delay 1");
   delay1->setPos(ofVec2f(40,140));
   nodeView->addNode(delay1);

@@ -19,19 +19,9 @@ GoofyNode::GoofyNode()
 
 GoofyNode::~GoofyNode()
 {
-  cout << "remove node" << endl;
   disableMouseEvents();
   disableKeyboardEvents();
-  int totNodes = nodes.size();
-  for(int a = 0; a < totNodes; a++)
-  {
-    delete nodes[a];
-    nodes[a] = NULL;
-  }
-  nodes.clear();
-  
-  //nodeOutConnections.clear();
-  parent = NULL;
+  parent    = NULL;
   mainStage = NULL;
 }
 
@@ -40,14 +30,10 @@ void GoofyNode::removeAllNodeOutConnections(GoofyNode* nodeToRemove)
   int totConnections = nodeOutConnections.size();
   for(int a = totConnections-1; a>=0; a--)
   {
-    cout << "DENTRO TYPE = " << type << endl;
-    cout << "DENTRO " << nodeOutConnections[a]->nodeOut << endl;
     if(nodeOutConnections[a]->nodeOut == nodeToRemove)
     {
       removeConnection(nodeOutConnections[a]);
-      //nodeOutConnections[a] = NULL;
     }
-    //nodeOutConnections.pop_back();
   }
 }
 
@@ -66,7 +52,6 @@ void GoofyNode::enableMouseEvents()
 
 void GoofyNode::disableMouseEvents()
 {
-  cout << "Disable events" << type << endl;
   ofRemoveListener(ofEvents().mousePressed, this, &GoofyNode::_mousePressed, 1000 - type);
   ofRemoveListener(ofEvents().mouseMoved, this, &GoofyNode::_mouseMoved, 1000 - type);
   ofRemoveListener(ofEvents().mouseDragged, this, &GoofyNode::_mouseDragged, 1000 - type);
@@ -85,7 +70,6 @@ void GoofyNode::disableKeyboardEvents()
 
 void GoofyNode::removeNodeChildren()
 {
-  cout << "TYPE = " << type << endl;
   int totNodes = nodes.size();
   for(int a = totNodes - 1; a >= 0; a--)
   {
@@ -102,15 +86,9 @@ bool GoofyNode::_keyPressed(ofKeyEventArgs &e)
 {
   if(e.key == OF_KEY_BACKSPACE && selected &&type != GOOFY_STAGE)
   {
-    cout << "cancello" <<  type <<endl;
     mainStage->removeNode(this);
   }
   return false;
-}
-
-void GoofyNode::removeMouseDragListener()
-{
-  ofRemoveListener(ofEvents().mouseDragged, this, &GoofyNode::_mouseDragged);
 }
 
 void GoofyNode::setSize(int w, int h)
@@ -162,7 +140,6 @@ void GoofyNode:: setPos(ofVec2f newPos)
 
 void GoofyNode::_mouseReleased(ofMouseEventArgs &e)
 {
-  cout << type << endl;
   int x = e.x;
   int y = e.y;
   int button = e.button;
@@ -211,8 +188,7 @@ bool GoofyNode::_mouseDragged(ofMouseEventArgs &e)
   int x = e.x;
   int y = e.y;
   int button = e.button;
-
-  cout << "TYPE = " << type << endl;
+  
   if(isDraggingIn)
   {
     if(type != GOOFY_PIN && type != GOOFY_STAGE)
@@ -229,11 +205,9 @@ bool GoofyNode::_mouseDragged(ofMouseEventArgs &e)
       if(mainStage->countDrag > 1 && type != GOOFY_PIN  && type != GOOFY_STAGE)
         return true;
     }
-    
     isMouseOver = true;
     if(isMousePressed)
       isDraggingIn  = true;
-    
   }
   else
   {
@@ -275,16 +249,16 @@ bool GoofyNode::hitTest(int tx, int ty)
 
 void GoofyNode::setup(string name)
 {
-  logVerboseModule = "";
-  this->name  = name;
-  mouseDragStart = ofVec2f(0,0);
-  dragOffset = ofVec2f(0,0);
-  isDraggingIn  = false;
-  parent      = NULL;
-  pos.x       = 0;
-  pos.y       = 0;
-  type        = GOOFY_SIMPLE_NODE;
-  selected    = false;
+  logVerboseModule  = "";
+  this->name        = name;
+  mouseDragStart    = ofVec2f(0,0);
+  dragOffset        = ofVec2f(0,0);
+  isDraggingIn      = false;
+  parent            = NULL;
+  pos.x             = 0;
+  pos.y             = 0;
+  type              = GOOFY_SIMPLE_NODE;
+  selected          = false;
   enableKeyboardEvents();
 }
 
@@ -327,7 +301,6 @@ GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofV
 {
   GoofyNodePin* newPin = new GoofyNodePin(mode);
   newPin->setup(name);
-  newPin->setSize(10,10);
   newPin->setPos(pos);
   newPin->pinId = idFunction;
   newPin->parent = this;
@@ -359,7 +332,6 @@ GoofyNode* GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage,
     }
     case GOOFY_DELAY:
     {
-      //addNode(GoofyNodeDelay::createDelay(pos, this->mainStage, 0, name), this->mainStage);
       break;
     }
     case GOOFY_BUTTON:
@@ -382,13 +354,17 @@ GoofyNode* GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage, ofVec2
   node->setMainStage(mainStage);
   if(node->nodeId == "")
   {
-    node->nodeId = ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(mainStage->nodeCounts);
+    node->nodeId = generateId();
   }
-  mainStage->nodeCounts++;
   if(node->type != GOOFY_PIN)
     mainStage->tempNode.push_back(node);
   nodes.push_back(node);
   return node;
+}
+
+string GoofyNode::generateId()
+{
+  return ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(mainStage->tempNode.size());
 }
 
 void GoofyNode::drawBackground()
@@ -436,7 +412,6 @@ bool removeEqualElement(GoofyNodeOutConnection* connection1, GoofyNodeOutConnect
 
 void GoofyNode::removeConnection(GoofyNodeOutConnection* connection)
 {
-  cout << "CONNECTION OUT REMOVED " << endl;
   delete connection;
   nodeOutConnections.erase(std::remove(nodeOutConnections.begin(), nodeOutConnections.end(), connection), nodeOutConnections.end());
   connection = NULL;
@@ -475,7 +450,6 @@ void GoofyNode::saveInfo(ofxXmlSettings* xml, int tagPos)
   xml->addValue("y", getY());
   xml->popTag();
   
-  
   saveOutConnections(xml);
   
   xml->addTag("nodes");
@@ -506,7 +480,6 @@ void GoofyNode::saveOutConnections(ofxXmlSettings* xml)
   xml->popTag();
 }
 
-
 void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
 {
   xml->pushTag("node", nodeXMLPos);
@@ -536,21 +509,20 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
       // Sono per forza nello stage
       GoofyNodeStage* stage = (GoofyNodeStage*)this;
       GoofyBridgeToNode* interactiveLayer;
-      for(int a = 0; a < mainStage->layers.size(); a++)
+      string idToFind = xml->getValue("interactiveLayerId","");
+      GoofyBridgeToNode* foundLayer = mainStage->getLayerById(idToFind);
+      if(foundLayer)
       {
-        if(mainStage->layers[a]->id == xml->getValue("interactiveLayerId",""))
-        {
-          cout << "Layer corrispondente trovato" << endl;
-          interactiveLayer = mainStage->layers[a];
-        }
+        interactiveLayer = foundLayer;
+        GoofyNode* tempNode = stage->addNode(interactiveLayer);
+        tempNode->nodeId = xml->getValue("interactiveLayerId","");
       }
-      GoofyNode* tempNode = stage->addNode(interactiveLayer);
-      cout << tempNode << endl;
-      tempNode->nodeId = xml->getValue("interactiveLayerId","");
-      //tempNode->nodeId =
-      cout << xml->getValue("interactiveLayerId","") << endl;;
-      interactiveLayer = NULL;
-      cout << "Devo creare un layer" << endl;
+      else
+      {
+        ofLogVerbose(logVerboseModule, "interactive layer not found!");
+      }
+      foundLayer        = NULL;
+      interactiveLayer  = NULL;
     }
   }
   

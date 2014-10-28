@@ -80,11 +80,12 @@ public:
   void                saveOutConnections(ofxXmlSettings* xml);
   virtual void        saveSpecificInfo(ofxXmlSettings* xml);
   string              nodeId;
-  void                loadFromXML(ofxXmlSettings* xml, int nodeXMLPos = 0);
+  virtual void        loadFromXML(ofxXmlSettings* xml, int nodeXMLPos = 0);
   bool                selected;
   void                drawSelected();
   void                removeNodeChildren();
   void                removeAllNodeOutConnections(GoofyNode* nodeToRemove);
+  string              generateId();
   
   
 protected:

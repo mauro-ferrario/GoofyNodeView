@@ -19,20 +19,18 @@ GoofyNodeDelay::GoofyNodeDelay(GoofyNodeStage* mainStage)
   this->mainStage = mainStage;
 }
 
-
 GoofyNodeDelay::~GoofyNodeDelay()
 {
-  cout << "DESTROY DELAY" << endl;
   textTimer.disable();
 }
 
 void GoofyNodeDelay::setup(string name)
 {
-  secondsDelay  = 0;
-  isPause       = false;
-  timeStartPause = 0;
+  secondsDelay    = 0;
+  isPause         = false;
+  timeStartPause  = 0;
   GoofyNode::setup(name);
-  type          = GOOFY_DELAY;
+  type            = GOOFY_DELAY;
   enableMouseEvents();
   setSize(100,30);
   createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((100-10)*.5,30), "output");
@@ -114,12 +112,10 @@ void GoofyNodeDelay::pauseTimer()
   isPause = !isPause;
   if(isPause)
   {
-    //timerActive     = false;
     timeStartPause = timer.getAppTimeMillis();
   }
   else
   {
-    //timerActive = true;
     float timerOffset = timer.getAppTimeMillis() - timeStartPause;
     endTimer        += timerOffset;
   }

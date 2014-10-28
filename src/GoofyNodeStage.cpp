@@ -12,7 +12,7 @@ GoofyNodeStage::GoofyNodeStage()
 {
   lineConnection    = NULL;
   logVerboseModule  = "GoofyNodeStage";
-  nodeCounts        = 0;
+  countDrag         = 0;
 }
 
 GoofyNodeStage::~GoofyNodeStage()
@@ -23,10 +23,7 @@ GoofyNodeStage::~GoofyNodeStage()
 void GoofyNodeStage::removeNode(GoofyNode* node)
 {
   removeNodeLineConnection(node);
- // return;
   node->removeNodeChildren();
-  
-  
   vector<GoofyNode*>::iterator itNodes = nodes.begin();
   
   while(itNodes != nodes.end())
@@ -48,26 +45,20 @@ void GoofyNodeStage::removeNodeLineConnection(GoofyNode* node)
   vector<GoofyNodeLineConnection*>::iterator it = connections.begin();
   while(it != connections.end())
   {
-    cout << "ID = " << node->nodeId << endl;
-    cout << "TIPOOOO = " << node->type << endl;
     if((*it)->firstPin->parent == node || (*it)->secondPin->parent == node)
     {
-      cout << "Qui" << endl;
       if((*it)->firstPin->parent == node)
       {
-        cout << "Qui 2" << endl;
         (*it)->secondPin->parent->removeAllNodeOutConnections(node);
       }
       if((*it)->secondPin->parent == node)
       {
-        cout << "Qui 3" << endl;
         (*it)->firstPin->parent->removeAllNodeOutConnections(node);
       }
       (*it)->connection = NULL;
       delete (*it);
       (*it) = NULL;
       connections.erase(it);
-      cout << "Rimuovo" << endl;
     }
     else
       it++;
@@ -79,7 +70,6 @@ void GoofyNodeStage::setup(string name)
   GoofyNode::setup(name);
   type = GOOFY_STAGE;
   checkRelease = false;
-  countDrag = 0;
   enableMouseEvents();
 }
 
@@ -163,7 +153,6 @@ void GoofyNodeStage::closeLineConnection(GoofyNodePin* pin)
   lineConnection = NULL;
 }
 
-
 bool GoofyNodeStage::checkMatch(GoofyNodePin* pin1, GoofyNodePin* pin2)
 {
   int passed = 0;
@@ -205,20 +194,19 @@ void GoofyNodeStage::removeTempLineConnection()
   lineConnection = NULL;
 }
 
+void GoofyNodeStage::loadFromXML(ofxXmlSettings* xml)
+{
+  cout << "LOD XML" << endl;
+  GoofyNode::loadFromXML(xml);
+  createConnections();
+  clearLayers();
+}
+
 void GoofyNodeStage::createConnections()
 {
   vector<GoofyNodeOutConnection*>::iterator it = tempNodeOutConnection.begin();
   while(it != tempNodeOutConnection.end())
   {
-    //addLineConnection
-//    cout << "**************" << endl;
-//    cout << (*it)->nodeInId << endl;
-//    cout << (*it)->nodeOutId<< endl;
-//    cout << (*it)->pinID << endl;
-//    cout << "Dentro" << endl;
-    
-    
-   
     GoofyNodePin* pin1;
     GoofyNodePin* pin2;
     
@@ -233,10 +221,7 @@ void GoofyNodeStage::createConnections()
         pin2 = (GoofyNodePin*)tempNode[a]->nodes[(*it)->pinID];
       }
     }
-    
     GoofyNodeOutConnection* newOutConnection = new GoofyNodeOutConnection(pin1->parent, pin2->parent, (*it)->pinID);
-    
-    
     GoofyNodeLineConnection* newConnection = new GoofyNodeLineConnection(pin1, pin2);
     pin1->parent->nodeOutConnections.push_back(newOutConnection);
     newConnection->connection = newOutConnection;
@@ -245,7 +230,6 @@ void GoofyNodeStage::createConnections()
     newOutConnection = NULL;
     it++;
   }
-  
   int totTempNodes = tempNode.size();
   for(int a = totTempNodes-1; a>=0; a--)
   {
@@ -293,10 +277,7 @@ void GoofyNodeStage::draw()
   {
     lineConnection->draw();
   }
-  
   vector<GoofyNodeLineConnection*>::iterator it = connections.begin();
-  
- // cout << "TOT CONNECTIONS =" << connections.size() << endl;
   while(it != connections.end())
   {
     if((*it)->toRemove)
@@ -306,7 +287,6 @@ void GoofyNodeStage::draw()
       (*it)->draw();
       it++;
     }
-    //(GoofyNodeLineConnection*)*it.
   }
   
   for(int a = 0; a < connections.size(); a++)
@@ -327,4 +307,31 @@ void GoofyNodeStage::onReleaseIn(int x, int y, int button)
 void GoofyNodeStage::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage)
 {
   GoofyNode::addNode(type, mainStage);
+}
+
+void GoofyNodeStage::addLayer(GoofyBridgeToNode* newLayer)
+{
+  layers.push_back(newLayer);
+  newLayer = NULL;
+}
+
+GoofyBridgeToNode* GoofyNodeStage::getLayerById(string layerId)
+{
+  int totLayers = layers.size();
+  for(int a = 0; a < totLayers; a++)
+  {
+    if(layers[a]->id == layerId)
+    {
+      return mainStage->layers[a];
+    }
+  }
+  return NULL;
+}
+
+void GoofyNodeStage::clearLayers()
+{
+  int totLayers = layers.size();
+  for(int a = 0; a < totLayers; a++)
+    layers[a] = NULL;
+  layers.clear();
 }

@@ -18,35 +18,35 @@ class GoofyNodeStage;
 class GoofyNodeDelay: public GoofyNode
 {
 public:
-                    GoofyNodeDelay();
-                    GoofyNodeDelay(GoofyNodeStage* mainStage);
-virtual ~GoofyNodeDelay();
-  void              addNodeOutConnection(GoofyNode* node);
-  void              setup(string name);
-  void              update();
-  void              draw();
-  void              activeFunction(int id);
-  void              setDelay(float seconds);
-  void              saveSpecificInfo(ofxXmlSettings* xml);
-  static GoofyNodeDelay* createDelay(ofVec2f pos, GoofyNodeStage* mainStage, float secondsDelay, string name);
+                          GoofyNodeDelay();
+                          GoofyNodeDelay(GoofyNodeStage* mainStage);
+  virtual                 ~GoofyNodeDelay();
+  void                    addNodeOutConnection(GoofyNode* node);
+  void                    setup(string name);
+  void                    update();
+  void                    draw();
+  void                    activeFunction(int id);
+  void                    setDelay(float seconds);
+  void                    saveSpecificInfo(ofxXmlSettings* xml);
+  static GoofyNodeDelay*  createDelay(ofVec2f pos, GoofyNodeStage* mainStage, float secondsDelay, string name);
 
 private:
-  void              drawAfterBackground();
-  void              timerEnded();
-  void              checkTimer();
-  void              startTimer();
-  void              stopTimer();
-  void              pauseTimer();
-  void              resetTimer();
-  void              initTextTimer();
-  bool              timerActive;
-  float             timeStartTimer;
-  float             endTimer;
-  float             secondsDelay;
-  ofxMSATimer       timer;
-  ofxTextInputField textTimer;
-  bool              isPause;
-  float             timeStartPause;
+  void                    drawAfterBackground();
+  void                    timerEnded();
+  void                    checkTimer();
+  void                    startTimer();
+  void                    stopTimer();
+  void                    pauseTimer();
+  void                    resetTimer();
+  void                    initTextTimer();
+  bool                    timerActive;
+  float                   timeStartTimer;
+  float                   endTimer;
+  float                   secondsDelay;
+  ofxMSATimer             timer;
+  ofxTextInputField       textTimer;
+  bool                    isPause;
+  float                   timeStartPause;
 };
 
 #endif /* defined(__GoofyNodeTest__GoofyNodeDelay__) */
