@@ -84,7 +84,7 @@ void GoofyNode::removeNodeChildren()
 
 bool GoofyNode::_keyPressed(ofKeyEventArgs &e)
 {
-  if(e.key == OF_KEY_BACKSPACE && selected &&type != GOOFY_STAGE)
+  if(e.key == OF_KEY_BACKSPACE && selected && type != GOOFY_STAGE && type != GOOFY_PIN)
   {
     mainStage->removeNode(this);
   }
