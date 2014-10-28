@@ -247,6 +247,27 @@ bool GoofyNode::hitTest(int tx, int ty)
   return (tx > x) && (tx < x + width) && (ty > y) && (ty < y + height);
 }
 
+
+
+
+void GoofyNode::setup(GoofyNodeStage* mainStage, string name)
+{
+  this->mainStage   = mainStage;
+  logVerboseModule  = "";
+  this->name        = name;
+  mouseDragStart    = ofVec2f(0,0);
+  dragOffset        = ofVec2f(0,0);
+  isDraggingIn      = false;
+  parent            = NULL;
+  pos.x             = 0;
+  pos.y             = 0;
+  type              = GOOFY_SIMPLE_NODE;
+  selected          = false;
+  enableKeyboardEvents();
+  mainStage = NULL;
+}
+
+/*
 void GoofyNode::setup(string name)
 {
   logVerboseModule  = "";
@@ -261,6 +282,7 @@ void GoofyNode::setup(string name)
   selected          = false;
   enableKeyboardEvents();
 }
+*/
 
 void GoofyNode::update()
 {
@@ -299,8 +321,8 @@ GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofV
 
 GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos, string name)
 {
-  GoofyNodePin* newPin = new GoofyNodePin(mode);
-  newPin->setup(name);
+  GoofyNodePin* newPin = new GoofyNodePin(mainStage, "", mode);
+  //newPin->setup(name);
   newPin->setPos(pos);
   newPin->pinId = idFunction;
   newPin->parent = this;

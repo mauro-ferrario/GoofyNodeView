@@ -9,20 +9,21 @@
 #include "GoofyNodePin.h"
 #include "GoofyNodeStage.h"
 
-GoofyNodePin::GoofyNodePin(GoofyNodePinMode mode)
+GoofyNodePin::GoofyNodePin(GoofyNodeStage* mainStage, string name, GoofyNodePinMode mode)
 {
   pinId     = -1;
   pinMode   = mode;
+  setup(mainStage, name);
 }
 
 GoofyNodePin::~GoofyNodePin()
 {
-  
+  GoofyNodePin(NULL);
 }
 
-void GoofyNodePin::setup(string name)
+void GoofyNodePin::setup(GoofyNodeStage* mainStage, string name)
 {
-  GoofyNode::setup(name);
+  GoofyNode::setup(mainStage, name);
   setSize(10,10);
   type = GOOFY_PIN;
   enableMouseEvents();

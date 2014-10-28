@@ -15,10 +15,10 @@ GoofyNodeStage::GoofyNodeStage()
 
 GoofyNodeStage::GoofyNodeStage(string name, int width, int height)
 {
-  setup(name, width, height);
   lineConnection    = NULL;
   logVerboseModule  = "GoofyNodeStage";
   countDrag         = 0;
+  setup(name, width, height);
 }
 
 GoofyNodeStage::~GoofyNodeStage()
@@ -74,7 +74,7 @@ void GoofyNodeStage::removeNodeLineConnection(GoofyNode* node)
 void GoofyNodeStage::setup(string name, int width, int height)
 {
   setSize(width, height);
-  GoofyNode::setup(name);
+  GoofyNode::setup(NULL, name);
   type = GOOFY_STAGE;
   checkRelease = false;
   enableMouseEvents();

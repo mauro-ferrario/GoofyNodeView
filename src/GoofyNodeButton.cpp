@@ -11,11 +11,12 @@
 
 GoofyNodeButton::GoofyNodeButton()
 {
+  GoofyNodeButton(NULL);
 }
 
-GoofyNodeButton::GoofyNodeButton(GoofyNodeStage* mainStage)
+GoofyNodeButton::GoofyNodeButton(GoofyNodeStage* mainStage, string name)
 {
-  this->mainStage = mainStage;
+  setup(mainStage, name);
 }
 
 GoofyNodeButton::~GoofyNodeButton()
@@ -23,9 +24,9 @@ GoofyNodeButton::~GoofyNodeButton()
   
 }
 
-void GoofyNodeButton::setup(string name)
+void GoofyNodeButton::setup(GoofyNodeStage* mainStage, string name)
 {
-  GoofyNode::setup(name);
+  GoofyNode::setup(mainStage, name);
   setSize(30,30);
   type = GOOFY_BUTTON;
   enableMouseEvents();
@@ -54,7 +55,7 @@ void GoofyNodeButton::onReleaseIn(int x, int y, int button)
 GoofyNodeButton* GoofyNodeButton::createButton(ofVec2f pos, GoofyNodeStage* mainStage, string name)
 {
   GoofyNodeButton* btn = new GoofyNodeButton(mainStage);
-  btn->setup("button");
+  //btn->setup("button");
   btn->setPos(pos);
   mainStage = NULL;
   return btn;

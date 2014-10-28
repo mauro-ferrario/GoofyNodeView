@@ -42,7 +42,8 @@ public:
   
                       GoofyNode();
       virtual                ~GoofyNode();
-  virtual void        setup(string name);
+  virtual void        setup(GoofyNodeStage* mainStage = NULL, string name = "");
+//  virtual void        setup(string name);
   void                enableKeyboardEvents();
   void                disableKeyboardEvents();
   void                enableMouseEvents();

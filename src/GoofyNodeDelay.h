@@ -19,10 +19,10 @@ class GoofyNodeDelay: public GoofyNode
 {
 public:
                           GoofyNodeDelay();
-                          GoofyNodeDelay(GoofyNodeStage* mainStage);
+                          GoofyNodeDelay(GoofyNodeStage* mainStage, string name = "");
   virtual                 ~GoofyNodeDelay();
   void                    addNodeOutConnection(GoofyNode* node);
-  void                    setup(string name);
+  void                    setup(GoofyNodeStage* mainStage, string name);
   void                    update();
   void                    draw();
   void                    activeFunction(int id);

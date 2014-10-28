@@ -11,20 +11,26 @@
 
 GoofyNodeLayer::GoofyNodeLayer()
 {
+  GoofyNodeLayer(NULL);
+}
+
+GoofyNodeLayer::GoofyNodeLayer(GoofyNodeStage* mainStage, string name)
+{
   interactiveLayer = NULL;
+  setup(mainStage, name);
 }
 
 GoofyNodeLayer::~GoofyNodeLayer()
 {
-  
 }
 
-void GoofyNodeLayer::setup(string name)
+void GoofyNodeLayer::setup(GoofyNodeStage* mainStage, string name)
 {
-  GoofyNode::setup(name);
+  GoofyNode::setup(mainStage, name);
   type = GOOFY_LAYER;
   setSize(200,100);
   enableMouseEvents();
+  mainStage = NULL;
 }
 
 void GoofyNodeLayer::update()
@@ -49,9 +55,8 @@ void GoofyNodeLayer::saveSpecificInfo(ofxXmlSettings* xml)
 
 GoofyNode* GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage)
 {
-  this->mainStage = mainStage;
-  GoofyNodeLayer* node = new GoofyNodeLayer();
-  node->setup("Layer");
+//  this->mainStage = mainStage;
+  GoofyNodeLayer* node = new GoofyNodeLayer(mainStage, "Layer");
   node->setPos(ofVec2f(ofRandom(0,600),ofRandom(0,600)));
   node->interactiveLayer = layer;
   GoofyNode::addNode(node, mainStage);
