@@ -315,8 +315,8 @@ GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofV
 
 GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos, string name)
 {
-  GoofyNodePin* newPin = new GoofyNodePin(mode);
-  newPin->setup(name);
+  cout << "CREO PIN" << mainStage << endl;
+  GoofyNodePin* newPin = new GoofyNodePin(mainStage, name, mode);
   newPin->setPos(pos);
   newPin->pinId = idFunction;
   newPin->parent = this;

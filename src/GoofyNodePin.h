@@ -15,9 +15,10 @@
 class GoofyNodePin: public GoofyNode
 {
 public:
-                      GoofyNodePin(GoofyNodePinMode mode = GOOFY_NODE_PIN_NOT_DEFINED);
+                      GoofyNodePin();
+                      GoofyNodePin(GoofyNodeStage* mainStage, string name = "", GoofyNodePinMode mode = GOOFY_NODE_PIN_NOT_DEFINED);
                       ~GoofyNodePin();
-  virtual void        setup(string name);
+  virtual void        setup(GoofyNodeStage* mainStage, string name = "");
   virtual void        update();
   virtual void        drawAfterBackground();
   void                drawHole();

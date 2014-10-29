@@ -9,10 +9,16 @@
 #include "GoofyNodePin.h"
 #include "GoofyNodeStage.h"
 
-GoofyNodePin::GoofyNodePin(GoofyNodePinMode mode)
+GoofyNodePin::GoofyNodePin()
+{
+  GoofyNodePin(NULL);
+}
+                           
+GoofyNodePin::GoofyNodePin(GoofyNodeStage* mainStage, string name, GoofyNodePinMode mode)
 {
   pinId     = -1;
   pinMode   = mode;
+  setup(mainStage, name);
 }
 
 GoofyNodePin::~GoofyNodePin()
@@ -20,7 +26,7 @@ GoofyNodePin::~GoofyNodePin()
   
 }
 
-void GoofyNodePin::setup(string name)
+void GoofyNodePin::setup(GoofyNodeStage* mainStage, string name)
 {
   GoofyNode::setup(name);
   setSize(10,10);

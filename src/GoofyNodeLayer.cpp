@@ -62,7 +62,7 @@ GoofyNode* GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mai
 
 GoofyNode* GoofyNodeLayer::addNode(GoofyNode* node, GoofyNodeStage* mainStage)
 {
-  if(node->type != GOOFY_DELAY || node->type != GOOFY_BUTTON)
+  if(node->type != GOOFY_DELAY || node->type != GOOFY_BUTTON || node->type != GOOFY_PIN)
     this->mainStage = mainStage;
   return GoofyNode::addNode(node, mainStage);
 }
