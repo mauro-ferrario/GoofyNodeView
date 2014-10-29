@@ -10,7 +10,6 @@
 
 GoofyNodeStageHandler::GoofyNodeStageHandler()
 {
-  cout << "costuttore di GoofyNodeStageHandler " << endl;
   lineConnection    = NULL;
   checkRelease = false;
 }

@@ -73,7 +73,6 @@ void GoofyNode::removeNodeChildren()
   int totNodes = nodes.size();
   for(int a = totNodes - 1; a >= 0; a--)
   {
-    cout << nodes[a]->type << endl;
     nodes[a]->removeNodeChildren();
     mainStage->removeNodeLineConnection(nodes[a]);
     delete nodes[a];
@@ -261,21 +260,6 @@ void GoofyNode::setup(GoofyNodeStage* mainStage, GoofyNodeGuiTypes type, string 
   pos.y             = 0;
   selected          = false;
   enableMouseEvents();
-  enableKeyboardEvents();
-}
-
-void GoofyNode::setup(string name)
-{
-  logVerboseModule  = "";
-  this->name        = name;
-  mouseDragStart    = ofVec2f(0,0);
-  dragOffset        = ofVec2f(0,0);
-  isDraggingIn      = false;
-  parent            = NULL;
-  pos.x             = 0;
-  pos.y             = 0;
-  type              = GOOFY_SIMPLE_NODE;
-  selected          = false;
   enableKeyboardEvents();
 }
 
@@ -505,7 +489,6 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
   string tempId =  xml->getValue("id","");
   if(type == GOOFY_STAGE)
     this->nodeId = xml->getValue("id","");
-  //cout << "ID FROM XML" << this->nodeId << endl;
   ofVec2f pos;
   pos.x = xml->getValue("position:x", 0);
   pos.y = xml->getValue("position:y", 0);
@@ -549,15 +532,11 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
   
   if(totOutConnections > 0)
   {
-   // cout << "Create connections " << endl;
     xml->pushTag("outConnections");
     int totConnection = xml->getNumTags("outConnection");
     for(int i = 0; i < totConnection; i++)
     {
-      //cout << "Boh " << i << endl;
       xml->pushTag("outConnection",i);
-     // cout << xml->getValue("nodeId", "") << endl;;
-     // cout << xml->getValue("pinId", 0) << endl;
       GoofyNodeOutConnection* tempOutConnection = new GoofyNodeOutConnection(tempId, xml->getValue("nodeId", ""), xml->getValue("pinId", 0));
       
       mainStage->tempNodeOutConnection.push_back(tempOutConnection);
@@ -567,7 +546,8 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
     xml->popTag();
   }
   
-  if(type == GOOFY_STAGE); // || type == GOOFY_LAYER)
+  // Controllare qui
+  if(type == GOOFY_STAGE)
   {
     xml->pushTag("nodes");
     int nodes = xml->getNumTags("node");;
