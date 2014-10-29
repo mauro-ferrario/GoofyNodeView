@@ -155,7 +155,7 @@ void GoofyNode::_mouseReleased(ofMouseEventArgs &e)
     }
   }
   
-  if(hitTest(x, y))
+  if(hitTest(x, y) && type != GOOFY_PIN && type != GOOFY_STAGE)
   {
     selected = true;
     onReleaseIn(x, y, button);
@@ -315,7 +315,6 @@ GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofV
 
 GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos, string name)
 {
-  cout << "CREO PIN" << mainStage << endl;
   GoofyNodePin* newPin = new GoofyNodePin(mainStage, name, mode);
   newPin->setPos(pos);
   newPin->pinId = idFunction;
@@ -579,6 +578,14 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
     xml->popTag();
   }
   xml->popTag();
+}
+
+void GoofyNode::addToStage()
+{
+  if(mainStage)
+    mainStage->addNode(this);
+  else
+    ofLogVerbose(logVerboseModule, "stage doesn't exist!");
 }
 
 void GoofyNode::saveSpecificInfo(ofxXmlSettings* xml)
