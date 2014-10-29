@@ -41,8 +41,9 @@ class GoofyNode
 public:
   
                       GoofyNode();
-      virtual                ~GoofyNode();
-  virtual void        setup(string name);
+  virtual                ~GoofyNode();
+  virtual void        setup(GoofyNodeStage* mainStage, string name = "");
+  virtual void        setup(string name = "");
   void                enableKeyboardEvents();
   void                disableKeyboardEvents();
   void                enableMouseEvents();

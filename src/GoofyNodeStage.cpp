@@ -15,10 +15,11 @@ GoofyNodeStage::GoofyNodeStage()
 
 GoofyNodeStage::GoofyNodeStage(string name, int width, int height)
 {
-  setup(name, width, height);
+  mainStage         = this;
   lineConnection    = NULL;
   logVerboseModule  = "GoofyNodeStage";
   countDrag         = 0;
+  setup(name, width, height);
 }
 
 GoofyNodeStage::~GoofyNodeStage()
@@ -203,7 +204,6 @@ void GoofyNodeStage::removeTempLineConnection()
 
 void GoofyNodeStage::loadFromXML(ofxXmlSettings* xml)
 {
-  cout << "LOD XML" << endl;
   GoofyNode::loadFromXML(xml);
   createConnections();
   clearLayers();

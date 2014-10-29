@@ -11,12 +11,13 @@
 
 GoofyNodeDelay::GoofyNodeDelay()
 {
-  timerActive = false;
+  GoofyNodeDelay(NULL);
 }
 
-GoofyNodeDelay::GoofyNodeDelay(GoofyNodeStage* mainStage)
+GoofyNodeDelay::GoofyNodeDelay(GoofyNodeStage* mainStage, string name)
 {
-  this->mainStage = mainStage;
+  timerActive = false;
+  setup(mainStage, name);
 }
 
 GoofyNodeDelay::~GoofyNodeDelay()
@@ -24,12 +25,12 @@ GoofyNodeDelay::~GoofyNodeDelay()
   textTimer.disable();
 }
 
-void GoofyNodeDelay::setup(string name)
+void GoofyNodeDelay::setup(GoofyNodeStage* mainStage, string name)
 {
   secondsDelay    = 0;
   isPause         = false;
   timeStartPause  = 0;
-  GoofyNode::setup(name);
+  GoofyNode::setup(mainStage, name);
   type            = GOOFY_DELAY;
   enableMouseEvents();
   setSize(100,30);
@@ -190,8 +191,7 @@ void GoofyNodeDelay::initTextTimer()
 
 GoofyNodeDelay* GoofyNodeDelay::createDelay(ofVec2f pos, GoofyNodeStage* mainStage, float secondsDelay, string name)
 {
-  GoofyNodeDelay* delay = new GoofyNodeDelay(mainStage);
-  delay->setup(name);
+  GoofyNodeDelay* delay = new GoofyNodeDelay(mainStage, name);
   delay->setDelay(secondsDelay);
   delay->setPos(pos);
   return delay;

@@ -24,7 +24,6 @@ void ofApp::setup(){
   {
 
   delay1 = new GoofyNodeDelay(nodeView);
-  delay1->setup("Delay 1");
   delay1->setPos(ofVec2f(40,140));
   nodeView->addNode(delay1);
   
@@ -34,7 +33,6 @@ void ofApp::setup(){
   nodeView->addNode(fake1);
     
   delay1 = new GoofyNodeDelay(nodeView);
-  delay1->setup("Delay 1");
   delay1->setPos(ofVec2f(40,140));
   nodeView->addNode(delay1);
   
@@ -45,7 +43,6 @@ void ofApp::setup(){
   
   
   delay2 = new GoofyNodeDelay(nodeView);
-  delay2->setup("Delay 2");
   delay2->setPos(ofVec2f(340,140));
   nodeView->addNode(delay2);
   nodeView->addNode(GOOFY_DELAY, nodeView);
