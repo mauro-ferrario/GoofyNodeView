@@ -87,7 +87,6 @@ public:
   void                removeNodeChildren();
   void                removeAllNodeOutConnections(GoofyNode* nodeToRemove);
   string              generateId();
-  void                addToStage();
   
   
 protected:

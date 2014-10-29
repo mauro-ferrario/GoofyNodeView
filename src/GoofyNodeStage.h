@@ -28,7 +28,7 @@ public:
   void                              drawBackground();
   GoofyNode*                        addNode(GoofyBridgeToNode* layer);
   GoofyNode*                        addNode(GoofyNode* node);
-  void                              addNode(GoofyNodeGuiTypes type);
+  void                              addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage);
   void                              mouseDragged(int x, int y, int button);
   void                              onReleaseIn(int x, int y, int button);
   void                              loadFromXML(ofxXmlSettings* xml);
