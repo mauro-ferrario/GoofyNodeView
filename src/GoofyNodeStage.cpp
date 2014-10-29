@@ -178,17 +178,19 @@ bool GoofyNodeStage::checkMatch(GoofyNodePin* pin1, GoofyNodePin* pin2)
   {
     bool tempPassed = !pin1->parent->checkSameConnection(pin2->parent, pin2->pinId);
     if(!tempPassed)
+    {
       ofLogVerbose(logVerboseModule, "same connection already done");
-    if(!tempPassed)
       passed++;
+    }
   }
   else
   {
     bool tempPassed = !pin2->parent->checkSameConnection(pin1->parent, pin1->pinId);
     if(!tempPassed)
+    {
       ofLogVerbose(logVerboseModule, "same connection already done");
-    if(!tempPassed)
       passed++;
+    }
   }
   pin1 = NULL;
   pin2 = NULL;  
