@@ -300,7 +300,6 @@ GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofV
 
 GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos, string name)
 {
-  cout << "CREO PIN" << mainStage << endl;
   GoofyNodePin* newPin = new GoofyNodePin(mainStage, name, mode);
   newPin->setPos(pos);
   newPin->pinId = idFunction;
@@ -421,23 +420,19 @@ void GoofyNode::removeConnection(GoofyNodeOutConnection* connection)
 
 bool GoofyNode::checkSameConnection(GoofyNode* node, int pinID)
 {
-  vector<GoofyNodeOutConnection*>::iterator it = nodeOutConnections.begin();
-  for(int a = 0; a < nodeOutConnections.size(); a++)
+  vector<GoofyNodeOutConnection*>::iterator it = nodeOutConnections.begin();  
+  bool found = false;
+  while(it != nodeOutConnections.end())
   {
-    if(nodeOutConnections[a]->nodeOut == node && (nodeOutConnections[a]->pinID == pinID))
-      return true;
+    if((*it)->nodeOut == node && ((*it)->pinID == pinID))
+    {
+      found = true;
+      it = nodeOutConnections.end();
+    }
+    else
+      it++;
   }
-  
-//  if(nodeOutConnections.size() > 0)
-//  {
-//    while(it != nodeOutConnections.end());
-//    {
-//      //if((*it)->node == node && ((*it)->pinID == pinID))
-//        //return true;
-//      it++;
-//    }
-//  }
-  return false;
+  return found;
 }
 
 void GoofyNode::saveInfo(ofxXmlSettings* xml, int tagPos)
