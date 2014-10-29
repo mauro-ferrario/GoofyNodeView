@@ -18,6 +18,7 @@ GoofyNodeDelay::GoofyNodeDelay(GoofyNodeStage* mainStage, string name)
 {
   timerActive = false;
   setup(mainStage, name);
+  mainStage = NULL;
 }
 
 GoofyNodeDelay::~GoofyNodeDelay()
@@ -39,6 +40,7 @@ void GoofyNodeDelay::setup(GoofyNodeStage* mainStage, string name)
   createSinglePin(2, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 0), "stop");
   createSinglePin(3, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 20), "pause");
   initTextTimer();
+  mainStage = NULL;
 }
 
 void GoofyNodeDelay::saveSpecificInfo(ofxXmlSettings* xml)

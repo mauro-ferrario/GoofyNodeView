@@ -37,7 +37,6 @@ void ofApp::setup(){
   nodeView->addNode(delay1);
   
   button = new GoofyNodeButton(nodeView);
-  button->setup("Button");
   button->setPos(ofVec2f(40,40));
   nodeView->addNode(button);
   

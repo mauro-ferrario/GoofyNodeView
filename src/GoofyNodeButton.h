@@ -18,10 +18,10 @@ class GoofyNodeButton: public GoofyNode
 {
 public:
                           GoofyNodeButton();
-                          GoofyNodeButton(GoofyNodeStage* mainStage);
+                          GoofyNodeButton(GoofyNodeStage* mainStage, string name = "");
                           ~GoofyNodeButton();
   void                    addNodeOutConnection(GoofyNode* node);
-  void                    setup(string name);
+  void                    setup(GoofyNodeStage*, string name = "");
   void                    drawAfterBackground();
   void                    update();
   static GoofyNodeButton* createButton(ofVec2f pos, GoofyNodeStage* mainStage, string name = "button");
