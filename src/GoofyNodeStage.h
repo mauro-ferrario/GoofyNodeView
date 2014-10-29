@@ -13,10 +13,9 @@
 #include "GoofyNodePin.h"
 #include "ofxMSATimer.h"
 #include "GoofyNodeLineConnection.h"
+#include "GoofyNodeStageHandler.h"
 
-class GoofyNodePin;
-
-class GoofyNodeStage: public GoofyNodeLayer
+class GoofyNodeStage: public GoofyNodeLayer, public GoofyNodeStageHandler
 {
 public:
                                     GoofyNodeStage();
@@ -33,29 +32,7 @@ public:
   void                              onReleaseIn(int x, int y, int button);
   void                              loadFromXML(ofxXmlSettings* xml);
   int                               countDrag;
-  
-  void                              removeTempLineConnection();
-  void                              createNewLineConnection(GoofyNodePin* pin);
-  void                              closeLineConnection(GoofyNodePin* pin);
-  bool                              checkLineConnectionPin();
-  ofxMSATimer                       timer;
-  float                             timerStart;
-  bool                              checkRelease;
-  bool                              checkMatch(GoofyNodePin* pin1, GoofyNodePin* pin2);
-  void                              addLineConnection(GoofyNodePin* pin1, GoofyNodePin* pin2);
-  void                              addPinConnection(GoofyNodePin* pin);
-  void                              addLayer(GoofyBridgeToNode* newLayer);
-  GoofyBridgeToNode*                getLayerById(string layerId);
-  void                              clearLayers();
-  
-  GoofyNodeLineConnection*          lineConnection;
-  vector<GoofyNodeLineConnection*>  connections;
-  vector<GoofyNode*>                tempNode; // Devo rimuovere anche da qui gli elementi rimossi
-  vector<GoofyNodeOutConnection*>   tempNodeOutConnection;
-  void                              createConnections();
-  vector<GoofyBridgeToNode*>        layers;
   void                              removeNode(GoofyNode* node);
-  void                              removeNodeLineConnection(GoofyNode* node);
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNodeStage__) */

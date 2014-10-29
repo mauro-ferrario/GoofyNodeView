@@ -16,7 +16,7 @@ void ofApp::setup(){
   nodeView->addLayer(fake1);
   
   xml.loadFile("test.xml");
-  if(false)
+  if(true)
   {
     nodeView->loadFromXML(&xml);
   }
