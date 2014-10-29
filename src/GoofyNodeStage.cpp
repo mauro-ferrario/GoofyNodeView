@@ -313,9 +313,9 @@ void GoofyNodeStage::onReleaseIn(int x, int y, int button)
   }
 }
 
-void GoofyNodeStage::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage)
+void GoofyNodeStage::addNode(GoofyNodeGuiTypes type)
 {
-  GoofyNode::addNode(type, mainStage);
+  GoofyNode::addNode(type, this);
 }
 
 void GoofyNodeStage::addLayer(GoofyBridgeToNode* newLayer)

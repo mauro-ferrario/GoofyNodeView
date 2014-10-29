@@ -22,34 +22,30 @@ void ofApp::setup(){
   }
   else
   {
-
-  delay1 = new GoofyNodeDelay(nodeView);
-  delay1->setPos(ofVec2f(40,140));
-  delay1->addToStage();
-  
-  fake1 = new FakeClassForNode();
-  fake1->setup();
-  nodeView->addNode(fake1);
+    delay1 = new GoofyNodeDelay(nodeView);
+    delay1->setPos(ofVec2f(40,140));
+    delay1->addToStage();
     
-  delay1 = new GoofyNodeDelay(nodeView);
-  delay1->setPos(ofVec2f(40,140));
-  delay1->addToStage();
-  
-  button = new GoofyNodeButton(nodeView);
-  button->setPos(ofVec2f(40,40));
-  button->addToStage();
-  
-  
-  delay2 = new GoofyNodeDelay(nodeView);
-  delay2->setPos(ofVec2f(340,140));
+    fake1 = new FakeClassForNode();
+    fake1->setup();
+    nodeView->addNode(fake1);
+      
+    delay1 = new GoofyNodeDelay(nodeView);
+    delay1->setPos(ofVec2f(40,140));
+    delay1->addToStage();
+    
+    button = new GoofyNodeButton(nodeView);
+    button->setPos(ofVec2f(40,40));
+    button->addToStage();
+    
+    
+    delay2 = new GoofyNodeDelay(nodeView);
+    delay2->setPos(ofVec2f(340,140));
     delay2->addToStage();
-    
-  nodeView->addNode(GOOFY_DELAY, nodeView);
-  nodeView->addNode(GOOFY_BUTTON, nodeView);
-    
+      
+    nodeView->addNode(GOOFY_DELAY);
+    nodeView->addNode(GOOFY_BUTTON);
   }
-  
-    
 }
 
 //--------------------------------------------------------------
