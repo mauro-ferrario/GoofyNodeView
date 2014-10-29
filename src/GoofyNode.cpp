@@ -581,6 +581,15 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
   xml->popTag();
 }
 
+void GoofyNode::addToStage()
+{
+  if(mainStage)
+    mainStage->addNode(this);
+  else
+    ofLogVerbose(logVerboseModule, "stage doesn't exist!");
+}
+
+
 void GoofyNode::saveSpecificInfo(ofxXmlSettings* xml)
 {
   xml = NULL;
