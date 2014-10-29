@@ -28,10 +28,8 @@ GoofyNodePin::~GoofyNodePin()
 
 void GoofyNodePin::setup(GoofyNodeStage* mainStage, string name)
 {
-  GoofyNode::setup(name);
+  GoofyNode::setup(mainStage, GOOFY_PIN, name);
   setSize(10,10);
-  type = GOOFY_PIN;
-  enableMouseEvents();
 }
 
 void GoofyNodePin::saveSpecificInfo(ofxXmlSettings* xml)

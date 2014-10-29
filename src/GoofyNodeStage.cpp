@@ -75,10 +75,8 @@ void GoofyNodeStage::removeNodeLineConnection(GoofyNode* node)
 void GoofyNodeStage::setup(string name, int width, int height)
 {
   setSize(width, height);
-  GoofyNode::setup(name);
-  type = GOOFY_STAGE;
+  GoofyNode::setup(mainStage, GOOFY_STAGE, name);
   checkRelease = false;
-  enableMouseEvents();
 }
 
 void GoofyNodeStage::drawBackground()

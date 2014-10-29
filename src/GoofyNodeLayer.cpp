@@ -27,10 +27,8 @@ GoofyNodeLayer::~GoofyNodeLayer()
 
 void GoofyNodeLayer::setup(GoofyNodeStage* mainStage, string name)
 {
-  GoofyNode::setup(mainStage, name);
-  type = GOOFY_LAYER;
+  GoofyNode::setup(mainStage, GOOFY_LAYER, name);
   setSize(200,100);
-  enableMouseEvents();
 }
 
 void GoofyNodeLayer::update()

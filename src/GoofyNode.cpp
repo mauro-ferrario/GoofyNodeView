@@ -247,10 +247,11 @@ bool GoofyNode::hitTest(int tx, int ty)
   return (tx > x) && (tx < x + width) && (ty > y) && (ty < y + height);
 }
 
-void GoofyNode::setup(GoofyNodeStage* mainStage, string name)
+void GoofyNode::setup(GoofyNodeStage* mainStage, GoofyNodeGuiTypes type, string name)
 {
   this->mainStage   = mainStage;
   logVerboseModule  = "";
+  this->type        = type;
   this->name        = name;
   mouseDragStart    = ofVec2f(0,0);
   dragOffset        = ofVec2f(0,0);
@@ -258,8 +259,8 @@ void GoofyNode::setup(GoofyNodeStage* mainStage, string name)
   parent            = NULL;
   pos.x             = 0;
   pos.y             = 0;
-  type              = GOOFY_SIMPLE_NODE;
   selected          = false;
+  enableMouseEvents();
   enableKeyboardEvents();
 }
 
