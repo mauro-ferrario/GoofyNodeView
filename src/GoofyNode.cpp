@@ -348,6 +348,7 @@ GoofyNode* GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage,
     }
     case GOOFY_DELAY:
     {
+      node = addNode(GoofyNodeDelay::createDelay(pos, mainStage, 1, name), this->mainStage);
       break;
     }
     case GOOFY_BUTTON:

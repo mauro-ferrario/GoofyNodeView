@@ -41,8 +41,6 @@ void ofApp::setup(){
     nodeView->addNode(GOOFY_DELAY, nodeView);
     nodeView->addNode(GOOFY_BUTTON, nodeView);
   }
-  
-    
 }
 
 //--------------------------------------------------------------
