@@ -11,7 +11,7 @@
 GoofyNodeStageHandler::GoofyNodeStageHandler()
 {
   lineConnection    = NULL;
-  checkRelease = false;
+  checkRelease      = false;
 }
 
 GoofyNodeStageHandler::~GoofyNodeStageHandler()
@@ -64,26 +64,40 @@ void GoofyNodeStageHandler::mouseDragged(int x, int y, int button)
   }
 }
 
-void GoofyNodeStageHandler::closeLineConnection(GoofyNodePin* pin)
+void GoofyNodeStageHandler::closeLineConnection(GoofyNodePin* secondPin)
 {
   lineConnection->editable = false;
-  lineConnection->secondPin = pin;
-  pin = NULL;
+  lineConnection->secondPin = secondPin;
+  secondPin = NULL;
+  closeLineConnection();
+}
+
+void GoofyNodeStageHandler::closeLineConnection()
+{
   GoofyNodeOutConnection* newOutConnection;
+  GoofyNodePin* inPin;
+  GoofyNodePin* outPin;
+  
   if(lineConnection->firstPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
   {
-    newOutConnection = new GoofyNodeOutConnection(lineConnection->firstPin->parent, lineConnection->secondPin->parent, lineConnection->secondPin->pinId);
-    lineConnection->firstPin->parent->nodeOutConnections.push_back(newOutConnection);
+    outPin  = lineConnection->firstPin;
+    inPin   = lineConnection->secondPin;
   }
   if(lineConnection->secondPin->pinMode == GOOFY_NODE_PIN_OUTPUT)
   {
-    newOutConnection = new GoofyNodeOutConnection(lineConnection->secondPin->parent, lineConnection->firstPin->parent, lineConnection->firstPin->pinId);
-    lineConnection->secondPin->parent->nodeOutConnections.push_back(newOutConnection);
+    outPin  = lineConnection->secondPin;
+    inPin   = lineConnection->firstPin;
   }
+  
+  newOutConnection = new GoofyNodeOutConnection(outPin->parent, inPin->parent, inPin->pinId);
+  outPin->parent->nodeOutConnections.push_back(newOutConnection);
+  
   lineConnection->connection = newOutConnection;
-  newOutConnection = NULL;
   connections.push_back(lineConnection);
-  lineConnection = NULL;
+  inPin             = NULL;
+  outPin            = NULL;
+  newOutConnection  = NULL;
+  lineConnection    =  NULL;
 }
 
 bool GoofyNodeStageHandler::checkLineConnectionPin()
@@ -210,13 +224,7 @@ void GoofyNodeStageHandler::createConnections()
         pin2 = (GoofyNodePin*)tempNode[a]->nodes[(*it)->pinID];
       }
     }
-    GoofyNodeOutConnection* newOutConnection = new GoofyNodeOutConnection(pin1->parent, pin2->parent, (*it)->pinID);
-    GoofyNodeLineConnection* newConnection = new GoofyNodeLineConnection(pin1, pin2);
-    pin1->parent->nodeOutConnections.push_back(newOutConnection);
-    newConnection->connection = newOutConnection;
-    connections.push_back(newConnection);
-    newConnection = NULL;
-    newOutConnection = NULL;
+    createConnection(NULL, pin1, pin2, (*it)->pinID);
     it++;
   }
   int totTempNodes = tempNode.size();
@@ -226,6 +234,19 @@ void GoofyNodeStageHandler::createConnections()
   }
   tempNode.clear();
 }
+
+void GoofyNodeStageHandler::createConnection(GoofyNodeLineConnection* tempLineConnection, GoofyNodePin* pin1, GoofyNodePin* pin2, int pinId)
+{
+  GoofyNodeOutConnection* newOutConnection = new GoofyNodeOutConnection(pin1->parent, pin2->parent, pinId);
+  if(tempLineConnection == NULL)
+    tempLineConnection = new GoofyNodeLineConnection(pin1, pin2);
+  pin1->parent->nodeOutConnections.push_back(newOutConnection);
+  tempLineConnection->connection = newOutConnection;
+  connections.push_back(tempLineConnection);
+  tempLineConnection = NULL;
+  newOutConnection = NULL;
+}
+
 
 void GoofyNodeStageHandler::removeNodeLineConnection(GoofyNode* node)
 {
@@ -238,7 +259,7 @@ void GoofyNodeStageHandler::removeNodeLineConnection(GoofyNode* node)
       {
         (*it)->secondPin->parent->removeAllNodeOutConnections(node);
       }
-      if((*it)->secondPin->parent == node)
+      else if((*it)->secondPin->parent == node)
       {
         (*it)->firstPin->parent->removeAllNodeOutConnections(node);
       }

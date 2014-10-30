@@ -23,6 +23,7 @@ public:
   void                              removeTempLineConnection();
   void                              createNewLineConnection(GoofyNodePin* pin);
   void                              closeLineConnection(GoofyNodePin* pin);
+  void                              closeLineConnection();
   bool                              checkLineConnectionPin();
   bool                              checkMatch(GoofyNodePin* pin1, GoofyNodePin* pin2);
   void                              addLineConnection(GoofyNodePin* pin1, GoofyNodePin* pin2);
@@ -36,6 +37,7 @@ public:
   void                              removeNode(GoofyNode* node);
   void                              removeNodeLineConnection(GoofyNode* node);
   void                              createConnections();
+  void                              createConnection(GoofyNodeLineConnection* tempLineConnection, GoofyNodePin* pin1, GoofyNodePin* pin2, int pinId);
   ofxMSATimer                       timer;
   float                             timerStart;
   bool                              checkRelease;
