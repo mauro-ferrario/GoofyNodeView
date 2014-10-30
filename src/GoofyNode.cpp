@@ -413,8 +413,8 @@ bool removeEqualElement(GoofyNodeOutConnection* connection1, GoofyNodeOutConnect
 
 void GoofyNode::removeConnection(GoofyNodeOutConnection* connection)
 {
-  delete connection;
   nodeOutConnections.erase(std::remove(nodeOutConnections.begin(), nodeOutConnections.end(), connection), nodeOutConnections.end());
+  delete connection;
   connection = NULL;
 }
 
