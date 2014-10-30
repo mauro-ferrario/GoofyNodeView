@@ -502,7 +502,6 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
     }
     else if(type == GOOFY_LAYER)
     {
-      // Sono per forza nello stage
       GoofyNodeStage* stage = (GoofyNodeStage*)this;
       GoofyBridgeToNode* interactiveLayer;
       string idToFind = xml->getValue("interactiveLayerId","");
@@ -522,7 +521,6 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
     }
   }
   
-  
   int totOutConnections = xml->getNumTags("outConnections");
   
   if(totOutConnections > 0)
@@ -541,7 +539,6 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
     xml->popTag();
   }
   
-  // Controllare qui!!! vedere se salva giusto
   if(type == GOOFY_STAGE)
   {
     xml->pushTag("nodes");
