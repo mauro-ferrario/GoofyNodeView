@@ -75,7 +75,11 @@ void GoofyNodeStage::draw()
   while(it != connections.end())
   {
     if((*it)->toRemove)
+    {
+      delete (*it);
+      (*it) = NULL;
       connections.erase(it);
+    }
     else
     {
       (*it)->draw();
