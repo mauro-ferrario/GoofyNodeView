@@ -172,7 +172,7 @@ void GoofyNode::_mouseReleased(ofMouseEventArgs &e)
     }
   }
   
-  if(hitTest(x, y))
+  if(hitTest(x, y) && type != GOOFY_STAGE && type != GOOFY_PIN)
   {
     selected = true;
     onReleaseIn(x, y, button);
