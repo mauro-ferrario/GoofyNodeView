@@ -420,7 +420,7 @@ void GoofyNode::removeConnection(GoofyNodeOutConnection* connection)
 
 bool GoofyNode::checkSameConnection(GoofyNode* node, int pinID)
 {
-  vector<GoofyNodeOutConnection*>::iterator it = nodeOutConnections.begin();  
+  vector<GoofyNodeOutConnection*>::iterator it = nodeOutConnections.begin();
   bool found = false;
   while(it != nodeOutConnections.end())
   {
@@ -541,7 +541,7 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
     xml->popTag();
   }
   
-  // Controllare qui
+  // Controllare qui!!! vedere se salva giusto
   if(type == GOOFY_STAGE)
   {
     xml->pushTag("nodes");
