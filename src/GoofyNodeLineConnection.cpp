@@ -93,7 +93,7 @@ void GoofyNodeLineConnection::remove()
   {
     ofLogVerbose(logVerboseModule, "Remove from second pin");
   }
-  nodeToRemoveConnection->parent->removeConnection(connection);
+  nodeToRemoveConnection->removeConnection(connection);
   nodeToRemoveConnection = NULL;
   connection = NULL;
 }
