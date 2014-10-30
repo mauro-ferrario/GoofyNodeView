@@ -112,7 +112,6 @@ void GoofyNodeStage::removeNode(GoofyNode* node)
   removeNodeLineConnection(node);
   node->removeNodeChildren();
   vector<GoofyNode*>::iterator itNodes = nodes.begin();
-  
   while(itNodes != nodes.end())
   {
     if((*itNodes) == node)
