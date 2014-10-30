@@ -24,7 +24,6 @@ public:
   void                              update();
   void                              draw();
   void                              setup(string name, int width, int height);
-  void                              drawBackground();
   GoofyNode*                        addNode(GoofyBridgeToNode* layer);
   GoofyNode*                        addNode(GoofyNode* node);
   void                              addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage);

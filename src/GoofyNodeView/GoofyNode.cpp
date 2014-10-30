@@ -372,7 +372,7 @@ string GoofyNode::generateId()
 void GoofyNode::drawBackground()
 {
   ofPushStyle();
-  ofSetColor(100);
+  ofSetColor(backgroundColor);
   ofRect(0,0, width, height);
   ofPopStyle();
 }
@@ -564,6 +564,11 @@ void GoofyNode::addToStage()
     ofLogVerbose(logVerboseModule, "stage doesn't exist!");
 }
 
+
+void GoofyNode::setBackgroundColor(ofColor color)
+{
+  backgroundColor = color;
+}
 
 void GoofyNode::saveSpecificInfo(ofxXmlSettings* xml)
 {

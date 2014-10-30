@@ -32,14 +32,6 @@ void GoofyNodeStage::setup(string name, int width, int height)
   GoofyNode::setup(mainStage, GOOFY_STAGE, name);
 }
 
-void GoofyNodeStage::drawBackground()
-{
-  ofPushStyle();
-  ofSetColor(255,0,0, 100);
-  ofRect(0,0, width, height);
-  ofPopStyle();
-}
-
 GoofyNode* GoofyNodeStage::addNode(GoofyBridgeToNode* layer)
 {
   return GoofyNodeLayer::addNode(layer, this);

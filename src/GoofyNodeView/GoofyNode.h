@@ -77,6 +77,7 @@ public:
   void                              drawSelected();
   void                              removeNodeChildren();
   void                              removeAllNodeOutConnections(GoofyNode* nodeToRemove);
+  void                              setBackgroundColor(ofColor color);
   string                            generateId();
   GoofyNode*                        addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage, ofVec2f pos = ofVec2f(0,0), string name = "");
   GoofyNode*                        addNode(GoofyNode* node, GoofyNodeStage* mainStage, ofVec2f pos = ofVec2f(0,0), string name = "");
@@ -85,6 +86,7 @@ public:
   ofVec2f                           mouseDragStart;
   ofVec2f                           dragOffset;
   bool                              selected;
+  ofColor                           backgroundColor;
   
   
 protected:

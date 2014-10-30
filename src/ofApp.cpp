@@ -10,6 +10,7 @@ void ofApp::setup(){
   ofBackground(0);
   
   nodeView = new GoofyNodeStage("Main", ofGetWindowWidth(), ofGetWindowHeight());
+  nodeView->setBackgroundColor(ofColor(10));
   fake1 = new FakeClassForNode();
   fake1->setup();
   fake1->id = "2014102703052-2625";
