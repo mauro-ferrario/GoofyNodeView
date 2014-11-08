@@ -172,9 +172,10 @@ void GoofyNode::_mouseReleased(ofMouseEventArgs &e)
     }
   }
   
-  if(hitTest(x, y) && type != GOOFY_STAGE && type != GOOFY_PIN)
+  if(hitTest(x, y) && type != GOOFY_STAGE)
   {
-    selected = true;
+    if(type != GOOFY_PIN)
+      selected = true;
     onReleaseIn(x, y, button);
   }
   else
@@ -219,8 +220,8 @@ bool GoofyNode::_mouseDragged(ofMouseEventArgs &e)
     if(!isDraggingIn)
     {
       mainStage->countDrag++;
-      if(mainStage->countDrag > 1 && type != GOOFY_PIN  && type != GOOFY_STAGE)
-        return true;
+     // if(mainStage->countDrag > 1 && type != GOOFY_PIN  && type != GOOFY_STAGE)
+       // return true;
     }
     isMouseOver = true;
     if(isMousePressed)
