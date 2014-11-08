@@ -13,11 +13,11 @@ void ofApp::setup(){
   nodeView->setBackgroundColor(ofColor(10));
   fake1 = new FakeClassForNode();
   fake1->setup();
-  fake1->id = "2014102703052-2625";
+  fake1->bridgeId = "2014102703052-2625";
   nodeView->addLayer(fake1);
   
   xml.loadFile("test.xml");
-  if(true)
+  if(false)
   {
     nodeView->loadFromXML(&xml);
   }

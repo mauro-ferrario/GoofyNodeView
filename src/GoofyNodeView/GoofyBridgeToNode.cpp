@@ -20,12 +20,13 @@ GoofyBridgeToNode::~GoofyBridgeToNode()
 
 void GoofyBridgeToNode::initId()
 {
-  id = ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(int(ofRandom(10000)));
+  bridgeId = ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(int(ofRandom(10000)));
+  cout << bridgeId << endl;
 }
 
 void GoofyBridgeToNode::setup()
 {
-  if(id == "")
+  if(bridgeId == "")
     initId();
   defineNodeMethods();
 }

@@ -189,7 +189,7 @@ GoofyBridgeToNode* GoofyNodeStageHandler::getLayerById(string layerId)
   int totLayers = layers.size();
   for(int a = 0; a < totLayers; a++)
   {
-    if(layers[a]->id == layerId)
+    if(layers[a]->bridgeId == layerId)
     {
       return layers[a];
     }

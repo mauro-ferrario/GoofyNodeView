@@ -83,6 +83,7 @@ void GoofyNodePin::onPressIn(int x, int y, int button)
 
 void GoofyNodePin::onReleaseIn(int x, int y, int button)
 {
+ // cout << "release In pin" <<endl;
    mainStage->addPinConnection(this);
 }
 

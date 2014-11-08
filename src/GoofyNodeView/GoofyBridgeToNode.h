@@ -21,7 +21,7 @@ public:
   virtual void                  defineNodeMethods();
   void                          initId();
   void                          addMethod(string methodName);
-  string                        id;
+  string                        bridgeId;
   vector<string>                functionNames;
 };
 
