@@ -61,6 +61,7 @@ void GoofyNodeStage::mouseDragged(int x, int y, int button)
 
 void GoofyNodeStage::draw()
 {
+  drawGrid();
   GoofyNode::draw();
   GoofyNodeStageHandler::draw();
   vector<GoofyNodeLineConnection*>::iterator it = connections.begin();
@@ -83,6 +84,24 @@ void GoofyNodeStage::draw()
   {
     connections[a]->draw();
   }
+}
+
+void GoofyNodeStage::drawGrid()
+{
+  ofPushStyle();
+  ofSetColor(0,20);
+  int size = 10;
+  int windowWidth = ofGetWindowWidth();
+  int windowHeight = ofGetWindowHeight();
+  for(int a = 0; a < windowWidth; a+= size)
+  {
+    ofLine(a,0,a,windowHeight);
+  }
+  for(int a = 0; a < windowHeight; a+= size)
+  {
+    ofLine(0,a,windowWidth,a);
+  }
+  ofPopStyle();
 }
 
 void GoofyNodeStage::onReleaseIn(int x, int y, int button)

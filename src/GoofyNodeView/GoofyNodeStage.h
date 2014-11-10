@@ -32,6 +32,7 @@ public:
   void                              loadFromXML(ofxXmlSettings* xml);
   int                               countDrag;
   void                              removeNode(GoofyNode* node);
+  void                              drawGrid();
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyNodeStage__) */
