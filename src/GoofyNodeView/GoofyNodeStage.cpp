@@ -23,7 +23,11 @@ GoofyNodeStage::GoofyNodeStage(string name, int width, int height)
 
 GoofyNodeStage::~GoofyNodeStage()
 {
-  
+  int totChildren = nodes.size();
+  for(int a = totChildren-1; a >= 0; a--)
+  {
+    removeNode(nodes[a]);
+  }
 }
 
 void GoofyNodeStage::setup(string name, int width, int height)
