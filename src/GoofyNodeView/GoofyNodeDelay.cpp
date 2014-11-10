@@ -32,9 +32,9 @@ void GoofyNodeDelay::setup(GoofyNodeStage* mainStage, string name)
   isPause         = false;
   timeStartPause  = 0;
   GoofyNode::setup(mainStage, GOOFY_DELAY, name);
-  setSize(100,30);
-  createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((100-10)*.5,30), "output");
-  createSinglePin(1, GOOFY_NODE_PIN_INPUT, ofVec2f((100-10)*.5,-10), "input");
+  setSize(110,30);
+  createSinglePin(0, GOOFY_NODE_PIN_OUTPUT, ofVec2f((110-10)*.5,30), "output");
+  createSinglePin(1, GOOFY_NODE_PIN_INPUT, ofVec2f((110-10)*.5,-10), "input");
   createSinglePin(2, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 0), "stop");
   createSinglePin(3, GOOFY_NODE_PIN_INPUT, ofVec2f(-10, 20), "pause");
   initTextTimer();
