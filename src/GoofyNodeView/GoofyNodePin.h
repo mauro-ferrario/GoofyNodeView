@@ -20,12 +20,14 @@ public:
                       ~GoofyNodePin();
   virtual void        setup(GoofyNodeStage* mainStage, string name = "");
   virtual void        update();
-  virtual void        drawAfterBackground();
+  void                drawAfterBackground();
+  void                drawAfterNodes();
   void                drawHole();
   void                drawName();
   GoofyNodePinMode    pinMode;
   int                 pinId;
   void                saveSpecificInfo(ofxXmlSettings* xml);
+  bool                bDrawName;
   
 protected:
   void                onReleaseIn(int x, int y, int button);

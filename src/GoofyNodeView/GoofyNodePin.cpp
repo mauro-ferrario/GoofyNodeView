@@ -28,6 +28,7 @@ GoofyNodePin::~GoofyNodePin()
 
 void GoofyNodePin::setup(GoofyNodeStage* mainStage, string name)
 {
+  bDrawName = false;
   GoofyNode::setup(mainStage, GOOFY_PIN, name);
   setSize(10,10);
 }
@@ -49,15 +50,31 @@ void GoofyNodePin::drawAfterBackground()
   if(isMouseOver)
   {
     drawHole();
-    drawName();
+    bDrawName = true;
   }
+}
+
+void GoofyNodePin::drawAfterNodes()
+{
+  if(bDrawName)
+    drawName();
+  bDrawName = false;
 }
 
 void GoofyNodePin::drawName()
 {
   ofPushMatrix();
+  ofTranslate(0,-10);
   ofPushStyle();
-  ofSetColor(0);
+  int length = name.length();
+  ofPushMatrix();
+  ofTranslate(-5, -18);
+  ofPushStyle();
+  ofSetColor(0,255);
+  ofRect(0,0,(length * 9)+5, 26);
+  ofPopStyle();
+  ofPopMatrix();
+  ofSetColor(255);
   ofVec2f pos;
   ofDrawBitmapString(name, pos);
   ofPopStyle();
