@@ -75,7 +75,7 @@ void GoofyNodeLayer::createPins()
     int totPins = interactiveLayer->functionNames.size();
     for(int a = 0; a < totPins; a++)
     {
-      createSinglePin(a, GOOFY_NODE_PIN_INPUT, ofVec2f(15*a, -10),interactiveLayer->functionNames[a]);
+      createSinglePin(a, GOOFY_NODE_PIN_INPUT, ofVec2f(20*a, -10),interactiveLayer->functionNames[a]);
     }
   }
 }
