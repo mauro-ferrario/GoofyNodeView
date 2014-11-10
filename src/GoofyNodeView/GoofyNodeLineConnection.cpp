@@ -120,6 +120,7 @@ bool GoofyNodeLineConnection::isCloseToTheLine(int x, int y)
   float y1 = (delta*(endPoint.x - x)-endPoint.y);
   y1 *= -1;
   float distance = abs(y1-y);
+  
   if(distance >= 0 && distance <= maxSelectedRange)
   {
     if(startPoint.x > endPoint.x)
