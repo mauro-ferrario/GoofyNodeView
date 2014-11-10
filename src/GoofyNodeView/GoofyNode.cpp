@@ -280,6 +280,7 @@ void GoofyNode::draw()
   drawBackground();
   drawAfterBackground();
   drawNodes();
+  drawAfterNodes();
   if(selected&&type != GOOFY_STAGE)
     drawSelected();
   ofPopMatrix();
@@ -294,6 +295,11 @@ void GoofyNode::drawSelected()
 }
 
 void GoofyNode::drawAfterBackground()
+{
+  
+}
+
+void GoofyNode::drawAfterNodes()
 {
   
 }

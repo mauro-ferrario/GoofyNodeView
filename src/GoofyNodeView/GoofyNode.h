@@ -57,6 +57,7 @@ public:
   virtual void                      update();
   virtual void                      draw();
   virtual void                      drawAfterBackground();
+  virtual void                      drawAfterNodes();
   virtual void                      drawBackground();
   virtual GoofyNode*                createSinglePin(int idFunction,  GoofyNodePinMode mode,  ofVec2f pos);
   virtual GoofyNode*                createSinglePin(int idFunction,  GoofyNodePinMode mode,  ofVec2f pos, string name);
