@@ -12,6 +12,8 @@
 #include "GoofyNodeDelay.h"
 #include "GoofyNodeButton.h"
 
+bool GoofyNode::checkInsideDragging = true;
+
 GoofyNode::GoofyNode()
 {
   logVerboseModule = "GoofyNode:";
@@ -223,8 +225,11 @@ bool GoofyNode::_mouseDragged(ofMouseEventArgs &e)
     if(!isDraggingIn)
     {
       mainStage->countDrag++;
-     // if(mainStage->countDrag > 1 && type != GOOFY_PIN  && type != GOOFY_STAGE)
-       // return true;
+      if(GoofyNode::checkInsideDragging == true)
+      {
+        //if(mainStage->countDrag > 1 && type != GOOFY_PIN  && type != GOOFY_STAGE)
+        //  return true;
+      }
     }
     isMouseOver = true;
     if(isMousePressed)

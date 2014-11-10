@@ -88,6 +88,7 @@ public:
   ofVec2f                           dragOffset;
   bool                              selected;
   ofColor                           backgroundColor;
+  static bool                       checkInsideDragging;
   
   
 protected:
