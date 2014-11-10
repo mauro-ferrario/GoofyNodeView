@@ -168,6 +168,9 @@ void GoofyNode::_mouseReleased(ofMouseEventArgs &e)
     if(type != GOOFY_PIN  && type != GOOFY_STAGE)
     {
       pos -= dragOffset;
+      // Snap to the grid
+      pos.x -= int(pos.x)%10;
+      pos.y -= int(pos.y)%10;
       dragOffset = ofVec2f(0,0);
     }
   }
