@@ -23,6 +23,7 @@ public:
   void                          addMethod(string methodName);
   string                        bridgeId;
   vector<string>                functionNames;
+  string                        name;
 };
 
 #endif /* defined(__ShadowTheatre2_0__GoofyBridgeToNode__) */

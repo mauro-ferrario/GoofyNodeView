@@ -36,9 +36,9 @@ void GoofyNodeStage::setup(string name, int width, int height)
   GoofyNode::setup(mainStage, GOOFY_STAGE, name);
 }
 
-GoofyNode* GoofyNodeStage::addNode(GoofyBridgeToNode* layer)
+GoofyNode* GoofyNodeStage::addNode(GoofyBridgeToNode* layer, string name)
 {
-  return GoofyNodeLayer::addNode(layer, this);
+  return GoofyNodeLayer::addNode(layer, this, name);
 }
 
 GoofyNode* GoofyNodeStage::addNode(GoofyNode* node)

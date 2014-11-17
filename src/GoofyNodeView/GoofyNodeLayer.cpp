@@ -51,9 +51,9 @@ void GoofyNodeLayer::saveSpecificInfo(ofxXmlSettings* xml)
   xml = NULL;
 }
 
-GoofyNode* GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage)
+GoofyNode* GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage, string name)
 {
-  GoofyNodeLayer* node = new GoofyNodeLayer(mainStage, layer, "Layer");
+  GoofyNodeLayer* node = new GoofyNodeLayer(mainStage, layer, name);
   node->setPos(ofVec2f(ofRandom(0,600),ofRandom(0,600)));
   GoofyNode::addNode(node, mainStage);
   node->createPins();
@@ -66,6 +66,14 @@ GoofyNode* GoofyNodeLayer::addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mai
 GoofyNode* GoofyNodeLayer::addNode(GoofyNode* node, GoofyNodeStage* mainStage)
 {
   return GoofyNode::addNode(node, mainStage);
+}
+
+void GoofyNodeLayer::drawAfterNodes()
+{
+  ofPushStyle();
+  ofSetColor(0);
+  ofDrawBitmapString(name, 10, height- 10);
+  ofPopStyle();
 }
 
 void GoofyNodeLayer::createPins()

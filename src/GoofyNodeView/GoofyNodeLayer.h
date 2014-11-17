@@ -23,10 +23,11 @@ public:
                       ~GoofyNodeLayer();
   virtual void        setup(GoofyNodeStage* mainStage, string name = "");
   virtual void        update();
-  virtual GoofyNode*  addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage);
+  virtual GoofyNode*  addNode(GoofyBridgeToNode* layer, GoofyNodeStage* mainStage, string name = "");
   virtual GoofyNode*  addNode(GoofyNode* node, GoofyNodeStage* mainStage);
   virtual void        mouseDragged(int x, int y, int button);
   void                createPins();
+  void                drawAfterNodes();
   GoofyBridgeToNode*  interactiveLayer;
   void                saveSpecificInfo(ofxXmlSettings* xml);
 protected:

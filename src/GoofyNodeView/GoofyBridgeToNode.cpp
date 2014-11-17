@@ -11,6 +11,7 @@
 
 GoofyBridgeToNode::GoofyBridgeToNode()
 {
+  name = "";
 }
 
 GoofyBridgeToNode::~GoofyBridgeToNode()
