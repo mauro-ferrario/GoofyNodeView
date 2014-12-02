@@ -55,6 +55,7 @@ void GoofyNodeStage::loadFromXML(ofxXmlSettings* xml)
 
 void GoofyNodeStage::update()
 {
+  GoofyNode::update();
   GoofyNodeStageHandler::update();
 }
 
