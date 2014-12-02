@@ -10,6 +10,7 @@
 #include "GoofyNodePin.h"
 #include "GoofyNodeStage.h"
 #include "GoofyNodeDelay.h"
+#include "GoofyNodePartitura.h"
 #include "GoofyNodeButton.h"
 
 bool GoofyNode::checkInsideDragging = true;
@@ -351,6 +352,11 @@ GoofyNode* GoofyNode::addNode(GoofyNodeGuiTypes type, GoofyNodeStage* mainStage,
       node = addNode(GoofyNodeDelay::createDelay(pos, mainStage, 1, name), this->mainStage);
       break;
     }
+    case GOOFY_PARTITURA:
+    {
+      node = addNode(GoofyNodePartitura::createPartitura(pos, mainStage, 1, name), this->mainStage);
+      break;
+    }
     case GOOFY_BUTTON:
     {
       node = addNode(GoofyNodeButton::createButton(pos, this->mainStage, name), this->mainStage);
@@ -403,6 +409,13 @@ void GoofyNode::activeOutputs()
         GoofyNodeDelay* delay = (GoofyNodeDelay*)nodeOutConnections[a]->nodeOut;
         delay->activeFunction(nodeOutConnections[a]->pinID);
         delay = NULL;
+        break;
+      }
+      case GOOFY_PARTITURA:
+      {
+        GoofyNodePartitura* partitura = (GoofyNodePartitura*)nodeOutConnections[a]->nodeOut;
+        partitura->activeFunction(nodeOutConnections[a]->pinID);
+        partitura = NULL;
         break;
       }
       case GOOFY_LAYER:
