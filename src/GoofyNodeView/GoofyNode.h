@@ -91,6 +91,7 @@ public:
   bool                              selected;
   ofColor                           backgroundColor;
   static bool                       checkInsideDragging;
+  ofVec2f                           pos;
   
   
 protected:
@@ -102,7 +103,6 @@ protected:
   float                             height;
   bool                              isMousePressed;
   bool                              isMouseOver;
-  ofVec2f                           pos;
   string                            name;
   string                            logVerboseModule;
   

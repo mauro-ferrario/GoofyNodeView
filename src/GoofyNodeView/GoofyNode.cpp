@@ -123,7 +123,7 @@ void GoofyNode::drawNodes()
   {
     if(nodes[a])
     {
-      nodes[a]->update();
+//      nodes[a]->update();
       nodes[a]->draw();
     }
   }
@@ -228,8 +228,8 @@ bool GoofyNode::_mouseDragged(ofMouseEventArgs &e)
       mainStage->countDrag++;
       if(GoofyNode::checkInsideDragging == true)
       {
-        //if(mainStage->countDrag > 1 && type != GOOFY_PIN  && type != GOOFY_STAGE)
-        //  return true;
+//        if(mainStage->countDrag > 1 && type != GOOFY_PIN  && type != GOOFY_STAGE)
+//          return true;
       }
     }
     isMouseOver = true;
@@ -276,6 +276,14 @@ bool GoofyNode::hitTest(int tx, int ty)
 
 void GoofyNode::update()
 {
+  for(int a = 0; a < nodes.size(); a++)
+  {
+    if(nodes[a])
+    {
+      nodes[a]->update();
+      nodes[a]->draw();
+    }
+  }
 }
 
 void GoofyNode::draw()
@@ -309,6 +317,7 @@ void GoofyNode::drawAfterNodes()
 {
   
 }
+
 
 GoofyNode* GoofyNode::createSinglePin(int idFunction, GoofyNodePinMode mode, ofVec2f pos)
 {
