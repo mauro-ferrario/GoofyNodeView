@@ -498,6 +498,7 @@ void GoofyNode::saveInfo(ofxXmlSettings* xml, int tagPos)
   xml->addTag("node");
   xml->pushTag("node", tagPos);
   xml->addValue("type", type);
+  xml->addValue("name", name);
   xml->addValue("id", nodeId);
   xml->addTag("position");
   xml->pushTag("position",0);
@@ -540,6 +541,7 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
   xml->pushTag("node", nodeXMLPos);
   int type = xml->getValue("type", 0);
   string tempId =  xml->getValue("id","");
+  string name =  xml->getValue("name","");
   if(type == GOOFY_STAGE)
     this->nodeId = xml->getValue("id","");
   ofVec2f pos;
@@ -563,12 +565,15 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
       GoofyNodeStage* stage = (GoofyNodeStage*)this;
       GoofyBridgeToNode* interactiveLayer;
       string idToFind = xml->getValue("interactiveLayerId","");
+      cout << "MAIN STAGE ADDRESS " << mainStage << endl;
       GoofyBridgeToNode* foundLayer = mainStage->getLayerById(idToFind);
       if(foundLayer)
       {
         interactiveLayer = foundLayer;
-        GoofyNode* tempNode = stage->addNode(interactiveLayer);
+        cout << "FOUND LAYER NAME = " << interactiveLayer->name << endl;
+        GoofyNode* tempNode = stage->addNode(interactiveLayer, name);
         tempNode->nodeId = xml->getValue("interactiveLayerId","");
+        tempNode->pos = pos;
       }
       else
       {
