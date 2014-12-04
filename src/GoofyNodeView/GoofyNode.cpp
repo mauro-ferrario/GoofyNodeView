@@ -17,6 +17,8 @@ bool GoofyNode::checkInsideDragging = true;
 
 GoofyNode::GoofyNode()
 {
+  parent    = NULL;
+  mainStage = NULL;
   logVerboseModule = "GoofyNode:";
 }
 
