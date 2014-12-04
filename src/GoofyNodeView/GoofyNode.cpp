@@ -560,7 +560,7 @@ void GoofyNode::loadFromXML(ofxXmlSettings* xml, int nodeXMLPos)
       addNode((GoofyNodeGuiTypes)type, mainStage, pos)->nodeId =  xml->getValue("id","");
     else if(type == GOOFY_DELAY)
     {
-      float delay =  xml->getValue("delay",0);
+      float delay =  xml->getValue("delay",0.0);
       addNode(GoofyNodeDelay::createDelay(pos, this->mainStage, delay, name), this->mainStage)->nodeId =  xml->getValue("id","");
     }
     else if(type == GOOFY_LAYER)
