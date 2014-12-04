@@ -11,6 +11,7 @@
 
 GoofyNodeLayer::GoofyNodeLayer()
 {
+  interactiveLayer = NULL;
   GoofyNodeLayer(NULL, NULL);
 } 
 
