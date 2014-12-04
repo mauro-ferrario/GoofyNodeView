@@ -82,11 +82,13 @@ void GoofyNode::disableMouseEvents()
 void GoofyNode::enableKeyboardEvents()
 {
   ofAddListener(ofEvents().keyPressed, this, &GoofyNode::_keyPressed,100);
+  ofAddListener(ofEvents().keyReleased, this, &GoofyNode::_keyReleased,100);
 }
 
 void GoofyNode::disableKeyboardEvents()
 {
   ofRemoveListener(ofEvents().keyPressed, this, &GoofyNode::_keyPressed,100);
+  ofAddListener(ofEvents().keyReleased, this, &GoofyNode::_keyReleased,100);
 }
 
 void GoofyNode::removeNodeChildren()
@@ -107,6 +109,22 @@ bool GoofyNode::_keyPressed(ofKeyEventArgs &e)
   if(e.key == OF_KEY_BACKSPACE && selected && type != GOOFY_STAGE && type != GOOFY_PIN)
   {
     mainStage->removeNode(this);
+  }
+  return false;
+}
+
+bool GoofyNode::_keyReleased(ofKeyEventArgs &e)
+{
+  if(type == GOOFY_STAGE)
+  {
+    if(e.key == 'z')
+    {
+      mainStage->addNode(GOOFY_BUTTON, mainStage);
+    }
+    if(e.key == 'x')
+    {
+      mainStage->addNode(GOOFY_DELAY, mainStage);
+    }
   }
   return false;
 }

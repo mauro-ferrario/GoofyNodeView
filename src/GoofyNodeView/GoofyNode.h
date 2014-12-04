@@ -112,6 +112,7 @@ private:
   void                              _mouseMoved(ofMouseEventArgs &e);
   bool                              _mouseDragged(ofMouseEventArgs &e);
   bool                              _keyPressed(ofKeyEventArgs &e);
+  bool                              _keyReleased(ofKeyEventArgs &e);
   ofxXmlSettings*                   xml;
 };
 
