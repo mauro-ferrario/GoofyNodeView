@@ -416,6 +416,9 @@ GoofyNode* GoofyNode::addNode(GoofyNode* node, GoofyNodeStage* mainStage, ofVec2
 
 string GoofyNode::generateId()
 {
+  cout << "Main stage" << endl;
+  cout << mainStage << endl;
+  cout << mainStage->tempNode.size() << endl;
   return ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(mainStage->tempNode.size());
 }
 
