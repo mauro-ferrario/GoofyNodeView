@@ -46,6 +46,7 @@ void GoofyNodeLayer::saveSpecificInfo(ofxXmlSettings* xml)
 {
   if(interactiveLayer != NULL)
   {
+    cout << "interactiveLayer->bridgeId" << interactiveLayer->bridgeId << endl;
     xml->setValue("id", interactiveLayer->bridgeId);
     xml->addValue("interactiveLayerId", interactiveLayer->bridgeId);
   }
