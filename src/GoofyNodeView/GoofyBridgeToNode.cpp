@@ -22,7 +22,6 @@ GoofyBridgeToNode::~GoofyBridgeToNode()
 void GoofyBridgeToNode::initId()
 {
   bridgeId = ofToString(ofGetYear())+ofToString(ofGetMonth())+ofToString(ofGetDay())+ofToString(ofGetHours())+ofToString(ofGetMinutes())+ofToString(ofGetSeconds())+"-"+ofToString(int(ofRandom(10000)));
-  cout << bridgeId << endl;
 }
 
 void GoofyBridgeToNode::setup()
